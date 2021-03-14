@@ -1,0 +1,307 @@
+Part I: Fundamentals
+	Chapter 1. Technology's Impact on Programs
+	Chapter 2. Programs, Processes and Threads
+	Chapter 3. Processes in UNIX
+	Chapter 4. UNIX I/O
+	Chapter 5. Files and Directories
+	Chapter 6. UNIX Special Files
+	Chapter 7. Project: The Token Ring
+
+Part II: Asynchronous Events
+	Chapter 8. Signals
+	Chapter 9. Times and Timers
+	Chapter 10. Project: Virtual Timers
+	Chapter 11. Project: Cracking Shells
+
+Part III: Concurrency
+	Chapter 12. POSIX Threads
+	Chapter 13. Thread Synchronization
+	Chapter 14. Critical Sections and Semaphores
+	Chapter 15. POSIX IPC
+	Chapter 16. Project: Producer Consumer Synchronization
+	Chapter 17. Project: The Not Too Parallel Virtual Machine
+
+Part IV: Communication
+	Chapter 18. Connection-Oriented Communication
+	Chapter 19. Project: WWW Redirection
+	Chapter 20. Connectionless Communication and Multicast
+	Chapter 21. Project: Internet Radio
+	Chapter 22. Project: Server Performance
+
+Appendices
+	Appendix A. UNIX Fundamentals
+	Appendix B. Restart Library
+	Appendix C. UICI Implementation
+	Appendix D. Logging Functions
+	Appendix E. POSIX Extensions
+
+################################################################################
+Part I: Fundamentals
+Chapter 1. Technology's Impact on Programs
+Section 1.1. Terminology of Change
+Section 1.2. Time and Speed
+Section 1.3. Multiprogramming and Time Sharing
+Section 1.4. Concurrency at the Applications Level
+Section 1.5. Security and Fault Tolerance
+Section 1.6. Buffer Overflows for Breaking and Entering
+Section 1.7. UNIX Standards
+Section 1.8. Additional Reading
+Chapter 2. Programs, Processes and Threads
+Section 2.1. How a Program Becomes a Process
+Section 2.2. Threads and Thread of Execution
+Section 2.3. Layout of a Program Image
+Section 2.4. Library Function Calls
+Section 2.5. Function Return Values and Errors
+Section 2.6. Argument Arrays
+Section 2.7. Thread-Safe Functions
+Section 2.8. Use of Static Variables
+Section 2.9. Structure of Static Objects
+Section 2.10. Process Environment
+Section 2.11. Process Termination
+Section 2.12. Exercise: An env Utility
+Section 2.13. Exercise: Message Logging
+Section 2.14. Additional Reading
+Chapter 3. Processes in UNIX
+Section 3.1. Process Identification
+Section 3.2. Process State
+Section 3.3. UNIX Process Creation and fork
+Section 3.4. The wait Function
+Section 3.5. The exec Function
+Section 3.6. Background Processes and Daemons
+Section 3.7. Critical Sections
+Section 3.8. Exercise: Process Chains
+Section 3.9. Exercise: Process Fans
+Section 3.10. Additional Reading
+Chapter 4. UNIX I/O
+Section 4.1. Device Terminology
+Section 4.2. Reading and Writing
+Section 4.3. Opening and Closing Files
+Section 4.4. The select Function
+Section 4.5. The poll Function
+Section 4.6. File Representation
+Section 4.7. Filters and Redirection
+Section 4.8. File Control
+Section 4.9. Exercise: Atomic Logging
+Section 4.10. Exercise: A cat Utility
+Section 4.11. Additional Reading
+Chapter 5. Files and Directories
+Section 5.1. UNIX File System Navigation
+Section 5.2. Directory Access
+Section 5.3. UNIX File System Implementation
+Section 5.4. Hard Links and Symbolic Links
+Section 5.5. Exercise: The which Command
+Section 5.6. Exercise: Biffing
+Section 5.7. Exercise: News biff
+Section 5.8. Exercise: Traversing Directories
+Section 5.9. Additional Reading
+Chapter 6. UNIX Special Files
+Section 6.1. Pipes
+Section 6.2. Pipelines
+Section 6.3. FIFOs
+Section 6.4. Pipes and the Client-Server Model
+Section 6.5. Terminal Control
+Section 6.6. Audio Device
+Section 6.7. Exercise: Audio
+Section 6.8. Exercise: Barriers
+Section 6.9. Exercise: The stty Command
+Section 6.10. Exercise: Client-Server Revisited
+Section 6.11. Additional Reading
+Chapter 7. Project: The Token Ring
+Section 7.1. Ring Topology
+Section 7.2. Ring Formation
+Section 7.3. Ring Exploration
+Section 7.4. Simple Communication
+Section 7.5. Mutual Exclusion with Tokens
+Section 7.6. Mutual Exclusion by Voting
+Section 7.7. Leader Election on an Anonymous Ring
+Section 7.8. Token Ring for Communication
+Section 7.9. Pipelined Preprocessor
+Section 7.10. Parallel Ring Algorithms
+Section 7.11. Flexible Ring
+Section 7.12. Additional Reading
+Part II: Asynchronous Events
+Chapter 8. Signals
+Section 8.1. Basic Signal Concepts
+Section 8.2. Generating Signals
+Section 8.3. Manipulating Signal Masks and Signal Sets
+Section 8.4. Catching and Ignoring Signals—sigaction
+Section 8.5. Waiting for Signals—pause, sigsuspend and sigwait
+Section 8.6. Handling Signals: Errors and Async-signal Safety
+Section 8.7. Program Control with siglongjmp and sigsetjmp
+Section 8.8. Programming with Asynchronous I/O
+Section 8.9. Exercise: Dumping Statistics
+Section 8.10. Exercise: Spooling a Slow Device
+Section 8.11. Additional Reading
+Chapter 9. Times and Timers
+Section 9.1. POSIX Times
+Section 9.2. Sleep Functions
+Section 9.3. POSIX:XSI Interval Timers
+Section 9.4. Realtime Signals
+Section 9.5. POSIX:TMR Interval Timers
+Section 9.6. Timer Drift, Overruns and Absolute Time
+Section 9.7. Additional Reading
+Chapter 10. Project: Virtual Timers
+Section 10.1. Project Overview
+Section 10.2. Simple Timers
+Section 10.3. Setting One of Five Single Timers
+Section 10.4. Using Multiple Timers
+Section 10.5. A Robust Implementation of Multiple Timers
+Section 10.6. POSIX:TMR Timer Implementation
+Section 10.7. mycron, a Small Cron Facility
+Section 10.8. Additional Reading
+Chapter 11. Project: Cracking Shells
+Section 11.1. Building a Simple Shell
+Section 11.2. Redirection
+Section 11.3. Pipelines
+Section 11.4. Signal Handling in the Foreground
+Section 11.5. Process Groups, Sessions and Controlling Terminals
+Section 11.6. Background Processes in ush
+Section 11.7. Job Control
+Section 11.8. Job Control for ush
+Section 11.9. Additional Reading
+Part III: Concurrency
+Chapter 12. POSIX Threads
+Section 12.1. A Motivating Problem: Monitoring File Descriptors
+Section 12.2. Use of Threads to Monitor Multiple File Descriptors
+Section 12.3. Thread Management
+Section 12.4. Thread Safety
+Section 12.5. User Threads versus Kernel Threads
+Section 12.6. Thread Attributes
+Section 12.7. Exercise: Parallel File Copy
+Section 12.8. Additional Reading
+Chapter 13. Thread Synchronization
+Section 13.1. POSIX Synchronization Functions
+Section 13.2. Mutex Locks
+Section 13.3. At-Most-Once and At-Least-Once-Execution
+Section 13.4. Condition Variables
+Section 13.5. Signal Handling and Threads
+Section 13.6. Readers and Writers
+Section 13.7. A strerror_r Implementation
+Section 13.8. Deadlocks and Other Pesky Problems
+Section 13.9. Exercise: Multiple Barriers
+Section 13.10. Additional Reading
+Chapter 14. Critical Sections and Semaphores
+Section 14.1. Dealing with Critical Sections
+Section 14.2. Semaphores
+Section 14.3. POSIX:SEM Unnamed Semaphores
+Section 14.4. POSIX:SEM Semaphore Operations
+Section 14.5. POSIX:SEM Named Semaphores
+Section 14.6. Exercise: License Manager
+Section 14.7. Additional Reading
+Chapter 15. POSIX IPC
+Section 15.1. POSIX:XSI Interprocess Communication
+Section 15.2. POSIX:XSI Semaphore Sets
+Section 15.3. POSIX:XSI Shared Memory
+Section 15.4. POSIX:XSI Message Queues
+Section 15.5. Exercise: POSIX Unnamed Semaphores
+Section 15.6. Exercise: POSIX Named Semaphores
+Section 15.7. Exercise: Implementing Pipes with Shared Memory
+Section 15.8. Exercise: Implementing Pipes with Message Queues
+Section 15.9. Additional Reading
+Chapter 16. Project: Producer Consumer Synchronization
+Section 16.1. The Producer-Consumer Problem
+Section 16.2. Bounded Buffer Protected by Mutex Locks
+Section 16.3. Buffer Implementation with Semaphores
+Section 16.4. Introduction to a Simple Producer-Consumer Problem
+Section 16.5. Bounded Buffer Implementation Using Condition Variables
+Section 16.6. Buffers with Done Conditions
+Section 16.7. Parallel File Copy
+Section 16.8. Threaded Print Server
+Section 16.9. Additional Reading
+Chapter 17. Project: The Not Too Parallel Virtual Machine
+Section 17.1. PVM History, Terminology, and Architecture
+Section 17.2. The Not Too Parallel Virtual Machine
+Section 17.3. NTPVM Project Overview
+Section 17.4. I/O and Testing of Dispatcher
+Section 17.5. Single Task with No Input
+Section 17.6. Sequential Tasks
+Section 17.7. Concurrent Tasks
+Section 17.8. Packet Communication, Broadcast and Barriers
+Section 17.9. Termination and Signals
+Section 17.10. Ordered Message Delivery
+Section 17.11. Additional Reading
+Part IV: Communication
+Chapter 18. Connection-Oriented Communication
+Section 18.1. The Client-Server Model
+Section 18.2. Communication Channels
+Section 18.3. Connection-Oriented Server Strategies
+Section 18.4. Universal Internet Communication Interface (UICI)
+Section 18.5. UICI Implementations of Different Server Strategies
+Section 18.6. UICI Clients
+Section 18.7. Socket Implementation of UICI
+Section 18.8. Host Names and IP Addresses
+Section 18.9. Thread-Safe UICI
+Section 18.10. Exercise: Ping Server
+Section 18.11. Exercise: Transmission of Audio
+Section 18.12. Additional Reading
+Chapter 19. Project: WWW Redirection
+Section 19.1. The World Wide Web
+Section 19.2. Uniform Resource Locators (URLs)
+Section 19.3. HTTP Primer
+Section 19.4. Web Communication Patterns
+Section 19.5. Pass-through Monitoring of Single Connections
+Section 19.6. Tunnel Server Implementation
+Section 19.7. Server Driver for Testing
+Section 19.8. HTTP Header Parsing
+Section 19.9. Simple Proxy Server
+Section 19.10. Proxy Monitor
+Section 19.11. Proxy Cache
+Section 19.12. Gateways as Portals
+Section 19.13. Gateway for Load Balancing
+Section 19.14. Postmortem
+Section 19.15. Additional Reading
+Chapter 20. Connectionless Communication and Multicast
+Section 20.1. Introduction to Connectionless Communication
+Section 20.2. Simplified Interface for Connectionless Communication
+Section 20.3. Simple-Request Protocols
+Section 20.4. Request-Reply Protocols
+Section 20.5. Request-Reply with Timeouts and Retries
+Section 20.6. Request-Reply-Acknowledge Protocols
+Section 20.7. Implementation of UICI UDP
+Section 20.8. Comparison of UDP and TCP
+Section 20.9. Multicast
+Section 20.10. Exercise: UDP Port Server
+Section 20.11. Exercise: Stateless File Server
+Section 20.12. Additional Reading
+Chapter 21. Project: Internet Radio
+Section 21.1. Project Overview
+Section 21.2. Audio Device Simulation
+Section 21.3. UDP Implementation with One Program and One Receiver
+Section 21.4. UDP Implementation with Multiple Programs and Receivers
+Section 21.5. UDP Implementation of Radio Broadcasts
+Section 21.6. Multicast Implementation of Radio Broadcasts
+Section 21.7. TCP Implementation Differences
+Section 21.8. Receiving Streaming Audio Through a Browser
+Section 21.9. Additional Reading
+Chapter 22. Project: Server Performance
+Section 22.1. Server Performance Costs
+Section 22.2. Server Architectures
+Section 22.3. Project Overview
+Section 22.4. Single-Client Driver
+Section 22.5. Multiple-Client Driver
+Section 22.6. Thread-per-request and Process-per-request Implementations
+Section 22.7. Thread-worker-pool Strategy
+Section 22.8. Thread-worker Pool with Bounded Buffer
+Section 22.9. Process-worker Pool
+Section 22.10. Influence of Disk I/O
+Section 22.11. Performance Studies
+Section 22.12. Report Writing
+Section 22.13. Additional Reading
+Appendices
+Appendix A. UNIX Fundamentals
+Section A.1. Manual Pages
+Section A.2. Compilation
+Section A.3. Makefiles
+Section A.4. Debugging Aids
+Section A.5. Identifiers, Storage Classes and Linkage Classes
+Section A.6. Additional Reading
+Appendix B. Restart Library
+Appendix C. UICI Implementation
+Section C.1. Connection-Oriented UICI TCP Implementation
+Section C.2. Name Resolution Implementations
+Section C.3. Connectionless UICI UDP Implementation
+Appendix D. Logging Functions
+Section D.1. Local Atomic Logging
+Section D.2. Remote Logging
+Appendix E. POSIX Extensions
+Bibliography

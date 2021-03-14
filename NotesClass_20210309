@@ -1,0 +1,12 @@
+Static data will have an aadress that remains same until the end of the program.
+
+Heap stores dynamically created memory regions (allocated fro malloc family).
+
+To make a program processs, the allocation of memory for the program image is not enough. The process must have an ID as well.
+
+= Process Control Block (PCB)
+	* A Process Control Block (PCB) is a "Data Structure" used by computer operating systems to store all the information about a 
+	process. It is also kown nas a process descriptor.
+ 
+
+

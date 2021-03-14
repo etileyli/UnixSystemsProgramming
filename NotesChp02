@@ -1,0 +1,83 @@
+2.1 How a Program Becomes a Process
+
+	One popular definition of a process is an instance of a program whose execution has started but has not yet terminated.
+
+	The C compiler translates each source file into an object file. The compiler then links the individual object files with the necessary libraries to produce an executable module. When a program is run or executed, the operating system copies the executable module into a program image in main memory.
+
+	A process is an instance of a program that is executing. Each instance has its own address space and execution state.
+
+	The allocation of memory for the program image is not enough to make the program a process. The process must have an ID (the process ID) so that the operating system can distinguish among individual processes.
+
+	** When the operating system has added the appropriate information in the "kernel data structures" and has allocated the necessary resources to run the program code, the program has become a process.
+
+	*A process has an address space (memory it can access) and at least one "FLOW OF CONTROL called a THREAD".
+
+	* Static Storage: Remains in exsitence for the life of the program
+	* Automatic Storage: Between execution enters a bloack and leaves it
+
+	* A process starts with a single flow of control (THREAD) that executes a sequence of instructions. The processor "Program Counter" keeps track of the next instruction to be executed by that processor
+
+	* Multiple processes may reside in memory and execute concurrently, almost independently of each other.
+
+	* For processes to communicate or cooperate they must explicitly interact through operating system constructs such as:
+		* The filesystem
+		* Pipes
+		* Shared Memory
+		* Network
+
+2.2 Threads and Thread of Execution
+
+	* The point at which execution switches from one process to another is called a context switch.
+
+	* The processor sees the threads of execution interleaved, whereas the individual processes see uninterrupted sequences.
+
+	* A natural extension of the process model allows multiple threads to execute within the same process. Multiple threads avoid context switches and allow sharing of code and data.
+
+	* Operating systems have significant natural parallelism and perform better by having multiple, simultaneous threads of execution.
+
+	* A thread is an "Abstract Data Type" that represents a thread of execution within a process.
+
+	* A thread has its own 
+		* execution stack
+		* program counter value
+		* register set and state
+
+	* A thread has its own execution stack, program counter value, register set and state.
+
+2.3 Layout of a Program Image
+
+	* After loading, the program executable appears to occupy a contiguous block of memory called a "Program Image".
+
+	* An "Activation Record" is a block of memory allocated on the top of the process stack to hold the execution context of a function during a call.
+
+	* The activation record contains 
+		* the return address
+		* the parameters 
+		* status information
+		* copy of some of the CPU register values at the time of the call.
+
+	* The particular format for an activation record depends on the hardware and on the programming language.
+
+	* The malloc family of functions allocates storage from a free memory pool called the heap.
+
+	* Storage allocated on the heap persists until it is freed or
+	until the program exits.
+
+	* If a function calls malloc, the storage remains allocated after the
+	function returns.
+
+	* Static variables that are not explicitly initialized in their declarations are initialized to 0 at run time. Notice that the initialized static variables and the uninitialized static variables occupy different sections in the program image.
+
+	* Automatic variables are not part of the "Executable Module" because they are only allocated when their defining block is called. The initial values of automatic variables are undetermined unless the program explicitly initializes them.
+
+	* The executable module for largearrayinit is about 200Kbytes larger than that of largearray because largearrayinit is initialized static data and therefore part of the executable module. In largearray, the array is not allocated until the program is loaded in memory and the array elements are initialized at 0 at that time.
+
+	* Static variables can make a program unsafe for threaded execution. Avoid using static variables except under controlled circumstances
+
+	* Although the "program image" appears to occupy a contiguous block of memory, in practice, the operating system maps the program image into noncontiguous blocks of "physical memory".
+
+	* A common mapping divides the program image into equal-sized pieces, called pages.
+
+	* The operating system loads the individual pages into memory and looks up the location of the page in a table when the processor references memory on that page.
+
+2.4 Library Function Calls
