@@ -80,4 +80,22 @@
 
 	* The operating system loads the individual pages into memory and looks up the location of the page in a table when the processor references memory on that page.
 
-2.4 Library Function Calls
+2.5 Function Return Values and Errors
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
