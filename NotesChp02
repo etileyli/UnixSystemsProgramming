@@ -13,7 +13,7 @@
 	*A process has an address space (memory it can access) and at least one "FLOW OF CONTROL called a THREAD".
 
 	* Static Storage: Remains in exsitence for the life of the program
-	* Automatic Storage: Between execution enters a bloack and leaves it
+	* Automatic Storage: Between execution enters a block and leaves it
 
 	* A process starts with a single flow of control (THREAD) that executes a sequence of instructions. The processor "Program Counter" keeps track of the next instruction to be executed by that processor
 
@@ -42,8 +42,6 @@
 		* program counter value
 		* register set and state
 
-	* A thread has its own execution stack, program counter value, register set and state.
-
 2.3 Layout of a Program Image
 
 	* After loading, the program executable appears to occupy a contiguous block of memory called a "Program Image".
@@ -60,11 +58,9 @@
 
 	* The malloc family of functions allocates storage from a free memory pool called the heap.
 
-	* Storage allocated on the heap persists until it is freed or
-	until the program exits.
+	* Storage allocated on the heap persists until it is freed or until the program exits.
 
-	* If a function calls malloc, the storage remains allocated after the
-	function returns.
+	* If a function calls malloc, the storage remains allocated after the function returns.
 
 	* Static variables that are not explicitly initialized in their declarations are initialized to 0 at run time. Notice that the initialized static variables and the uninitialized static variables occupy different sections in the program image.
 

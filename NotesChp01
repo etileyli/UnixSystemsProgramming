@@ -100,8 +100,7 @@ Section 1.4. Concurrency at the Applications Level
 
 		* Most UNIX library functions indicate an error by a return value.
 
-		* One of the most common bugs was the failure to
-		check for a NULL return on functions that return pointers. If the code later uses the returned pointer, a core dump occurs.
+		* One of the most common bugs was the failure to check for a NULL return on functions that return pointers. If the code later uses the returned pointer, a CORE DUMP occurs.
 
 1.6 Buffer Overflows for Breaking and Entering
 	This section presents a simplified explanation of buffer overflows and how they might be used to attack a computer system.
