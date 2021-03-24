@@ -7,42 +7,41 @@
     * In general, functions should never exit on their own but should always report an error to the calling program.
 
 	* Most library functions provide good models for implementing functions. Here are guidelines to follow
-	
+
 		1. Make use of return values to communicate information and to make error trapping easy for the calling program.
-		
+
 		2. Do not exit from functions. Instead, return an error value to allow the calling program flexibility in handling the error
-		
+
 		3. Make functions general but usable. (Sometimes these are conflicting goals.)
-		
+
 		4. Do not make unnecessary assumptions about sizes of buffers. (This is often hard to implement.)
-		
+
 		5. When it is necessary to use limits, use standard system-defined limits rather than arbitrary constants.
-		
+
 		6. Do not reinvent the wheel—use standard library functions when possible.
-		
+
 		7. Do not modify input parameter values unless it makes sense to do so.
-		
+
 		8. Do not use static variables or dynamic memory allocation if automatic allocation will do just as well.
-		
+
 		9. Analyze all the calls to the malloc family to make sure the program frees the memory that was allocated.
-		
-		10. Consider whether a function is ever called recursively or from a signal handler or from a thread. Functions 
-			with variables of static storage class may not behave in the desired way. (The error number can cause a big 
+
+		10. Consider whether a function is ever called recursively or from a signal handler or from a thread. Functions
+			with variables of static storage class may not behave in the desired way. (The error number can cause a big
 			problem here.)
-			
+
 		11. Analyze the consequences of interruptions by signals.
-		
+
 		12. Carefully consider how the entire program terminates.
-			
+
 2.6 Argument Arrays
-	
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+2.7 Thread-Safe Functions
+  * The strtok function is not a model that you should emulate in your programs. Because of its definition (page 35), it must use
+  an internal STATIC variable to keep track of the current location of the next token to parse within the string. However, when
+  calls to strtok with different parse strings occur in the same program, the parsing of the respective strings may interfere because
+  there is only one variable for the location.
+
+  * The strtok_r function behaves similarly to strtok except for an additional parameter, lasts,
+  a user-provided pointer to a location that strtok_r uses to store the starting address for the
+  next parse.
