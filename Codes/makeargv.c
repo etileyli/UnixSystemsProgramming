@@ -43,12 +43,26 @@ int makeargv(const char *s, const char *delimiters, char ***argvp) {
     return numtokens;
 }
 
+void freemakeargv(char **argv) {
+  if (argv == NULL)
+    return;
+
+  if (*argv != NULL)
+    free(*argv);
+
+  free(argv);
+}
+
+
 int main(int argc, char const *argv[]) {
 
    char delim[] = " \t";
    int i;
    char **myargv;
    int numtokens;
+
+   // print arguments
+   printf("\n%d\n%s\n%s\n\n", argc, argv[0], argv[1]);
 
    if (argc != 2) {
      fprintf(stderr, "Usage: %s string\n", argv[0]);
