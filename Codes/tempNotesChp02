@@ -64,6 +64,8 @@
      permanent. Any variable of this class retains its value until changed by another assignment. The scope is
      global. A variable can be known or seen by all functions within a program.
 
+     * https://stackoverflow.com/questions/3684450/what-is-the-difference-between-static-and-extern-in-c
+
     * bubblesort.c: The variable count has a "static storage class" because it is declared outside any block.
         - The static qualifier forces this variable to have internal linkage, guaranteeing that the count variable
         cannot be directly accessed by any function aside from bubblesort.c.
@@ -72,6 +74,12 @@
 
     * Difference between linking library and adding include directories:
       https://stackoverflow.com/questions/7096152/c-difference-between-linking-library-and-adding-include-directories
+
+    * Choose one file which will store the variable. Do not use static. The whole point of static is to keep the
+    variable private and untouchable by other modules. In all other files, use the extern keyword to reference the
+    variable: extern int i;
+
+    * There is never a reason to access a static variable in another file. 
 
 
 
