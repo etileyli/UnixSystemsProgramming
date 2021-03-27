@@ -1,0 +1,4 @@
+Assignment 1
+  - Finish Chp 2, 3, 4 quickly
+  - Explore shell programming samples
+  - Learn Bash basics
