@@ -65,8 +65,36 @@ Chapter 3. Processes in UNIX
       - locks held by the process
 
   3.3 UNIX Process Creation and fork
-    * 
+    * A process can create a new process by calling fork. The calling process
+    becomes the parent, and the created process is called the child.
 
+    * The fork function copies the parent's memory image so that the new process
+    receives a copy of the address space of the parent. Both processes continue
+    at the instruction after the fork statement (executing in their respective
+    memory images).
+
+    * The fork function return value is the critical characteristic that allows
+    the parent and the child to distinguish themselves and to execute different
+    code. The fork function:
+      - returns 0 to the child
+      - returns the child's process ID to the parent
+
+    * By default, the system buffers output written to stdout, so a particular
+    message may not appear immediately after the printf returns. Messages to
+    stderr are not buffered, but instead written immediately. For this reason,
+    you should always use stderr for your debugging messages.
+
+    * After fork, the child does not get locks that the parent holds. If the
+    parent has set an alarm, the child is not notified when the parent's alarm
+    expires. The child starts with no pending signals, even if the parent had
+    signals pending at the time of the fork.
+
+    * Although a child inherits its parent's process priority and scheduling
+    attributes, it competes for processor time with other processes as a
+    separate entity.
+
+  3.4 The wait Function
+    * 
 
 
 
