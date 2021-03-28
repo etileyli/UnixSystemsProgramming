@@ -143,8 +143,24 @@ Chapter 3. Processes in UNIX
     operating system relies on many daemon processes to perform routine (and not
     so routine) tasks.
 
+  3.7 Critical Sections
+    * The problem is that the processes are "simultaneously" attempting to
+    access a shared resource—a resource that should be used by only one process
+    at a time.
 
+    * The portion of code in which each process accesses such a shared resource
+    is called a critical section. Programs with critical sections must be sure
+    not to violate the "mutual exclusion" requirement.
 
+    * Locking Mechanism: Each process acquires a lock that excludes all other
+    processes before entering its critical section. When the process finishes
+    the critical section, it releases the lock.
+
+    * Printers are usually handled by having only one process (the printer
+    daemon) with permissions to access the actual printer.
+
+    * Tables and other information within the operating system kernel code are
+    shared among processes managing the system. 
 
 
 
