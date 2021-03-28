@@ -1,0 +1,82 @@
+Chapter 3. Processes in UNIX
+
+  3.1 Process Identification
+    * UNIX identifies processes by a unique integral value called the process
+      ID.
+
+    * Each process also has a parent process ID, which is initially the process
+    ID of the process that created it. If this parent process terminates, the
+    process is adopted by a system process so that the parent process ID always
+    identifies a valid process.
+
+    * The "getpid" and "getppid" functions return the process ID and the parent
+    process ID, respectively.
+
+    * System administrators assign a unique integral user ID and an integral
+    group ID to each user when creating the user's account. The system uses the
+    user and group IDs to retrieve from the system database the privileges
+    allowed for that user. The most privileged user, superuser or root, has a
+    user ID of 0. The root user is usually the system administrator.
+
+    * Real user ID, the real group ID, the effective user ID and the effective
+    group ID.
+      - gid_t getegid(void);
+      - uid_t geteuid(void);
+      - git_t getgid(void);
+      - uid_t getuid(void);
+
+  3.2 Process State
+    * The state of a process indicates its status at a particular time. States:
+      - new
+      - ready
+      - running
+      - blocked
+      - done
+
+    * A process in the blocked state is waiting for an event and is not eligible
+    to be picked for execution. More commonly, a process moves to the blocked
+    state when it performs an I/O request.
+
+    * A process performs I/O by requesting the service through a library
+    function that is sometimes called a system call. During the execution of a
+    system call, the operating system regains control of the processor and can
+    move the process to the blocked state until the operation completes.
+
+    * A context switch is the act of removing one process from the running state
+    and replacing it with another.
+
+    * The "process context" is the information that the operating systems needs
+    about the process and its environment to restart it after a context switch.
+      - the executable code
+      - stack
+      - registers
+      - program counter
+      - the memory used for static and dynamic variables
+      &&
+      - process state
+      - the status of program I/O
+      - user and process identification
+      - privileges,
+      - scheduling parameters
+      - accounting information
+      - memory management information
+      &&
+      - If a process is waiting for an event or has caught a signal
+      - locks held by the process
+
+  3.3 UNIX Process Creation and fork
+    * 
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
