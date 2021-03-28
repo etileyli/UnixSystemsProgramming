@@ -110,9 +110,25 @@ Chapter 3. Processes in UNIX
     this process is called init and has process ID equal to 1, but POSIX does
     not require this designation.
 
+  3.5 The exec Function
+    * The fork function creates a copy of the calling process, but many
+    applications require the child process to execute code that is different
+    from that of the parent.
 
+    * The exec family of functions provides a facility for overlaying the
+    process image of the calling process with a new image.
 
+    * The traditional way to use the fork–exec combination is for the child to
+    execute (with an exec function) the new program while the parent continues
+    to execute the original code.
 
+    * The exec() family of functions replaces the current process image with a
+    new process image. It loads the program into the current process space and
+    runs it from the entry point.
+
+    * Both parent and child processes are executed simultaneously in case of
+    fork() while Control never returns to the original program unless there is
+    an exec() error.
 
 
 
