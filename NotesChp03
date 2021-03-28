@@ -130,6 +130,24 @@ Chapter 3. Processes in UNIX
     fork() while Control never returns to the original program unless there is
     an exec() error.
 
+  3.6 Background Processes and Daemons
+    * Most shells interpret a line ending with "&" as a command that should be
+    executed by a background process.
+
+    * When a shell creates a background process, it does not wait for the
+    process to complete before issuing a prompt and accepting additional
+    commands. Furthermore, a Ctrl-C from the keyboard does not terminate a
+    background process.
+
+    * A daemon is a background process that normally runs indefinitely. The UNIX
+    operating system relies on many daemon processes to perform routine (and not
+    so routine) tasks.
+
+
+
+
+
+
 
 
 
