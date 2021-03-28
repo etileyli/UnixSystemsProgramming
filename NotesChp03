@@ -94,8 +94,21 @@ Chapter 3. Processes in UNIX
     separate entity.
 
   3.4 The wait Function
-    * 
+    * The parent can execute wait or waitpid to block until the child finishes.
 
+    * The wait function causes the caller to suspend execution until a child's
+    status becomes available or until the caller receives a signal.
+
+    * The waitpid function allows a parent to wait for a particular child.
+    This function also allows a parent to check whether a child has terminated
+    without blocking.
+
+    * When a process terminates, but its parent does not wait for it, it becomes
+    a zombie in UNIX terminology. Zombies stay in the system until they are
+    waited for. If a parent terminates without waiting for a child, the child
+    becomes an orphan and is adopted by a special system process. Traditionally,
+    this process is called init and has process ID equal to 1, but POSIX does
+    not require this designation.
 
 
 
