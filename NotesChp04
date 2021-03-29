@@ -1,0 +1,39 @@
+Chapter 4. UNIX I/O
+  UNIX uses a uniform device interface, through file descriptors, that allows
+  the same I/O calls to be used for terminals, disks, tapes, audio and even
+  network communication. This chapter explores the five functions that form the
+  basis for UNIX device-independent I/O.
+
+  4.1 Device Terminology
+    * A peripheral device is piece of hardware accessed by a computer system.
+    User programs perform control and I/O to these devices through system calls
+    to operating system modules called "device drivers".
+
+    * A device driver hides the details of device operation and protects the
+    device from unauthorized use.
+
+    * UNIX has greatly simplified the programmer device interface by providing
+    uniform access to most devices through five functions:
+    - open
+    - close
+    - read
+    - write
+    - ioctl
+
+    * All devices are represented by files, called "special files", that are
+    located in the /dev directory.
+
+    * A "regular file" is just an ordinary data file on disk.
+
+    * A block special file represents a device with characteristics similar to a
+    disk.
+
+    * A character special file represents a device with characteristics similar
+    to a terminal.
+
+  4.2 Reading and Writing
+    * If successful, read returns the number of bytes actually read. If
+    unsuccessful, read returns –1 and sets errno.
+
+    * A read operation for a pipe returns as soon as the pipe is not empty, so
+    the number of bytes read can be less than the number of bytes requested.
