@@ -16,9 +16,6 @@ s_command *parse(char *myArgv){
 
   s_command *cmd = (s_command*)malloc(sizeof(s_command));
 
-  cmd->isBackground = 0;
-  cmd->argc = 2;
-
   const char s[2] = " ";
   char *token;
 
@@ -35,7 +32,17 @@ s_command *parse(char *myArgv){
      cmd->argv = realloc(cmd->argv, sizeof(char *)*(i + 1));
      token = strtok(NULL, s);
   }
+
+  // an extra NULL is required to terminate the array
   cmd->argv[i] = NULL;
+
+  cmd->argc = i;
+
+  // check if the process is background
+  if (!strcmp(cmd->argv[i-1], "&"))
+    cmd->isBackground = 1;
+  else
+    cmd->isBackground = 0;
 
   return cmd;
 }
@@ -71,18 +78,18 @@ int main(int argc, char const *argv[]) {
   // shell's loop
   do{
     char *line = readLine();
-    printf("Your input is: %s\n", line);
+    // printf("Your input is: %s\n", line);
 
     // parse input command
     cmd = parse(line);
 
-    // printf("isBackground = %d; argv = %d\n", cmd->isBackground, cmd->argc);
+    printf("isBackground = %d; argv = %d\n", cmd->isBackground, cmd->argc);
     int i = 0;
     while (cmd->argv[i]){
       printf("argument[%d]: %s\n",i , cmd->argv[i]);
       i++;
     }
-    
+
     // check exit condition
     if (!strcmp(line, EXIT_KEYWORD)){
       printf("CIKIYOR!\n");
