@@ -7,8 +7,8 @@
 // Type s_command stores user command's parsed information.
 typedef struct s_command{
   int isBackground;
-  char **argv;
   int argc;
+  char **argv;
 }s_command;
 
 // This function parses user command into s_command variables.
@@ -18,6 +18,24 @@ s_command *parse(char *myArgv){
 
   cmd->isBackground = 0;
   cmd->argc = 2;
+
+  const char s[2] = " ";
+  char *token;
+
+  cmd->argv = calloc(1, sizeof(char *));
+
+  /* get the first token */
+  int i = 0;
+  token = strtok(myArgv, s);
+
+  /* walk through other tokens */
+  while( token != NULL ) {
+     // printf( " %s\n", token );
+     cmd->argv[i++] = token;
+     cmd->argv = realloc(cmd->argv, sizeof(char *)*(i + 1));
+     token = strtok(NULL, s);
+  }
+  cmd->argv[i] = NULL;
 
   return cmd;
 }
@@ -58,8 +76,13 @@ int main(int argc, char const *argv[]) {
     // parse input command
     cmd = parse(line);
 
-    printf("isBackground = %d; argv = %d\n", cmd->isBackground, cmd->argc);
-
+    // printf("isBackground = %d; argv = %d\n", cmd->isBackground, cmd->argc);
+    int i = 0;
+    while (cmd->argv[i]){
+      printf("argument[%d]: %s\n",i , cmd->argv[i]);
+      i++;
+    }
+    
     // check exit condition
     if (!strcmp(line, EXIT_KEYWORD)){
       printf("CIKIYOR!\n");
