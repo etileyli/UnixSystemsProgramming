@@ -31,12 +31,19 @@ int main(int argc, char const *argv[]) {
     char *line = readLine();
     // printf("Your input is: %s\n", line);
 
-    // parse input command
+    // If nothing is entered, continue.
+    if (line == NULL)
+			continue;
+
+		// parse input command
     cmd = parse(line);
 
-    // If nothing is entered, continue.
-    if (cmd->argv[0] == NULL)
-      continue;
+		// check exit condition
+    if (!strcmp(line, EXIT_KEYWORD)){
+      printf("CIKIYOR!\n");
+      free(line); // free allocated memory in readLine function
+      break;
+    }
 
     // printf("isBackground = %d; argv = %d\n", cmd->isBackground, cmd->argc);
     // int i = 0;
@@ -50,7 +57,7 @@ int main(int argc, char const *argv[]) {
     //   printf("%s\n", builtInCommands[i]);
     // }
 
-    // First command: yankı
+    // Test command: yankı
     if(!strcmp(cmd->argv[0], builtInCommands[0])){
       // printf("The command is %s\n", cmd->argv[0]);
       pid_t childPid;
@@ -90,13 +97,6 @@ int main(int argc, char const *argv[]) {
     }
     else{
       printf("Command is not in the list!\n");
-    }
-
-    // check exit condition
-    if (!strcmp(line, EXIT_KEYWORD)){
-      printf("CIKIYOR!\n");
-      free(line); // free allocated memory in readLine function
-      break;
     }
 
   }while(1);

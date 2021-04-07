@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "parser.h"
 
@@ -11,6 +12,7 @@ s_command *parse(char *myArgv){
 
   const char s[2] = " ";
   char *token;
+
 
   cmd->argv = calloc(1, sizeof(char *));
 
@@ -41,6 +43,8 @@ s_command *parse(char *myArgv){
 }
 
 char *readLine(){
+  // Returns NULL if a whitespace character si entered to getline()
+
   char *buffer = NULL;  // input line
   size_t bufsize = 512; // max size of input line
   size_t charCount;     // character number of input line
@@ -56,8 +60,11 @@ char *readLine(){
   // get number of characters
   charCount = getline(&buffer, &bufsize, stdin);
 
-  // Truncate last newline character
-  buffer[charCount - 1] = '\0';
+  if (!isspace(buffer[0]))                      // if something is entered.
+    buffer[charCount - 1] = '\0';             // Truncate last newline character
+  else
+    return NULL;
+
 
   return buffer;
 }
