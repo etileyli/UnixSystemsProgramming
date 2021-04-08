@@ -71,10 +71,10 @@ char *readLine(){
 }
 
 // This function gets size of a file
-int getFileSize(int fd){
+int getFileSize(char *filePath){
   struct stat bufFileSize;
 
-  if (fstat(fd, &bufFileSize) == -1) {
+  if (stat(filePath, &bufFileSize) == -1) {
      perror("stat");
      exit(EXIT_FAILURE);
   }

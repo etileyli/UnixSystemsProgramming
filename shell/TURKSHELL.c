@@ -105,14 +105,15 @@ int main(int argc, char const *argv[]) {
 
         // First function of birleştir: Read file contents into stdout
         int fd;
-        if ((fd = open(cmd->argv[1], O_RDONLY)) == -1)
+        char *filePath = cmd->argv[1];
+        if ((fd = open(filePath, O_RDONLY)) == -1)
         {
             perror("Cannot open file!");
             exit(1);
         }
 
         // get size of the file
-        int fileSize = getFileSize(fd);
+        int fileSize = getFileSize(filePath);
         // struct stat bufFileSize;
         //
         // fstat(fd, &bufFileSize);
