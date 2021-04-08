@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #include "parser.h"
 
@@ -82,4 +83,18 @@ int getFileSize(char *filePath){
   int fileSize =(int)bufFileSize.st_size;
 
   return fileSize;
+}
+
+void printFile(int fd, char *filePath){
+
+  // get size of the file
+  int fileSize = getFileSize(filePath);
+
+  // Allocate space as large as file size
+  char buf[(int)fileSize];
+  size_t nbytes = sizeof(buf);
+  ssize_t bytes_read, bytes_written;
+  bytes_read = read(fd, buf, nbytes);									// Read from file
+  bytes_written = write(STDOUT_FILENO, buf, nbytes);	// Write to terminal
+  printf("\n");
 }

@@ -14,7 +14,7 @@
 
 static char *builtInCommands[] = {
 	"yankı",
-  "birleştir",
+  "bir",
 	"cd",
 	"help"
 };
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[]) {
     // for (int i = 0; i < numOfElements; i++){
     //   printf("%s\n", builtInCommands[i]);
     // }
-
+		/****************************Test command**********************************/
     // Test command: yankı
     if(!strcmp(cmd->argv[0], builtInCommands[0])){
       // printf("The command is %s\n", cmd->argv[0]);
@@ -72,7 +72,7 @@ int main(int argc, char const *argv[]) {
         return -1;
       }
       else if (childPid == 0) {	// in child process
-        // printf("I am child %ld, ID = %ld\n", (long)getpid(), (long)getppid());
+        // printf("I'm child %ld, ID = %ld\n", (long)getpid(), (long)getppid());
 
         // Echo the words entered after 'yankı'
         int j = 1;
@@ -90,7 +90,8 @@ int main(int argc, char const *argv[]) {
         // printf("I am parent %ld, ID = %ld\n", (long)getpid(), (long)getppid());
       }
     }
-    // First command: birleştir (imitates 'cat' command)
+		/****************************First command*********************************/
+		// birleştir (imitates 'cat' command)
     else if(!strcmp(cmd->argv[0], builtInCommands[1])){
       printf("The command is %s\n", cmd->argv[0]);
       pid_t childPid;
@@ -103,7 +104,7 @@ int main(int argc, char const *argv[]) {
       else if (childPid == 0) {	// in child process
         int j = 1;
 
-        // First function of birleştir: Read file contents into stdout
+        /* *** First function of birleştir: Read file contents into stdout*** */
         int fd;
         char *filePath = cmd->argv[1];
         if ((fd = open(filePath, O_RDONLY)) == -1)
@@ -112,23 +113,12 @@ int main(int argc, char const *argv[]) {
             exit(1);
         }
 
-        // get size of the file
-        int fileSize = getFileSize(filePath);
-        // struct stat bufFileSize;
-        //
-        // fstat(fd, &bufFileSize);
-        // int fileSize = (int)bufFileSize.st_size;
+				printFile(fd, filePath);
 
-        // Allocate space as large as file size
-        char buf[(int)fileSize];
-        size_t nbytes = sizeof(buf);
-        ssize_t bytes_read, bytes_written;
-        bytes_read = read(fd, buf, nbytes);
-        bytes_written = write(STDOUT_FILENO, buf, nbytes);
+				/* *** Second function of birleştir: Read all non-command arguments as
+				input files and print their content to terminal.*** */
 
-        printf("\n");
-
-        return 0;
+        return 0;	// Child returns
       }
       // parent process
       else{

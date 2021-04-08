@@ -12,3 +12,4 @@ typedef struct s_command{
 s_command *parse(char *myArgv);
 char *readLine();
 int getFileSize(char *filePath);
+void printFile(int fd, char *filePath);
