@@ -110,7 +110,7 @@ int main(int argc, char const *argv[]) {
 					/**2nd Function of birleştir: Read all non-command arguments as
 					input files and print their content to terminal.*** */
 
-					for (int i = 0; i < cmd->argc; i++){
+					for (int i = 0; i < (cmd->argc - 1); i++){
 						int fd;
 						char *filePath = cmd->argv[i + 1];
 						if ((fd = open(filePath, O_RDONLY)) == -1)
