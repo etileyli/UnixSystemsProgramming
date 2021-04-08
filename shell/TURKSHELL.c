@@ -72,7 +72,7 @@ int main(int argc, char const *argv[]) {
 		else if (childPid == 0) {	// in child process
 			// printf("I'm child %ld, ID = %ld\n", (long)getpid(), (long)getppid());
 
-			/****************************Test command********************************/
+			/* 0th Test Command *****************************************************/
 			// Test command: yankı
 			if(!strcmp(cmd->argv[0], builtInCommands[0])){
 				int j = 1;
@@ -84,23 +84,46 @@ int main(int argc, char const *argv[]) {
 
 				return 0;
 			}
-			/****************************First command*******************************/
+			/*1st Command ***********************************************************/
 			// birleştir (imitates 'cat' command)
 			else if(!strcmp(cmd->argv[0], builtInCommands[1])){
-				/**1st Function of birleştir: Read file contents into stdout**/
-				int fd;
-				char *filePath = cmd->argv[1];
-				if ((fd = open(filePath, O_RDONLY)) == -1)
-				{
-						perror("Cannot open file");
-						exit(1);
-				}
 
-				// print file content to terminal
-				printFile(fd, filePath);
-				close(fd);
-				/**2nd Function of birleştir: Read all non-command arguments as
-				input files and print their content to terminal.*** */
+				if (cmd->argc == 1){
+					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+				}
+				else if (cmd->argc == 2){
+					/**1st Function of birleştir: Read file contents into stdout**/
+					int fd;
+					char *filePath = cmd->argv[1];
+
+					if ((fd = open(filePath, O_RDONLY)) == -1)
+					{
+							perror("Cannot open file");
+							exit(1);
+					}
+
+					// print file content to terminal
+					printFile(fd, filePath);
+					close(fd);
+				}
+				else if (cmd->argc > 2){
+					/**2nd Function of birleştir: Read all non-command arguments as
+					input files and print their content to terminal.*** */
+
+					for (int i = 0; i < cmd->argc; i++){
+						int fd;
+						char *filePath = cmd->argv[i + 1];
+						if ((fd = open(filePath, O_RDONLY)) == -1)
+						{
+								perror("Cannot open file");
+								exit(1);
+						}
+
+						// print file content to terminal
+						printFile(fd, filePath);
+						close(fd);
+					}
+				}
 
 				return 0;
 			}
