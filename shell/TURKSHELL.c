@@ -93,7 +93,7 @@ int main(int argc, char const *argv[]) {
 		/****************************First command*********************************/
 		// birleştir (imitates 'cat' command)
     else if(!strcmp(cmd->argv[0], builtInCommands[1])){
-      printf("The command is %s\n", cmd->argv[0]);
+      // printf("The command is %s\n", cmd->argv[0]);
       pid_t childPid;
 
       // Fork
@@ -102,19 +102,19 @@ int main(int argc, char const *argv[]) {
         return -1;
       }
       else if (childPid == 0) {	// in child process
-        int j = 1;
 
         /* *** First function of birleştir: Read file contents into stdout*** */
         int fd;
         char *filePath = cmd->argv[1];
         if ((fd = open(filePath, O_RDONLY)) == -1)
         {
-            perror("Cannot open file!");
+            perror("Cannot open file");
             exit(1);
         }
 
+				// print file content to terminal
 				printFile(fd, filePath);
-
+				close(fd);
 				/* *** Second function of birleştir: Read all non-command arguments as
 				input files and print their content to terminal.*** */
 

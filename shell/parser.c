@@ -45,6 +45,7 @@ s_command *parse(char *myArgv){
   return cmd;
 }
 
+// This function reads a line and returns it.
 char *readLine(){
   // Returns NULL if a whitespace character si entered to getline()
 
@@ -86,7 +87,7 @@ int getFileSize(char *filePath){
 }
 
 void printFile(int fd, char *filePath){
-
+  
   // get size of the file
   int fileSize = getFileSize(filePath);
 
