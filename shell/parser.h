@@ -7,6 +7,8 @@ typedef struct s_command{
   int isBackground;
   int argc;
   char **argv;
+  char *delim;
+  int delimPos;
 }s_command;
 
 s_command *parse(char *myArgv);

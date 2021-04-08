@@ -16,7 +16,6 @@ s_command *parse(char *myArgv){
   const char s[2] = " ";
   char *token;
 
-
   cmd->argv = calloc(1, sizeof(char *));
 
   /* get the first token */
@@ -41,6 +40,35 @@ s_command *parse(char *myArgv){
     cmd->isBackground = 1;
   else
     cmd->isBackground = 0;
+
+  // get delimiters if there is one. get first delimiter only.
+  int j = 0;
+  while (cmd->argv[j]){
+    if (!strcmp(cmd->argv[j], ">>")){
+      cmd->delim = ">>";
+      break;
+    }
+    else if(!strcmp(cmd->argv[j], ">")){
+      cmd->delim = ">";
+      break;
+    }
+    else if(!strcmp(cmd->argv[j], "<")){
+      cmd->delim = "<";
+      break;
+    }
+    else if(cmd->argv[j][0] == '-'){
+      cmd->delim = cmd->argv[j];
+      break;
+    }
+    else{
+      cmd->delim = NULL;
+    }
+    j++;
+  }
+  if (cmd->delim == NULL)
+    cmd->delimPos = -1;
+  else
+    cmd->delimPos = j;
 
   return cmd;
 }
@@ -87,7 +115,7 @@ int getFileSize(char *filePath){
 }
 
 void printFile(int fd, char *filePath){
-  
+
   // get size of the file
   int fileSize = getFileSize(filePath);
 

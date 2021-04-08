@@ -51,6 +51,7 @@ int main(int argc, char const *argv[]) {
 
 		// Test code
     // printf("isBackground = %d; argv = %d\n", cmd->isBackground, cmd->argc);
+    // printf("delim = %s; delimPos = %d\n", cmd->delim, cmd->delimPos);
     // int i = 0;
     // while (cmd->argv[i]){
     //   printf("argument[%d]: %s\n",i , cmd->argv[i]);
