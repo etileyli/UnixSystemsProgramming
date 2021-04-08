@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "parser.h"
 
@@ -65,6 +67,19 @@ char *readLine(){
   else
     return NULL;
 
-
   return buffer;
+}
+
+// This function gets size of a file
+int getFileSize(int fd){
+  struct stat bufFileSize;
+
+  if (fstat(fd, &bufFileSize) == -1) {
+     perror("stat");
+     exit(EXIT_FAILURE);
+  }
+
+  int fileSize =(int)bufFileSize.st_size;
+
+  return fileSize;
 }

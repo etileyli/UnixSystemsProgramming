@@ -6,11 +6,11 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include "parser.h"
 
 #define EXIT_KEYWORD "exit"
 #define PROMPT ">>> "
-#define MAXREADBUFFER 1024
 
 static char *builtInCommands[] = {
 	"yankı",
@@ -111,7 +111,15 @@ int main(int argc, char const *argv[]) {
             exit(1);
         }
 
-        char buf[MAXREADBUFFER];
+        // get size of the file
+        int fileSize = getFileSize(fd);
+        // struct stat bufFileSize;
+        //
+        // fstat(fd, &bufFileSize);
+        // int fileSize = (int)bufFileSize.st_size;
+
+        // Allocate space as large as file size
+        char buf[(int)fileSize];
         size_t nbytes = sizeof(buf);
         ssize_t bytes_read, bytes_written;
         bytes_read = read(fd, buf, nbytes);
