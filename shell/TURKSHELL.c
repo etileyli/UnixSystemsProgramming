@@ -107,13 +107,12 @@ int main(int argc, char const *argv[]) {
 					printFile(fd, filePath);
 					close(fd);
 				}
-				else if (cmd->argc > 2){
+				else if (cmd->delim == NULL){
 					/**2nd Function of birleştir: Read all non-command arguments as
 					input files and print their content to terminal.*** */
-
-					for (int i = 0; i < (cmd->argc - 1); i++){
+					for (int i = 1; i < (cmd->argc); i++){
 						int fd;
-						char *filePath = cmd->argv[i + 1];
+						char *filePath = cmd->argv[i];
 						if ((fd = open(filePath, O_RDONLY)) == -1)
 						{
 								perror("Cannot open file");
@@ -125,7 +124,63 @@ int main(int argc, char const *argv[]) {
 						close(fd);
 					}
 				}
+				else if (1){
+					/**3rd Function of birleştir: append files into a file. */
+					for (int i = 1; i < cmd->argc; i++){
 
+  					int fd;
+  					char *filePath = cmd->argv[i];
+
+            if (i < cmd->delimPos){         // process files before delimiter.
+              if(access(filePath, F_OK)) {
+                // file does not exist
+                printf("BEFORE: File %s does not exist!\n", filePath);
+                // exit(1);
+              }
+              else{
+                // file exists. read content into a source buffer.
+                printf("BEFORE:File %s exists\n", filePath);
+              }
+            }
+            else if (i > cmd->delimPos){    // process files after delimiter.
+              if(access(filePath, F_OK)) {
+                // file does not exist
+                printf("AFTER: File %s does not exist!\n", filePath);
+                // exit(1);
+              }
+              else{
+                // file exists. read content into a source buffer.
+                  printf("AFTER: File %s exists\n", filePath);
+              }
+            }
+
+
+            // // if argv is not delim (so is a file) and the file does not exist
+            // if(strcmp(filePath, cmd->delim) && access(filePath, F_OK)) {
+            //   // file does not exists
+            //   printf("File %s does not exist!\n", filePath);
+            //   exit(1);
+            // }
+            // else if (!strcmp(filePath, cmd->delim)){
+            //   printf("This is delimiter %s\n", cmd->delim);
+            // }
+            // else{
+            //   printf("File %s exists\n", filePath);
+            // }
+
+						// if ((fd = open(filePath, O_RDONLY)) == -1)
+						// {
+						// 		perror("Cannot open file");
+						// 		exit(1);
+						// }
+            //
+						// printFile(fd, filePath);
+						// close(fd);
+					}
+				}
+        else{
+          printf("Invalid usage of \"bir\"!\n");
+        }
 				return 0;
 			}
 			else if(!strcmp(cmd->argv[0], builtInCommands[2])){
