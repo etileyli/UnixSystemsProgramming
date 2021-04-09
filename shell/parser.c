@@ -132,11 +132,6 @@ void appendToFile(int fdr, int fdw, char *sourceFilePath, char *targetFilePath){
     // get size of the file
     int fileSize = getFileSize(sourceFilePath);
 
-    printf("######sourceFile:");
-    printFile(fdr, sourceFilePath);
-    printf("######targetFile:");
-    printFile(fdr, targetFilePath);
-
     // Allocate space as large as file size
     char buf[(int)fileSize];
     size_t nbytes = sizeof(buf);

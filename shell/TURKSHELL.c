@@ -124,14 +124,18 @@ int main(int argc, char const *argv[]) {
 						close(fd);
 					}
 				}
-				else if (1){
-					/**3rd Function of birleştir: append files into a file. */
-					printf("In 3rd Function of \"bir\"\n");
+				// if (delimiter is >>) and (only one token is fetched after delimiter) 
+				else if (!strcmp(cmd->delim, ">>") && (cmd->delimPos + 2 == cmd->argc)){
+					/**3rd Function of birleştir: append files into a file.
+					Creates destination file if it does not exists.
+					Usage: bir file1 ... fileN >> fileTarget */
+					// printf("In 3rd Function of \"bir\"\n");
 
 					for (int i = 1; i < cmd->argc; i++){
 
   					int fdr, fdw;
   					char *filePath = cmd->argv[i];
+						printf("cmd->argv[1] = %s\n", cmd->argv[i]);
 
             if (i < cmd->delimPos){         // process files before delimiter.
 						  if(access(filePath, F_OK)) {
@@ -146,6 +150,8 @@ int main(int argc, char const *argv[]) {
 										perror("Cannot open source file");
 										exit(1);
 								}
+								printf("source file name: %s\n", filePath);
+
 								// open target file
 								char *targetFilePath = cmd->argv[cmd->delimPos + 1];
 								if ((fdw = open(targetFilePath, O_CREAT | O_APPEND | O_RDWR, 0777)) == -1)
@@ -163,44 +169,13 @@ int main(int argc, char const *argv[]) {
 								bytes_read = read(fdr, buf, nbytes);			// Read from file
 								bytes_written = write(fdw, buf, nbytes);	// Write to target file
 
+								// does not work!
 								// appendToFile(fdr, fdw, filePath, targetFilePath);
-								// printFile(fdr, filePath);
-								// printFile(fdw, filePath);
 
 								close(fdw);
 								close(fdr);
               }
             }
-            else if (i > cmd->delimPos){    // process files after delimiter.
-              if(access(filePath, F_OK)) {
-                // file does not exist
-              }
-              else{
-                // file exists. read content into a source buffer.
-                  // printf("AFTER: File %s exists\n", filePath);
-              }
-            }
-            // // if argv is not delim (so is a file) and the file does not exist
-            // if(strcmp(filePath, cmd->delim) && access(filePath, F_OK)) {
-            //   // file does not exists
-            //   printf("File %s does not exist!\n", filePath);
-            //   exit(1);
-            // }
-            // else if (!strcmp(filePath, cmd->delim)){
-            //   printf("This is delimiter %s\n", cmd->delim);
-            // }
-            // else{
-            //   printf("File %s exists\n", filePath);
-            // }
-
-						// if ((fd = open(filePath, O_RDONLY)) == -1)
-						// {
-						// 		perror("Cannot open file");
-						// 		exit(1);
-						// }
-            //
-						// printFile(fd, filePath);
-						// close(fd);
 					}
 				}
         else{
