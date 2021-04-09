@@ -124,7 +124,7 @@ int main(int argc, char const *argv[]) {
 						close(fd);
 					}
 				}
-				// if (delimiter is >>) and (only one token is fetched after delimiter)  
+				// if (delimiter is >>) and (only one token is fetched after delimiter)
 				else if (!strcmp(cmd->delim, ">>") && (cmd->delimPos + 2 == cmd->argc)){
 					/**3rd Function of birleştir: append files into a file.
 					Creates destination file if it does not exists.
@@ -155,6 +155,61 @@ int main(int argc, char const *argv[]) {
 								// open target file
 								char *targetFilePath = cmd->argv[cmd->delimPos + 1];
 								if ((fdw = open(targetFilePath, O_CREAT | O_APPEND | O_RDWR, 0777)) == -1)
+								{
+										perror("Cannot open target file");
+										exit(1);
+								}
+
+								int fileSize = getFileSize(filePath);
+
+								// Allocate space as large as file size
+								char buf[(int)fileSize];
+								size_t nbytes = sizeof(buf);
+								ssize_t bytes_read, bytes_written;
+								bytes_read = read(fdr, buf, nbytes);			// Read from file
+								bytes_written = write(fdw, buf, nbytes);	// Write to target file
+
+								// does not work!
+								// appendToFile(fdr, fdw, filePath, targetFilePath);
+
+								close(fdw);
+								close(fdr);
+              }
+            }
+					}
+				}
+				else if (!strcmp(cmd->delim, ">") && (cmd->delimPos + 2 == cmd->argc)){
+					for (int i = 1; i < cmd->argc; i++){
+
+  					int fdr, fdw;
+  					char *filePath = cmd->argv[i];
+						printf("cmd->argv[1] = %s\n", cmd->argv[i]);
+
+            if (i < cmd->delimPos){         // process files before delimiter.
+						  if(access(filePath, F_OK)) {
+                // file does not exist
+                printf("File %s does not exist!\n", filePath);
+                exit(1);
+              }
+              else{
+                // file exists. Open source file.
+								if ((fdr = open(filePath, O_RDONLY)) == -1)
+								{
+										perror("Cannot open source file");
+										exit(1);
+								}
+								printf("source file name: %s\n", filePath);
+
+								char *targetFilePath = cmd->argv[cmd->delimPos + 1];
+								if(!access(filePath, F_OK)) {
+	                // file exists, delete
+									if (unlink(filePath) != 0)
+							      perror("unlink() error");
+										exit(1);
+	              }
+
+								// open target file
+								if ((fdw = open(targetFilePath, O_CREAT | O_RDWR, 0777)) == -1)
 								{
 										perror("Cannot open target file");
 										exit(1);
