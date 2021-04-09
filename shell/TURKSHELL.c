@@ -124,7 +124,7 @@ int main(int argc, char const *argv[]) {
 						close(fd);
 					}
 				}
-				// if (delimiter is >>) and (only one token is fetched after delimiter) 
+				// if (delimiter is >>) and (only one token is fetched after delimiter)  
 				else if (!strcmp(cmd->delim, ">>") && (cmd->delimPos + 2 == cmd->argc)){
 					/**3rd Function of birleştir: append files into a file.
 					Creates destination file if it does not exists.
