@@ -130,27 +130,28 @@ int main(int argc, char const *argv[]) {
 
   					int fd;
   					char *filePath = cmd->argv[i];
+            char *sourceBuffer;
 
             if (i < cmd->delimPos){         // process files before delimiter.
               if(access(filePath, F_OK)) {
                 // file does not exist
-                printf("BEFORE: File %s does not exist!\n", filePath);
-                // exit(1);
+                printf("File %s does not exist!\n", filePath);
+                exit(1);
               }
               else{
                 // file exists. read content into a source buffer.
-                printf("BEFORE:File %s exists\n", filePath);
+                // printf("BEFORE:File %s exists\n", filePath);
+                sourceBuffer = realloc(sourceBuffer, sizeof(getFileSize));
               }
             }
             else if (i > cmd->delimPos){    // process files after delimiter.
               if(access(filePath, F_OK)) {
                 // file does not exist
-                printf("AFTER: File %s does not exist!\n", filePath);
-                // exit(1);
+                // printf("AFTER: File %s does not exist!\n", filePath);
               }
               else{
                 // file exists. read content into a source buffer.
-                  printf("AFTER: File %s exists\n", filePath);
+                  // printf("AFTER: File %s exists\n", filePath);
               }
             }
 

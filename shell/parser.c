@@ -114,10 +114,10 @@ int getFileSize(char *filePath){
   return fileSize;
 }
 
-void printFile(int fd, char *filePath){
+void printFile(int fd, char *sourceFilePath){
 
   // get size of the file
-  int fileSize = getFileSize(filePath);
+  int fileSize = getFileSize(sourceFilePath);
 
   // Allocate space as large as file size
   char buf[(int)fileSize];
