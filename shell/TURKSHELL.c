@@ -50,13 +50,13 @@ int main(int argc, char const *argv[]) {
     }
 
 		// Test code
-    // printf("isBackground = %d; argv = %d\n", cmd->isBackground, cmd->argc);
-    // printf("delim = %s; delimPos = %d\n", cmd->delim, cmd->delimPos);
-    // int i = 0;
-    // while (cmd->argv[i]){
-    //   printf("argument[%d]: %s\n",i , cmd->argv[i]);
-    //   i++;
-    // }
+    printf("isBackground = %d; argc = %d\n", cmd->isBackground, cmd->argc);
+    printf("delim = %s; delimPos = %d\n", cmd->delim, cmd->delimPos);
+    int i = 0;
+    while (cmd->argv[i]){
+      printf("argument[%d]: %s\n",i , cmd->argv[i]);
+      i++;
+    }
 
     // Print all built-in commands
     // for (int i = 0; i < numOfElements; i++){
@@ -126,36 +126,60 @@ int main(int argc, char const *argv[]) {
 				}
 				else if (1){
 					/**3rd Function of birleştir: append files into a file. */
+					printf("In 3rd Function of \"bir\"\n");
+
 					for (int i = 1; i < cmd->argc; i++){
 
-  					int fd;
+  					int fdr, fdw;
   					char *filePath = cmd->argv[i];
-            char *sourceBuffer;
 
             if (i < cmd->delimPos){         // process files before delimiter.
-              if(access(filePath, F_OK)) {
+						  if(access(filePath, F_OK)) {
                 // file does not exist
                 printf("File %s does not exist!\n", filePath);
                 exit(1);
               }
               else{
-                // file exists. read content into a source buffer.
-                // printf("BEFORE:File %s exists\n", filePath);
-                sourceBuffer = realloc(sourceBuffer, sizeof(getFileSize));
+                // file exists. Open source file.
+								if ((fdr = open(filePath, O_RDONLY)) == -1)
+								{
+										perror("Cannot open source file");
+										exit(1);
+								}
+								// open target file
+								char *targetFilePath = cmd->argv[cmd->delimPos + 1];
+								if ((fdw = open(targetFilePath, O_CREAT | O_APPEND | O_RDWR, 0777)) == -1)
+								{
+										perror("Cannot open target file");
+										exit(1);
+								}
+
+								int fileSize = getFileSize(filePath);
+
+								// Allocate space as large as file size
+								char buf[(int)fileSize];
+								size_t nbytes = sizeof(buf);
+								ssize_t bytes_read, bytes_written;
+								bytes_read = read(fdr, buf, nbytes);			// Read from file
+								bytes_written = write(fdw, buf, nbytes);	// Write to target file
+
+								// appendToFile(fdr, fdw, filePath, targetFilePath);
+								// printFile(fdr, filePath);
+								// printFile(fdw, filePath);
+
+								close(fdw);
+								close(fdr);
               }
             }
             else if (i > cmd->delimPos){    // process files after delimiter.
               if(access(filePath, F_OK)) {
                 // file does not exist
-                // printf("AFTER: File %s does not exist!\n", filePath);
               }
               else{
                 // file exists. read content into a source buffer.
                   // printf("AFTER: File %s exists\n", filePath);
               }
             }
-
-
             // // if argv is not delim (so is a file) and the file does not exist
             // if(strcmp(filePath, cmd->delim) && access(filePath, F_OK)) {
             //   // file does not exists

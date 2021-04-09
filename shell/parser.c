@@ -127,3 +127,21 @@ void printFile(int fd, char *sourceFilePath){
   bytes_written = write(STDOUT_FILENO, buf, nbytes);	// Write to terminal
   printf("\n");
 }
+
+void appendToFile(int fdr, int fdw, char *sourceFilePath, char *targetFilePath){
+    // get size of the file
+    int fileSize = getFileSize(sourceFilePath);
+
+    printf("######sourceFile:");
+    printFile(fdr, sourceFilePath);
+    printf("######targetFile:");
+    printFile(fdr, targetFilePath);
+
+    // Allocate space as large as file size
+    char buf[(int)fileSize];
+    size_t nbytes = sizeof(buf);
+    ssize_t bytes_read, bytes_written;
+    bytes_read = read(fdr, buf, nbytes);			// Read from file
+    bytes_written = write(fdw, buf, nbytes);	// Write to target file
+    printf("\n");
+}
