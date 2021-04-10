@@ -128,6 +128,21 @@ void printFile(int fd, char *sourceFilePath){
   printf("\n");
 }
 
+int deleteFile(char *filePath){
+  printf("Deleting %s\n", filePath);
+  if(!access(filePath, F_OK)) {
+    // file exists, delete
+    if (unlink(filePath) != 0){
+      perror("unlink() error");
+      return -1;
+    }
+  }
+  else
+    printf("File %s does not exist.\n", filePath);
+
+  return 0;
+}
+
 void appendToFile(int fdr, int fdw, char *sourceFilePath, char *targetFilePath){
     // get size of the file
     int fileSize = getFileSize(sourceFilePath);

@@ -135,7 +135,7 @@ int main(int argc, char const *argv[]) {
 
   					int fdr, fdw;
   					char *filePath = cmd->argv[i];
-						printf("cmd->argv[1] = %s\n", cmd->argv[i]);
+						// printf("cmd->argv[1] = %s\n", cmd->argv[i]);
 
             if (i < cmd->delimPos){         // process files before delimiter.
 						  if(access(filePath, F_OK)) {
@@ -150,7 +150,7 @@ int main(int argc, char const *argv[]) {
 										perror("Cannot open source file");
 										exit(1);
 								}
-								printf("source file name: %s\n", filePath);
+								// printf("source file name: %s\n", filePath);
 
 								// open target file
 								char *targetFilePath = cmd->argv[cmd->delimPos + 1];
@@ -179,11 +179,27 @@ int main(int argc, char const *argv[]) {
 					}
 				}
 				else if (!strcmp(cmd->delim, ">") && (cmd->delimPos + 2 == cmd->argc)){
+					/**4th Function of birleştir: copy contents of files sto a target
+          file. Deletes target file if it exists. */
+					int fdr, fdw;
+          char *targetFilePath = cmd->argv[cmd->delimPos + 1];
+          if (deleteFile(targetFilePath) == -1){
+            printf("Cannot delete target file %s. Quitting\n", targetFilePath);
+            exit(1);
+          }
+
+					// create target file
+					if ((fdw = open(targetFilePath, O_CREAT | O_RDWR, 0777)) == -1)
+					{
+							perror("Cannot open target file");
+							exit(1);
+					}
+          close(fdw);
+
 					for (int i = 1; i < cmd->argc; i++){
 
-  					int fdr, fdw;
   					char *filePath = cmd->argv[i];
-						printf("cmd->argv[1] = %s\n", cmd->argv[i]);
+						printf("cmd->argv[%d] = %s\n", i, cmd->argv[i]);
 
             if (i < cmd->delimPos){         // process files before delimiter.
 						  if(access(filePath, F_OK)) {
@@ -200,20 +216,12 @@ int main(int argc, char const *argv[]) {
 								}
 								printf("source file name: %s\n", filePath);
 
-								char *targetFilePath = cmd->argv[cmd->delimPos + 1];
-								if(!access(filePath, F_OK)) {
-	                // file exists, delete
-									if (unlink(filePath) != 0)
-							      perror("unlink() error");
-										exit(1);
-	              }
-
-								// open target file
-								if ((fdw = open(targetFilePath, O_CREAT | O_RDWR, 0777)) == -1)
-								{
-										perror("Cannot open target file");
-										exit(1);
-								}
+                // open target file
+      					if ((fdw = open(targetFilePath, O_APPEND | O_RDWR, 0777)) == -1)
+      					{
+      							perror("Cannot open target file");
+      							exit(1);
+      					}
 
 								int fileSize = getFileSize(filePath);
 
@@ -227,8 +235,8 @@ int main(int argc, char const *argv[]) {
 								// does not work!
 								// appendToFile(fdr, fdw, filePath, targetFilePath);
 
+                close(fdr);
 								close(fdw);
-								close(fdr);
               }
             }
 					}

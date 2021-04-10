@@ -15,4 +15,6 @@ s_command *parse(char *myArgv);
 char *readLine();
 int getFileSize(char *filePath);
 void printFile(int fd, char *filePath);
+int deleteFile(char *filePath);
+
 void appendToFile(int fdr, int fdw, char *sourceFilePath, char *targetFilePath);
