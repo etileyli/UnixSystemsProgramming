@@ -12,11 +12,11 @@
 #include "parser.h"
 
 // This function parses user command into s_command variables.
-s_command *parse(char *myArgv){
+s_command *parse(char *myArgv, char *s){
 
   s_command *cmd = (s_command*)malloc(sizeof(s_command));
 
-  const char s[2] = " ";
+  // const char s[2] = " ";
   char *token;
 
   cmd->argv = calloc(1, sizeof(char *));
@@ -103,6 +103,8 @@ char *readLine(){
   return buffer;
 }
 
+
+
 void printCurrentDirectory(){
   char cwd[PATH_MAX];
   if (getcwd(cwd, sizeof(cwd)) != NULL) {
@@ -183,6 +185,8 @@ int deleteFile(char *filePath){
 int createDirectory(char *dirPath){
 
   // printCurrentDirectory();
+
+
 
   DIR* dir = opendir(dirPath);
   if (dir) {

@@ -12,7 +12,7 @@ typedef struct s_command{
   int delimPos;
 }s_command;
 
-s_command *parse(char *myArgv);
+s_command *parse(char *myArgv, char *s);
 char *readLine();
 void printCurrentDirectory();
 void printContentOfDir();

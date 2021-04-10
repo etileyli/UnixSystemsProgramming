@@ -41,8 +41,8 @@ int main(int argc, char const *argv[]) {
     if (line == NULL)
 			continue;
 
-		// parse input command
-    cmd = parse(line);
+		// parse input command wrt space character.
+    cmd = parse(line, " ");
 
 		// check exit condition
     if (!strcmp(line, EXIT_KEYWORD)){
@@ -260,6 +260,20 @@ int main(int argc, char const *argv[]) {
             for (int i = 1; i < (cmd->argc); i++){
               char *dirPath = cmd->argv[i];
               createDirectory(dirPath);
+            }
+        }
+        else if (!strcmp(cmd->delim, "-p")){
+  					/**2nd Function of dizinYarat: mkdir with subfolders.*/
+            s_command *cmdDizin = parse(cmd->argv[cmd->delimPos + 1], "/");
+            printCmd(cmdDizin);
+            for (int i = 0; i < (cmdDizin->argc); i++){
+              char *dirPath = cmdDizin->argv[i];
+              createDirectory(dirPath);
+              // change directory
+              if (chdir(dirPath) != 0){
+                perror("chdir() to /tmp failed");
+                exit(-1);
+              }
             }
         }
         else{
