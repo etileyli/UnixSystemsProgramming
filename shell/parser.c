@@ -183,10 +183,7 @@ int deleteFile(char *filePath){
 }
 
 int createDirectory(char *dirPath){
-
   // printCurrentDirectory();
-
-
 
   DIR* dir = opendir(dirPath);
   if (dir) {
@@ -201,7 +198,7 @@ int createDirectory(char *dirPath){
       return -1;
     }
     else{
-      printf("Directory \"%s\" is created.\n", dirPath);
+      // printf("Directory \"%s\" is created.\n", dirPath);
     }
   }else {
       /* opendir() failed for some other reason. */
@@ -210,6 +207,8 @@ int createDirectory(char *dirPath){
 
   return 0;
 }
+
+
 
 void appendToFile(int fdr, int fdw, char *sourceFilePath, char *targetFilePath){
     // get size of the file
