@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <limits.h>
 #include <dirent.h>
+#include <fcntl.h>
 #include <errno.h>
 
 #include "parser.h"
@@ -78,7 +79,7 @@ s_command *parse(char *myArgv, char *s){
 
 // This function reads a line and returns it.
 char *readLine(){
-  // Returns NULL if a whitespace character si entered to getline()
+  // Returns NULL if a whitespace character is entered to getline()
 
   char *buffer = NULL;  // input line
   size_t bufsize = 512; // max size of input line
@@ -95,15 +96,13 @@ char *readLine(){
   // get number of characters
   charCount = getline(&buffer, &bufsize, stdin);
 
-  if (!isspace(buffer[0]))                      // if something is entered.
+  if (!isspace(buffer[0]))                    // if something is entered.
     buffer[charCount - 1] = '\0';             // Truncate last newline character
   else
     return NULL;
 
   return buffer;
 }
-
-
 
 void printCurrentDirectory(){
   char cwd[PATH_MAX];
@@ -116,6 +115,7 @@ void printCurrentDirectory(){
 }
 
 void printContentOfDir(){
+  printf("Contents of directory:\n");
   DIR *d;
   struct dirent *dir;
   d = opendir(".");
@@ -167,6 +167,27 @@ void printFile(int fd, char *sourceFilePath){
   printf("\n");
 }
 
+void printHeadOfFile(int fd, char *sourceFilePath, int lineCount){
+  // get size of the file
+  int fileSize = getFileSize(sourceFilePath);
+
+  // Allocate space as large as file size
+  char buf[(int)fileSize];
+  size_t nbytes = sizeof(buf);
+  ssize_t bytes_read, bytes_written;
+  bytes_read = read(fd, buf, nbytes);									// Read from file
+
+  int i = 0;
+  while(lineCount){
+    if (buf[i] == '\n'){
+      lineCount--;
+    }
+    putc(buf[i++], stdout);
+  }
+
+  // bytes_written = write(STDOUT_FILENO, buf, nbytes);	// Write to terminal
+}
+
 int deleteFile(char *filePath){
   // printf("Deleting %s\n", filePath);
   if(!access(filePath, F_OK)) {
@@ -183,6 +204,7 @@ int deleteFile(char *filePath){
 }
 
 int createDirectory(char *dirPath){
+
   // printCurrentDirectory();
 
   DIR* dir = opendir(dirPath);
@@ -207,8 +229,6 @@ int createDirectory(char *dirPath){
 
   return 0;
 }
-
-
 
 void appendToFile(int fdr, int fdw, char *sourceFilePath, char *targetFilePath){
     // get size of the file

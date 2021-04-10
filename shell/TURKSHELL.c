@@ -17,6 +17,7 @@ static char *builtInCommands[] = {
 	"yankı",			// imitates echo
   "bir",				// 1st Command: imitates cat
 	"dizinYarat",	// 2nd Command: imitates mkdir
+  "baş",        // 3rd Command: imitates head
 	"dizinYaz",		// imitates pwd
 	"help"
 };
@@ -82,7 +83,7 @@ int main(int argc, char const *argv[]) {
 				return 0;
 			}
       // Helper command: dizinYaz
-      else if(!strcmp(cmd->argv[0], builtInCommands[3])){
+      else if(!strcmp(cmd->argv[0], builtInCommands[4])){
         printCurrentDirectory();
         printContentOfDir();
 
@@ -251,7 +252,7 @@ int main(int argc, char const *argv[]) {
 			}
 			else if(!strcmp(cmd->argv[0], builtInCommands[2])){
         /*2nd Command *********************************************************/
-        //dizin: create directory. Imitates command "mkdir".
+        //dizinYarat: creates directory. Imitates command "mkdir".
 				if (cmd->argc == 1){
 					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
 				}
@@ -307,11 +308,43 @@ int main(int argc, char const *argv[]) {
           }
         }
         else{
-          printf("Invalid usage of \"dizin\"!\n");
+          printf("Invalid usage of \"dizinYarat\"!\n");
         }
 
 				return 0;
 			}
+      else if(!strcmp(cmd->argv[0], builtInCommands[3])){
+        /*3rd Command ********************************************************
+        baş: imitates command "head" prints a number of first lines of a file
+        Usage:
+        head file1
+        head -n lineCount file1         (N defines first N lines of the file)
+        head -n lineCount file1 file2   (first N lines of multiple files)
+        */
+
+        int lineCount = 10;   // default value
+
+        if (cmd->argc == 1){
+          printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+        }
+        else if (cmd->argc == 2){
+          /**1st Function of baş: print first 10 lines of input file*/
+          int fd;
+          char *filePath = cmd->argv[1];
+
+          if ((fd = open(filePath, O_RDONLY)) == -1)
+          {
+              perror("Cannot open file");
+              exit(1);
+          }
+          printf("File is opened\n");
+
+          printHeadOfFile(fd, filePath, lineCount);
+          close(fd);
+        }
+
+        return 0;
+      }
 			else{
 				printf("Command is not in the list!\n");
 				return 0;
