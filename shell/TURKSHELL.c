@@ -1,21 +1,23 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/wait.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <dirent.h>
 #include "parser.h"
 
 #define EXIT_KEYWORD "exit"
 #define PROMPT ">>> "
 
 static char *builtInCommands[] = {
-	"yankı",
-  "bir",
-	"cd",
+	"yankı",			// imitates echo
+  "bir",				// 1st Command: imitates cat
+	"dizinYarat",	// 2nd Command: imitates mkdir
+	"dizinYaz",		// imitates pwd
 	"help"
 };
 // Count of all built-in commands
@@ -50,13 +52,7 @@ int main(int argc, char const *argv[]) {
     }
 
 		// Test code
-    printf("isBackground = %d; argc = %d\n", cmd->isBackground, cmd->argc);
-    printf("delim = %s; delimPos = %d\n", cmd->delim, cmd->delimPos);
-    int i = 0;
-    while (cmd->argv[i]){
-      printf("argument[%d]: %s\n",i , cmd->argv[i]);
-      i++;
-    }
+    // printCmd(cmd);
 
     // Print all built-in commands
     // for (int i = 0; i < numOfElements; i++){
@@ -85,15 +81,20 @@ int main(int argc, char const *argv[]) {
 
 				return 0;
 			}
+      // Helper command: dizinYaz
+      else if(!strcmp(cmd->argv[0], builtInCommands[3])){
+        printCurrentDirectory();
+        printContentOfDir();
+      }
 			/*1st Command ***********************************************************/
-			// birleştir (imitates 'cat' command)
+			// bir (imitates 'cat' command)
 			else if(!strcmp(cmd->argv[0], builtInCommands[1])){
 
 				if (cmd->argc == 1){
 					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
 				}
 				else if (cmd->argc == 2){
-					/**1st Function of birleştir: Read file contents into stdout**/
+					/**1st Function of bir: Read file contents into stdout**/
 					int fd;
 					char *filePath = cmd->argv[1];
 
@@ -108,7 +109,7 @@ int main(int argc, char const *argv[]) {
 					close(fd);
 				}
 				else if (cmd->delim == NULL){
-					/**2nd Function of birleştir: Read all non-command arguments as
+					/**2nd Function of bir: Read all non-command arguments as
 					input files and print their content to terminal.*** */
 					for (int i = 1; i < (cmd->argc); i++){
 						int fd;
@@ -126,7 +127,7 @@ int main(int argc, char const *argv[]) {
 				}
 				// if (delimiter is >>) and (only one token is fetched after delimiter)
 				else if (!strcmp(cmd->delim, ">>") && (cmd->delimPos + 2 == cmd->argc)){
-					/**3rd Function of birleştir: append files into a file.
+					/**3rd Function of bir: append files into a file.
 					Creates destination file if it does not exists.
 					Usage: bir file1 ... fileN >> fileTarget */
 					// printf("In 3rd Function of \"bir\"\n");
@@ -179,7 +180,7 @@ int main(int argc, char const *argv[]) {
 					}
 				}
 				else if (!strcmp(cmd->delim, ">") && (cmd->delimPos + 2 == cmd->argc)){
-					/**4th Function of birleştir: copy contents of files sto a target
+					/**4th Function of bir: copy contents of files sto a target
           file. Deletes target file if it exists. */
 					int fdr, fdw;
           char *targetFilePath = cmd->argv[cmd->delimPos + 1];
@@ -199,7 +200,7 @@ int main(int argc, char const *argv[]) {
 					for (int i = 1; i < cmd->argc; i++){
 
   					char *filePath = cmd->argv[i];
-						printf("cmd->argv[%d] = %s\n", i, cmd->argv[i]);
+						// printf("cmd->argv[%d] = %s\n", i, cmd->argv[i]);
 
             if (i < cmd->delimPos){         // process files before delimiter.
 						  if(access(filePath, F_OK)) {
@@ -214,7 +215,7 @@ int main(int argc, char const *argv[]) {
 										perror("Cannot open source file");
 										exit(1);
 								}
-								printf("source file name: %s\n", filePath);
+								// printf("source file name: %s\n", filePath);
 
                 // open target file
       					if ((fdw = open(targetFilePath, O_APPEND | O_RDWR, 0777)) == -1)
@@ -247,7 +248,40 @@ int main(int argc, char const *argv[]) {
 				return 0;
 			}
 			else if(!strcmp(cmd->argv[0], builtInCommands[2])){
-				printf("The command is %s\n", cmd->argv[0]);
+        /*2nd Command *********************************************************/
+        //dizin: create directory. Imitates command "mkdir".
+				if (cmd->argc == 1){
+					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+				}
+        else if (cmd->argc == 2){
+  					/**1st Function of dizinYarat: imitates mkdir */
+
+            char *dirPath = cmd->argv[1];
+
+            DIR* dir = opendir(dirPath);
+            if (dir) {
+              /* Directory exists. */
+              printf("The name \"%s\" is already taken.\n", dirPath);
+              closedir(dir);
+            } else if (ENOENT == errno) {
+              /* Directory does not exist. */
+              int dirResult = mkdir(dirPath, 0755);
+              if(dirResult != 0){
+                printf("Failed to create directory \"%s\".\n", dirPath);
+                return -1;
+              }
+              else{
+                printf("Directory \"%s\" is created.\n", dirPath);
+              }
+            }else {
+                /* opendir() failed for some other reason. */
+                printf("The name %s is already taken.\n", dirPath);
+            }
+        }
+        else{
+          printf("Invalid usage of \"dizin\"!\n");
+        }
+
 				return 0;
 			}
 			else{
@@ -260,6 +294,5 @@ int main(int argc, char const *argv[]) {
 			// printf("I am parent %ld, ID = %ld\n", (long)getpid(), (long)getppid());
 		}
   }while(1);
-
   return 0;
 }

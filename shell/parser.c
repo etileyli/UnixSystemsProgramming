@@ -58,10 +58,6 @@ s_command *parse(char *myArgv){
       cmd->delim = "<";
       break;
     }
-    else if(!strcmp(cmd->argv[j], "..")){
-      cmd->delim = "..";
-      break;
-    }
     else if(cmd->argv[j][0] == '-'){
       cmd->delim = cmd->argv[j];
       break;
