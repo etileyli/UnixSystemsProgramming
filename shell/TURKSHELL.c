@@ -263,17 +263,49 @@ int main(int argc, char const *argv[]) {
             }
         }
         else if (!strcmp(cmd->delim, "-p")){
-  					/**2nd Function of dizinYarat: mkdir with subfolders.*/
-            s_command *cmdDizin = parse(cmd->argv[cmd->delimPos + 1], "/");
-            printCmd(cmdDizin);
-            for (int i = 0; i < (cmdDizin->argc); i++){
-              char *dirPath = cmdDizin->argv[i];
-              createDirectory(dirPath);
-              // change directory
-              if (chdir(dirPath) != 0){
-                perror("chdir() to /tmp failed");
-                exit(-1);
+  					/**2nd Function of dizinYarat: mkdir multiple folders with
+            subfolders.
+            Usage: dizinYarat -p dir1/dir2/dir3 dir4/dir5/dir6 dir7
+            Creates all 7 folders with hierarchy entered.
+            */
+
+            // for each cmd argv tokens other than command and delimiter:
+            for (int i = 2; i < (cmd->argc); i++){
+
+              /*subDirPath:value that holds how many times the directory changes
+               when a new subfolder created. It will be used to come back from
+               last created subfolder. */
+              int subDirDepth = 0;
+
+              char *dirPath = cmd->argv[i];
+              printf("dir name: %s\n", dirPath);
+
+              /* parse token into directory and its subdirectories.
+              Split token by '/' character. */
+              s_command *cmdDizin = parse(dirPath, "/");
+              printCmd(cmdDizin);
+              /* For each token splitted by '/' create new folder under
+              its parent folder created on previous iteration.*/
+              for (int i = 0; i < (cmdDizin->argc); i++){
+                char *dirPathNew = cmdDizin->argv[i];
+                printf("dirPathNew: %s\n", dirPathNew);
+                createDirectory(dirPathNew);
+                // change directory
+                if (chdir(dirPathNew) != 0){
+                  perror("chdir() failed");
+                  exit(-1);
+                }
+                subDirDepth += 1;
               }
+
+              for (int j = subDirDepth; j > 0; j--){
+                if (chdir("..") != 0){
+                  perror("chdir() failed");
+                  exit(-1);
+                }
+              }
+
+              printf("Next token:\n\n");
             }
         }
         else{
