@@ -1,10 +1,12 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
+#include <limits.h>
+#include <dirent.h>
 
 #include "parser.h"
 
@@ -56,6 +58,10 @@ s_command *parse(char *myArgv){
       cmd->delim = "<";
       break;
     }
+    else if(!strcmp(cmd->argv[j], "..")){
+      cmd->delim = "..";
+      break;
+    }
     else if(cmd->argv[j][0] == '-'){
       cmd->delim = cmd->argv[j];
       break;
@@ -100,6 +106,40 @@ char *readLine(){
   return buffer;
 }
 
+void printCurrentDirectory(){
+  char cwd[PATH_MAX];
+  if (getcwd(cwd, sizeof(cwd)) != NULL) {
+      printf("Current working dir: %s\n", cwd);
+  } else {
+      perror("getcwd() error");
+      exit(-1);
+  }
+}
+
+void printContentOfDir(){
+  DIR *d;
+  struct dirent *dir;
+  d = opendir(".");
+  if (d) {
+    while ((dir = readdir(d)) != NULL) {
+      if (dir->d_type == DT_REG){
+         printf("%s\n", dir->d_name);
+      }
+    }
+    closedir(d);
+  }
+}
+
+void printCmd(s_command *cmd){
+  printf("isBackground = %d; argc = %d\n", cmd->isBackground, cmd->argc);
+  printf("delim = %s; delimPos = %d\n", cmd->delim, cmd->delimPos);
+  int i = 0;
+  while (cmd->argv[i]){
+    printf("argument[%d]: %s\n",i , cmd->argv[i]);
+    i++;
+  }
+}
+
 // This function gets size of a file
 int getFileSize(char *filePath){
   struct stat bufFileSize;
@@ -129,7 +169,7 @@ void printFile(int fd, char *sourceFilePath){
 }
 
 int deleteFile(char *filePath){
-  printf("Deleting %s\n", filePath);
+  // printf("Deleting %s\n", filePath);
   if(!access(filePath, F_OK)) {
     // file exists, delete
     if (unlink(filePath) != 0){
@@ -137,8 +177,8 @@ int deleteFile(char *filePath){
       return -1;
     }
   }
-  else
-    printf("File %s does not exist.\n", filePath);
+  // else
+  //   printf("File %s does not exist.\n", filePath);
 
   return 0;
 }

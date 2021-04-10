@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,6 +14,9 @@ typedef struct s_command{
 
 s_command *parse(char *myArgv);
 char *readLine();
+void printCurrentDirectory();
+void printContentOfDir();
+void printCmd(s_command *cmd);
 int getFileSize(char *filePath);
 void printFile(int fd, char *filePath);
 int deleteFile(char *filePath);
