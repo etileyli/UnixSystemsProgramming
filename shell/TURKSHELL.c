@@ -255,17 +255,11 @@ int main(int argc, char const *argv[]) {
 				if (cmd->argc == 1){
 					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
 				}
-        else if (cmd->argc == 2){
-  					/**1st Function of dizinYarat: imitates mkdir with only one arg*/
-
-            char *dirPath = cmd->argv[1];
-            createDirectory(dirPath);
-        }
         else if (cmd->delim == NULL){
-  					/**2nd Function of dizinYarat: imitates mkdir for multiple folders*/
+  					/**1st Function of dizinYarat: imitates mkdir for multiple folders*/
             for (int i = 1; i < (cmd->argc); i++){
               char *dirPath = cmd->argv[i];
-              createDirectory(dirPath);              
+              createDirectory(dirPath);
             }
         }
         else{
