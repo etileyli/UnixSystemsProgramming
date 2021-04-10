@@ -85,6 +85,8 @@ int main(int argc, char const *argv[]) {
       else if(!strcmp(cmd->argv[0], builtInCommands[3])){
         printCurrentDirectory();
         printContentOfDir();
+
+        return 0;
       }
 			/*1st Command ***********************************************************/
 			// bir (imitates 'cat' command)
@@ -254,28 +256,16 @@ int main(int argc, char const *argv[]) {
 					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
 				}
         else if (cmd->argc == 2){
-  					/**1st Function of dizinYarat: imitates mkdir */
+  					/**1st Function of dizinYarat: imitates mkdir with only one arg*/
 
             char *dirPath = cmd->argv[1];
-
-            DIR* dir = opendir(dirPath);
-            if (dir) {
-              /* Directory exists. */
-              printf("The name \"%s\" is already taken.\n", dirPath);
-              closedir(dir);
-            } else if (ENOENT == errno) {
-              /* Directory does not exist. */
-              int dirResult = mkdir(dirPath, 0755);
-              if(dirResult != 0){
-                printf("Failed to create directory \"%s\".\n", dirPath);
-                return -1;
-              }
-              else{
-                printf("Directory \"%s\" is created.\n", dirPath);
-              }
-            }else {
-                /* opendir() failed for some other reason. */
-                printf("The name %s is already taken.\n", dirPath);
+            createDirectory(dirPath);
+        }
+        else if (cmd->delim == NULL){
+  					/**2nd Function of dizinYarat: imitates mkdir for multiple folders*/
+            for (int i = 1; i < (cmd->argc); i++){
+              char *dirPath = cmd->argv[i];
+              createDirectory(dirPath);              
             }
         }
         else{

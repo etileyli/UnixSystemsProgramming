@@ -20,5 +20,6 @@ void printCmd(s_command *cmd);
 int getFileSize(char *filePath);
 void printFile(int fd, char *filePath);
 int deleteFile(char *filePath);
+int createDirectory(char *dirPath);
 
 void appendToFile(int fdr, int fdw, char *sourceFilePath, char *targetFilePath);

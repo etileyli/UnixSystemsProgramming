@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <limits.h>
 #include <dirent.h>
+#include <errno.h>
 
 #include "parser.h"
 
@@ -175,6 +176,33 @@ int deleteFile(char *filePath){
   }
   // else
   //   printf("File %s does not exist.\n", filePath);
+
+  return 0;
+}
+
+int createDirectory(char *dirPath){
+
+  // printCurrentDirectory();
+
+  DIR* dir = opendir(dirPath);
+  if (dir) {
+    /* Directory exists. */
+    printf("The name \"%s\" is already taken.\n", dirPath);
+    closedir(dir);
+  } else if (ENOENT == errno) {
+    /* Directory does not exist. */
+    int dirResult = mkdir(dirPath, 0755);
+    if(dirResult != 0){
+      printf("Failed to create directory \"%s\".\n", dirPath);
+      return -1;
+    }
+    else{
+      printf("Directory \"%s\" is created.\n", dirPath);
+    }
+  }else {
+      /* opendir() failed for some other reason. */
+      printf("The name %s is already taken.\n", dirPath);
+  }
 
   return 0;
 }
