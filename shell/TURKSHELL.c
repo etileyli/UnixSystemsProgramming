@@ -327,31 +327,51 @@ int main(int argc, char const *argv[]) {
         if (cmd->argc == 1){
           printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
         }
-        else if (cmd->argc == 2){
-          /**1st Function of baş: print first 10 lines of input file*/
-          int fd;
-          char *filePath = cmd->argv[1];
+        else if (cmd->delim == NULL){
+          /**1st Function of baş: print first 10 lines of input files */
 
-          if ((fd = open(filePath, O_RDONLY)) == -1)
-          {
-              perror("Cannot open file");
-              exit(1);
-          }
+					for (int i = 1; i < cmd->argc; i++){
 
-          // print first lineCount lines of file to terminal
-          printHeadOfFile(fd, filePath, lineCount);
-          close(fd);
+						int fd;
+						char *filePath = cmd->argv[i];
+
+						if ((fd = open(filePath, O_RDONLY)) == -1)
+						{
+								perror("Cannot open file");
+								exit(1);
+						}
+
+						printf("==> %s <==\n", filePath);
+						// print first lineCount lines of file to terminal
+						printHeadOfFile(fd, filePath, lineCount);
+						close(fd);
+					}
         }
         else if (cmd->argc >= 4 && !strcmp(cmd->delim, "-n")){
 
           // if parameter after delimiter -n is a number
           if (isDigit(cmd->argv[2])){
-            printf("cmd->argv[2] = %d\n", atoi(cmd->argv[2]));
+            // printf("cmd->argv[2] = %d\n", atoi(cmd->argv[2]));
+						lineCount = atoi(cmd->argv[2]);
 
+						for (int i = 3; i < cmd->argc; i++){
+							int fd;
+							char *filePath = cmd->argv[i];
+
+							if ((fd = open(filePath, O_RDONLY)) == -1)
+							{
+									perror("Cannot open file");
+									exit(1);
+							}
+							printf("==> %s <==\n", filePath);
+							// print first lineCount lines of file to terminal
+							printHeadOfFile(fd, filePath, lineCount);
+							close(fd);
+						}
 
           }
           else{
-            printf("The argument should be a number: %s\n", cmd->argv[2]);
+            printf("The argument should be a positive number: %s\n", cmd->argv[2]);
           }
 
         }
