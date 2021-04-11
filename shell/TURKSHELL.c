@@ -23,14 +23,15 @@ static char *builtInCommands[] = {
 	"dosyaYarat", // 5th Command: partially imitates touch
   "??", // Custom Command:
 	"dizinYaz",		// imitates pwd
-	"help"
+	"yardım"
 };
 // Count of all built-in commands
 static int numOfElements = sizeof(builtInCommands) / sizeof(builtInCommands[0]);
 
 int main(int argc, char const *argv[]) {
 
-  printf("TURKSHELL'e Hosgeldiniz!\n");
+	displayWelcomeMessage();
+	// displayHelpMessage();
 
   s_command *cmd;
 
@@ -57,12 +58,7 @@ int main(int argc, char const *argv[]) {
     }
 
 		// Test code
-    printCmd(cmd);
-
-    // Print all built-in commands
-    // for (int i = 0; i < numOfElements; i++){
-    //   printf("%s\n", builtInCommands[i]);
-    // }
+    // printCmd(cmd);
 
 		pid_t childPid;
 
@@ -72,10 +68,7 @@ int main(int argc, char const *argv[]) {
 			return -1;
 		}
 		else if (childPid == 0) {	// in child process
-			// printf("I'm child %ld, ID = %ld\n", (long)getpid(), (long)getppid());
-
-			/* 0th Test Command *****************************************************/
-			// Test command: yankı
+			/* Helper Command: yankı ************************************************/
 			if(!strcmp(cmd->argv[0], builtInCommands[0])){
 				int j = 1;
 				while (cmd->argv[j]){
@@ -86,18 +79,24 @@ int main(int argc, char const *argv[]) {
 
 				return 0;
 			}
-      // Helper command: dizinYaz
-      else if(!strcmp(cmd->argv[0], builtInCommands[6])){
+      /* Helper command: dizinYaz *********************************************/
+      else if(!strcmp(cmd->argv[0], builtInCommands[7])){
         printCurrentDirectory();
         printContentOfDir();
 
         return 0;
       }
+      /* Helper command: yardım ***********************************************/
+      else if(!strcmp(cmd->argv[0], builtInCommands[8])){
+        displayHelpMessage();
+
+        return 0;
+      }
 			else if(!strcmp(cmd->argv[0], builtInCommands[1])){
-				/*1st Command ***********************************************************/
-				// bir (imitates 'cat' command)
+				/*1st Command *********************************************************/
+				/* bir partially imitates cat */
 				if (cmd->argc == 1){
-					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+					printf("\"%s\" komutu için daha fazla argüman gerekiyor.\n", cmd->argv[0]);
 				}
 				else if (cmd->argc == 2){
 					/**1st Function of bir: Read file contents into stdout**/
@@ -115,7 +114,7 @@ int main(int argc, char const *argv[]) {
 					close(fd);
 				}
 				else if (cmd->delim == NULL){
-					/**2nd Function of bir: Read all non-command arguments as
+					/**1st (extended) Function of bir: Read all non-command arguments as
 					input files and print their content to terminal.*** */
 					for (int i = 1; i < (cmd->argc); i++){
 						int fd;
@@ -147,7 +146,7 @@ int main(int argc, char const *argv[]) {
             if (i < cmd->delimPos){         // process files before delimiter.
 						  if(access(filePath, F_OK)) {
                 // file does not exist
-                printf("File %s does not exist!\n", filePath);
+                printf("Dosya %s mevcut değil!\n", filePath);
                 exit(1);
               }
               else{
@@ -191,7 +190,7 @@ int main(int argc, char const *argv[]) {
 					int fdr, fdw;
           char *targetFilePath = cmd->argv[cmd->delimPos + 1];
           if (deleteFile(targetFilePath) == -1){
-            printf("Cannot delete target file %s. Quitting\n", targetFilePath);
+            printf("%s hedef dosyası silinmiyor. Çıkıyor.\n", targetFilePath);
             exit(1);
           }
 
@@ -211,7 +210,7 @@ int main(int argc, char const *argv[]) {
             if (i < cmd->delimPos){         // process files before delimiter.
 						  if(access(filePath, F_OK)) {
                 // file does not exist
-                printf("File %s does not exist!\n", filePath);
+                printf("Dosya %s mevcut değil!\n", filePath);
                 exit(1);
               }
               else{
@@ -246,7 +245,7 @@ int main(int argc, char const *argv[]) {
 					}
 				}
         else{
-          printf("Invalid usage of \"bir\"!\n");
+          printf("\"bir\" komutu için hatalı kullanım!\n");
         }
 				return 0;
 			}
@@ -254,7 +253,7 @@ int main(int argc, char const *argv[]) {
         /*2nd Command *********************************************************/
         //dizinYarat: creates directory. Imitates command "mkdir".
 				if (cmd->argc == 1){
-					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+					printf("\"%s\" komutu için daha fazla argüman gerekiyor.\n", cmd->argv[0]);
 				}
         else if (cmd->delim == NULL){
 					/**1st Function of dizinYarat: imitates mkdir for multiple folders*/
@@ -309,7 +308,7 @@ int main(int argc, char const *argv[]) {
           }
         }
         else{
-          printf("Invalid usage of \"dizinYarat\"!\n");
+          printf("\"dizinYarat\" komutu için hatalı kullanım!\n");
         }
 
 				return 0;
@@ -318,15 +317,15 @@ int main(int argc, char const *argv[]) {
         /*3rd Command ********************************************************
         baş: imitates command "head" prints a number of first lines of a file
         Usage:
-        baş file1												(first 10 lines)
-        baş -n lineCount file1         (N defines first N lines of the file)
-        baş -n lineCount file1 file2   (first N lines of multiple files)
+        baş file1	file2 								(first 10 lines)
+        baş -n lineCount file1	        (N defines first N lines of the file)
+        baş -n lineCount file1 file2    (first N lines of multiple files)
         */
 
         int lineCount = 10;   // default value
 
         if (cmd->argc == 1){
-          printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+          printf("\"%s\" komutu için daha fazla argüman gerekiyor.\n", cmd->argv[0]);
         }
         else if (cmd->delim == NULL){
           /**1st Function of baş: print first 10 lines of input files */
@@ -373,12 +372,12 @@ int main(int argc, char const *argv[]) {
 
           }
           else{
-            printf("The argument should be a positive number: %s\n", cmd->argv[2]);
+            printf("Argüman pozitif bir sayı olmalı: %s\n", cmd->argv[2]);
           }
 
         }
         else{
-          printf("Invalid usage of \"baş\"!\n");
+          printf("\"baş\" komutu için hatalı kullanım!\n");
         }
 
         return 0;
@@ -395,7 +394,7 @@ int main(int argc, char const *argv[]) {
         int lineCount = 10;   // default value
 
         if (cmd->argc == 1){
-          printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+          printf("\"%s\" komutu için daha fazla argüman gerekiyor.\n", cmd->argv[0]);
         }
         else if (cmd->delim == NULL){
           /**1st Function of son: print last 10 lines of input files */
@@ -454,11 +453,11 @@ int main(int argc, char const *argv[]) {
 
           }
           else{
-            printf("The argument should be a positive number: %s\n", cmd->argv[2]);
+						printf("Argüman pozitif bir sayı olmalı: %s\n", cmd->argv[2]);
           }
         }
         else{
-          printf("Invalid usage of \"son\"!\n");
+					printf("\"son\" komutu için hatalı kullanım!\n");
         }
 
         return 0;
@@ -473,7 +472,7 @@ int main(int argc, char const *argv[]) {
 				*/
 				// sleep(3);
 				if (cmd->argc == 1){
-					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+					printf("\"%s\" komutu için daha fazla argüman gerekiyor.\n", cmd->argv[0]);
 				}
 				else if (cmd->delim == NULL){
 					/*1st Function of dosyaYarat: Creates empty files entered. */
@@ -497,12 +496,12 @@ int main(int argc, char const *argv[]) {
 					}
 				}
 				else{
-					printf("Invalid usage of \"dosyaYarat\"!\n");
+					printf("\"dosyaYarat\" komutu için hatalı kullanım!\n");
 				}
 				return 0;
 			}
 			else{
-				printf("Command is not in the list!\n");
+				printf("Komut listede mevcut değil!\n");
 				return 0;
 			}
 		}
@@ -512,8 +511,7 @@ int main(int argc, char const *argv[]) {
 			for the child.*/
 			if (!cmd->isBackground){
 				wait(&childPid);
-		   	// printf("I am parent %ld, ID = %ld\n", (long)getpid(), (long)getppid());
-		}
+			}
 		}
   }while(1);
   return 0;

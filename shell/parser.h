@@ -25,3 +25,5 @@ void printTailOfFile(char *sourceFilePath, int lineCount);
 int deleteFile(char *filePath);
 int createDirectory(char *dirPath);
 int isDigit(char *str);
+void displayWelcomeMessage();
+void displayHelpMessage();

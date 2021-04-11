@@ -332,3 +332,48 @@ int isDigit(char *str){
   }
   return 1;
 }
+
+void displayWelcomeMessage(){
+
+    printf("TURKSHELL'e Hosgeldiniz!\n");
+  	printf("Yapılabileceklerin listesi için komut satırına \"yardım\" yazabilirsiniz.\n");
+}
+
+void displayHelpMessage(){
+  printf("TURKSHELL ile aşağıdakileri yapabilirsiniz:\n\n");
+	printf("Yardımcı Komutlar: \n");
+	printf("yankı           Komut satırına yazılanları tekrar eder (yankılar).\n");
+  printf("dizinYaz        Klasör içerisindeki dosya ve klasörleri listeler.\n\n");
+	printf("yardım          Komutlar ve kullanımları ile ilgili bilgileri gösterir.\n\n");
+	printf("Asıl Komutlar:\n");
+	printf("1. Komut \"bir\": bash cat komutunu örnek alır.\n");
+	printf("    1. Fonksiyon: Dosyaların içeriklerini komut satırına yazar.\n");
+	printf("                  Örnek: bir dosya1 dosya2 dosya 3\n");
+	printf("    2. Fonksiyon: Dosyaların içeriklerini hedef dosyaya ekler.\n");
+	printf("                  Hedef dosya yoksa yaratılır.\n");
+	printf("                  Örnek: bir dosya1 dosya2 dosya3 >> hedefDosya\n");
+	printf("    3. Fonksiyon: Dosyaların içeriklerini belirtilen dosyaya yazar.\n");
+	printf("                  Hedef dosya yoksa yaratılır.\n");
+	printf("                  Örnek: bir dosya1 dosya2 dosya3 > hedefDosya\n");
+	printf("2. Komut \"dizinYarat\": bash mkdir komutunu örnek alır.\n");
+	printf("    1. Fonksiyon: Girilen isimlerde klasörler yaratır.\n");
+	printf("                  Örnek: dizinYarat dizin1 dizin2 dizin3\n");
+	printf("    2. Fonksiyon: Girilen isimlerde klasörler ve altklasörlerini yaratır.\n");
+	printf("                  Örnek: baş dosya1 dosya2 dosya3\n");
+	printf("3. Komut \"baş\": bash head komutunu örnek alır.\n");
+	printf("    1. Fonksiyon: Girilen dosyaların ilk 10 satırını komut satırına yazar.\n");
+	printf("                  Örnek: baş dosya1 dosya2 dosya3\n");
+	printf("    2. Fonksiyon: Girilen dosyaların ilk belirtilen satırını komut");
+  printf("                  satırına yazar.\n");
+	printf("                  Örnek: baş -n 5 dosya1 dosya2 dosya3\n");
+	printf("4. Komut \"son\": bash tail komutunu örnek alır.\n");
+	printf("    1. Fonksiyon: Girilen dosyaların son 10 satırını komut satırına yazar.\n");
+	printf("                  Örnek: son dosya1 dosya2 dosya3\n");
+	printf("    2. Fonksiyon: Girilen dosyaların son belirtilen satırını komut");
+  printf("                  satırına yazar.\n");
+	printf("                  Örnek: son -n 5 dosya1 dosya2 dosya3\n");
+	printf("5. Komut \"dosyaYarat\": bash touch komutunu örnek alır.\n");
+	printf("    1. Fonksiyon: Girilen dosyalar varsa dosyaların değiştirilme zamanını o ");
+	printf("                  ana günceller. Yoksa dosyaları boş olarak yaratır.\n");
+	printf("                  Örnek: dosyaYarat dosya1 dosya2 dosya3\n");
+}
