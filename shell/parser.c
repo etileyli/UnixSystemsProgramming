@@ -117,7 +117,7 @@ char *readLine(){
 void printCurrentDirectory(){
   char cwd[PATH_MAX];
   if (getcwd(cwd, sizeof(cwd)) != NULL) {
-      printf("Current working dir: %s\n", cwd);
+      printf("Şu anki çalışılan dizin: %s\n", cwd);
   } else {
       perror("getcwd() error");
       exit(-1);
@@ -125,7 +125,7 @@ void printCurrentDirectory(){
 }
 
 void printContentOfDir(){
-  printf("Contents of directory:\n");
+  printf("Dizin içeriği:\n");
   DIR *d;
   struct dirent *dir;
   d = opendir(".");
@@ -384,7 +384,7 @@ void displayHelpMessage(){
   printf("dizinYaz        Klasör içerisindeki dosya ve klasörleri listeler.\n\n");
 	printf("yardım          Komutlar ve kullanımları ile ilgili bilgileri gösterir.\n\n");
 	printf("Asıl Komutlar:\n");
-	printf("1. Komut \"bir\": bash cat komutunu örnek alır.\n");
+	printf("1. Komut \"bir\": bash cat komutunu örnek alır (birleştir kelimesinin kısaltmasıdır).\n");
 	printf("    1. Fonksiyon: Dosyaların içeriklerini komut satırına yazar.\n");
 	printf("                  Örnek: bir dosya1 dosya2 dosya 3\n");
 	printf("    2. Fonksiyon: Dosyaların içeriklerini hedef dosyaya ekler.\n");
