@@ -56,7 +56,7 @@ int main(int argc, char const *argv[]) {
     }
 
 		// Test code
-    // printCmd(cmd);
+    printCmd(cmd);
 
     // Print all built-in commands
     // for (int i = 0; i < numOfElements; i++){
@@ -473,6 +473,7 @@ int main(int argc, char const *argv[]) {
 																				If file(s) exist refreshes
 																				"Date Modified" attribute.)
 				*/
+				// sleep(3);
 				if (cmd->argc == 1){
 					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
 				}
@@ -508,8 +509,13 @@ int main(int argc, char const *argv[]) {
 			}
 		}
 		else{	// in parent process
-			wait(&childPid);
-			// printf("I am parent %ld, ID = %ld\n", (long)getpid(), (long)getppid());
+			/*If "&" is entered at the end of the command it is a background
+			process. Parent will not wait for the child. If not, parent should wait
+			for the child.*/
+			if (!cmd->isBackground){
+				wait(&childPid);
+		   	// printf("I am parent %ld, ID = %ld\n", (long)getpid(), (long)getppid());
+		}
 		}
   }while(1);
   return 0;

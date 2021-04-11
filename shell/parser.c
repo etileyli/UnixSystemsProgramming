@@ -27,9 +27,16 @@ s_command *parse(char *myArgv, char *s){
   int i = 0;
   token = strtok(myArgv, s);
 
+  int ampIndex = -1;    /* flag for "&" among tokens.*/
   /* walk through other tokens */
   while( token != NULL ) {
      // printf( " %s\n", token );
+     if (!strcmp(token, "&")){
+        printf("Token is &\n");
+        ampIndex = i;
+        token = strtok(NULL, s);
+        continue;
+     }
      cmd->argv[i++] = token;
      cmd->argv = realloc(cmd->argv, sizeof(char *)*(i + 1));
      token = strtok(NULL, s);
@@ -41,8 +48,10 @@ s_command *parse(char *myArgv, char *s){
   cmd->argc = i;
 
   // check if the process is background
-  if (!strcmp(cmd->argv[i-1], "&"))
+  // if (!strcmp(cmd->argv[i-1], "&")){
+  if (ampIndex == i){
     cmd->isBackground = 1;
+  }
   else
     cmd->isBackground = 0;
 
