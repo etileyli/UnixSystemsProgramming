@@ -193,6 +193,86 @@ void printHeadOfFile(int fd, char *sourceFilePath, int lineCount){
   putc('\n', stdout);
 }
 
+int totalLineCount(int fd, char *sourceFilePath){
+  // get size of the file
+  int fileSize = getFileSize(sourceFilePath);
+
+  // Allocate space as large as file size
+  char buf[(int)fileSize];
+  size_t nbytes = sizeof(buf);
+  ssize_t bytes_read;
+  bytes_read = read(fd, buf, nbytes);									// Read from file
+
+  // count number of lines
+  int i = 0, totalLineCount = 0;
+  while(buf[i] != EOF){
+    if (buf[i++] == '\n'){
+      totalLineCount++;
+    };
+  }
+  // printf("Total number of lines: %d\n", --totalLineCount);
+  return totalLineCount;
+}
+
+void printTailOfFile(char *sourceFilePath, int lineCount){
+
+  FILE *fp;
+  char *buffer = NULL;
+  long length;
+
+  fp = fopen(sourceFilePath, "rb");
+
+  if (fp){
+    fseek (fp, 0, SEEK_END);
+    length = ftell (fp);
+    fseek (fp, 0, SEEK_SET);
+    buffer = malloc (length);
+    if (buffer)
+    {
+      fread (buffer, 1, length, fp);
+    }
+    fclose (fp);
+  }
+
+  // count number of lines
+  int i = 0, totalLineCount = 0;
+  while(i < length){
+    if (buffer[i++] == '\n'){
+      ++totalLineCount;
+    }
+    // putc(buffer[i], stdout);
+  }
+  // putc('\n', stdout);
+
+  printf("Total Line Count= %d\n", ++totalLineCount);
+
+  i = 0;
+  while(i < length){
+    if (buffer[i++] == '\n'){
+      totalLineCount--;
+      // printf("lineCount = %d\n", lineCount);
+      // printf("totalLineCount = %d\n", totalLineCount);
+    }
+
+    if (lineCount >= totalLineCount){
+        putc(buffer[i], stdout);
+    }
+  }
+  putc('\n', stdout);
+
+  // i = 0;
+  // while(length > 0){
+  //   if (buffer[i++] == '\n'){
+  //     // printf("%2d- ", j++);
+  //     totalLineCount--;
+  //   }
+  //   if (lineCount > totalLineCount){
+  //       putc(buffer[i], stdout);
+  //   }
+  // }
+  // putc('\n', stdout);
+}
+
 int deleteFile(char *filePath){
   // printf("Deleting %s\n", filePath);
   if(!access(filePath, F_OK)) {

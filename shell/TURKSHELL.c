@@ -17,7 +17,8 @@ static char *builtInCommands[] = {
 	"yankı",			// imitates echo
   "bir",				// 1st Command: imitates cat
 	"dizinYarat",	// 2nd Command: imitates mkdir
-  "baş",        // 3rd Command: imitates head
+	"baş",        // 3rd Command: imitates head
+  "son",        // 4th Command: imitates tail
 	"dizinYaz",		// imitates pwd
 	"help"
 };
@@ -83,7 +84,7 @@ int main(int argc, char const *argv[]) {
 				return 0;
 			}
       // Helper command: dizinYaz
-      else if(!strcmp(cmd->argv[0], builtInCommands[4])){
+      else if(!strcmp(cmd->argv[0], builtInCommands[5])){
         printCurrentDirectory();
         printContentOfDir();
 
@@ -317,9 +318,9 @@ int main(int argc, char const *argv[]) {
         /*3rd Command ********************************************************
         baş: imitates command "head" prints a number of first lines of a file
         Usage:
-        head file1											(first 10 lines)
-        head -n lineCount file1         (N defines first N lines of the file)
-        head -n lineCount file1 file2   (first N lines of multiple files)
+        baş file1												(first 10 lines)
+        baş -n lineCount file1         (N defines first N lines of the file)
+        baş -n lineCount file1 file2   (first N lines of multiple files)
         */
 
         int lineCount = 10;   // default value
@@ -348,6 +349,7 @@ int main(int argc, char const *argv[]) {
 					}
         }
         else if (cmd->argc >= 4 && !strcmp(cmd->delim, "-n")){
+					/**2nd Function of baş: print first "lineCount" lines of input files */
 
           // if parameter after delimiter -n is a number
           if (isDigit(cmd->argv[2])){
@@ -377,6 +379,86 @@ int main(int argc, char const *argv[]) {
         }
         else{
           printf("Invalid usage of \"baş\"!\n");
+        }
+
+        return 0;
+      }
+      else if(!strcmp(cmd->argv[0], builtInCommands[4])){
+        /*4th Command ********************************************************
+        son: imitates command "tail" prints a number of first lines of a file
+        Usage:
+        son file1												(first 10 lines)
+        son -n lineCount file1         	(N defines first N lines of the file)
+        son -n lineCount file1 file2   	(first N lines of multiple files)
+        */
+
+        int lineCount = 10;   // default value
+
+        if (cmd->argc == 1){
+          printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+        }
+        else if (cmd->delim == NULL){
+          /**1st Function of son: print last 10 lines of input files */
+
+					for (int i = 1; i < cmd->argc; i++){
+
+						int fd;
+						char *filePath = cmd->argv[i];
+
+						if ((fd = open(filePath, O_RDONLY)) == -1)
+						{
+								perror("Cannot open file");
+								exit(1);
+						}
+
+						// print last lineCount lines of file to terminal
+						if ((fd = open(filePath, O_RDONLY)) == -1)
+						{
+								perror("Cannot open file");
+								exit(1);
+						}
+
+						printf("==> %s <==\n", filePath);
+						printTailOfFile(filePath, lineCount);
+						close(fd);
+					}
+        }
+        else if (cmd->argc >= 4 && !strcmp(cmd->delim, "-n")){
+					/**2nd Function of son: print last "lineCount" lines of input files */
+          // if parameter after delimiter -n is a number
+          if (isDigit(cmd->argv[2])){
+            // printf("cmd->argv[2] = %d\n", atoi(cmd->argv[2]));
+						lineCount = atoi(cmd->argv[2]);
+
+						for (int i = 3; i < cmd->argc; i++){
+							int fd;
+							char *filePath = cmd->argv[i];
+
+							// get line count of file
+							if ((fd = open(filePath, O_RDONLY)) == -1)
+							{
+									perror("Cannot open file");
+									exit(1);
+							}
+							// print last lineCount lines of file to terminal
+							if ((fd = open(filePath, O_RDONLY)) == -1)
+							{
+									perror("Cannot open file");
+									exit(1);
+							}
+
+							printf("==> %s <==\n", filePath);
+							printTailOfFile(filePath, lineCount);
+							close(fd);
+						}
+
+          }
+          else{
+            printf("The argument should be a positive number: %s\n", cmd->argv[2]);
+          }
+        }
+        else{
+          printf("Invalid usage of \"son\"!\n");
         }
 
         return 0;

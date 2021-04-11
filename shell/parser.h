@@ -20,6 +20,8 @@ void printCmd(s_command *cmd);
 int getFileSize(char *filePath);
 void printFile(int fd, char *filePath);
 void printHeadOfFile(int fd, char *sourceFilePath, int lineCount);
+int totalLineCount(int fd, char *sourceFilePath);
+void printTailOfFile(char *sourceFilePath, int lineCount);
 int deleteFile(char *filePath);
 int createDirectory(char *dirPath);
 int isDigit(char *str);
