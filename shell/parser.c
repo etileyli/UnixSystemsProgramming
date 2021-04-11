@@ -9,6 +9,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <ctype.h>
 
 #include "parser.h"
 
@@ -177,15 +178,19 @@ void printHeadOfFile(int fd, char *sourceFilePath, int lineCount){
   ssize_t bytes_read, bytes_written;
   bytes_read = read(fd, buf, nbytes);									// Read from file
 
-  int i = 0;
-  while(lineCount){
-    if (buf[i] == '\n'){
+  int i = 0, j = 0;
+  // printf("%2d- ", j++);
+  /* While not EOF put all characters in buffer filled from file to terminal.
+  Count down each newline character and when entered number of newline is
+  reached put character and exit from the loop */
+  while(buf[i] != EOF && lineCount > 0){
+    putc(buf[i], stdout);
+    if (buf[i++] == '\n'){
+      // printf("%2d- ", j++);
       lineCount--;
     }
-    putc(buf[i++], stdout);
   }
-
-  // bytes_written = write(STDOUT_FILENO, buf, nbytes);	// Write to terminal
+  putc('\n', stdout);
 }
 
 int deleteFile(char *filePath){
@@ -228,6 +233,15 @@ int createDirectory(char *dirPath){
   }
 
   return 0;
+}
+
+// This function returns a positive value if entered string is numeric.
+int isDigit(char *str){
+  while (*str) {
+    if (isdigit(*str++) == 0)
+      return 0;
+  }
+  return 1;
 }
 
 void appendToFile(int fdr, int fdw, char *sourceFilePath, char *targetFilePath){

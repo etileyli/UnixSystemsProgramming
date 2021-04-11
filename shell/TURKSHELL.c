@@ -317,7 +317,7 @@ int main(int argc, char const *argv[]) {
         /*3rd Command ********************************************************
         baş: imitates command "head" prints a number of first lines of a file
         Usage:
-        head file1
+        head file1											(first 10 lines)
         head -n lineCount file1         (N defines first N lines of the file)
         head -n lineCount file1 file2   (first N lines of multiple files)
         */
@@ -337,10 +337,26 @@ int main(int argc, char const *argv[]) {
               perror("Cannot open file");
               exit(1);
           }
-          printf("File is opened\n");
 
+          // print first lineCount lines of file to terminal
           printHeadOfFile(fd, filePath, lineCount);
           close(fd);
+        }
+        else if (cmd->argc >= 4 && !strcmp(cmd->delim, "-n")){
+
+          // if parameter after delimiter -n is a number
+          if (isDigit(cmd->argv[2])){
+            printf("cmd->argv[2] = %d\n", atoi(cmd->argv[2]));
+
+
+          }
+          else{
+            printf("The argument should be a number: %s\n", cmd->argv[2]);
+          }
+
+        }
+        else{
+          printf("Invalid usage of \"baş\"!\n");
         }
 
         return 0;

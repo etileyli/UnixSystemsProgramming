@@ -22,5 +22,6 @@ void printFile(int fd, char *filePath);
 void printHeadOfFile(int fd, char *sourceFilePath, int lineCount);
 int deleteFile(char *filePath);
 int createDirectory(char *dirPath);
+int isDigit(char *str);
 
 void appendToFile(int fdr, int fdw, char *sourceFilePath, char *targetFilePath);
