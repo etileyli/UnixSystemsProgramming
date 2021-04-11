@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <utime.h>
 #include "parser.h"
 
 #define EXIT_KEYWORD "exit"
@@ -18,7 +19,8 @@ static char *builtInCommands[] = {
   "bir",				// 1st Command: imitates cat
 	"dizinYarat",	// 2nd Command: imitates mkdir
 	"baş",        // 3rd Command: imitates head
-  "son",        // 4th Command: imitates tail
+	"son",        // 4th Command: imitates tail
+  "dosyaYarat", // 5th Command: imitates touch
 	"dizinYaz",		// imitates pwd
 	"help"
 };
@@ -84,16 +86,15 @@ int main(int argc, char const *argv[]) {
 				return 0;
 			}
       // Helper command: dizinYaz
-      else if(!strcmp(cmd->argv[0], builtInCommands[5])){
+      else if(!strcmp(cmd->argv[0], builtInCommands[6])){
         printCurrentDirectory();
         printContentOfDir();
 
         return 0;
       }
-			/*1st Command ***********************************************************/
-			// bir (imitates 'cat' command)
 			else if(!strcmp(cmd->argv[0], builtInCommands[1])){
-
+				/*1st Command ***********************************************************/
+				// bir (imitates 'cat' command)
 				if (cmd->argc == 1){
 					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
 				}
@@ -300,6 +301,7 @@ int main(int argc, char const *argv[]) {
               subDirDepth += 1;
             }
 
+						/* Go up subDirDepth times. */
             for (int j = subDirDepth; j > 0; j--){
               if (chdir("..") != 0){
                 perror("chdir() failed");
@@ -463,6 +465,43 @@ int main(int argc, char const *argv[]) {
 
         return 0;
       }
+			else if(!strcmp(cmd->argv[0], builtInCommands[5])){
+				/*5th Command ********************************************************
+				dosyaYarat:imitates command "touch" partially. Creates empty files
+				Usage:
+				dosyaYarat file1 file2					(Creates multiple empty files.
+																				If file(s) exist refreshes
+																				"Date Modified" attribute.)
+				*/
+				if (cmd->argc == 1){
+					printf("The command \"%s\" needs more arguments.\n", cmd->argv[0]);
+				}
+				else if (cmd->delim == NULL){
+					/*1st Function of dosyaYarat: Creates empty files entered. */
+					for (int i = 1; i < cmd->argc; i++){
+
+						int fd;
+						char *filePath = cmd->argv[i];
+
+						if(access(filePath, F_OK)) {
+							// file does not exist. Create file.
+							if ((fd = open(filePath, O_CREAT, 0777)) == -1)
+							{
+									perror("Cannot create file");
+									exit(1);
+							}
+							close(fd);
+						}
+						else{
+							utime(filePath, NULL);
+						}
+					}
+				}
+				else{
+					printf("Invalid usage of \"dosyaYarat\"!\n");
+				}
+				return 0;
+			}
 			else{
 				printf("Command is not in the list!\n");
 				return 0;
