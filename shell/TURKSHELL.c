@@ -15,12 +15,13 @@
 #define PROMPT ">>> "
 
 static char *builtInCommands[] = {
-	"yankı",			// imitates echo
-  "bir",				// 1st Command: imitates cat
-	"dizinYarat",	// 2nd Command: imitates mkdir
-	"baş",        // 3rd Command: imitates head
-	"son",        // 4th Command: imitates tail
-  "dosyaYarat", // 5th Command: imitates touch
+	"yankı",			// partially imitates echo
+  "bir",				// 1st Command: partially imitates cat
+	"dizinYarat",	// 2nd Command: partially imitates mkdir
+	"baş",        // 3rd Command: partially imitates head
+	"son",        // 4th Command: partially imitates tail
+	"dosyaYarat", // 5th Command: partially imitates touch
+  "??", // Custom Command:
 	"dizinYaz",		// imitates pwd
 	"help"
 };
@@ -185,7 +186,7 @@ int main(int argc, char const *argv[]) {
 					}
 				}
 				else if (!strcmp(cmd->delim, ">") && (cmd->delimPos + 2 == cmd->argc)){
-					/**4th Function of bir: copy contents of files sto a target
+					/**4th Function of bir: copy contents of files to a target
           file. Deletes target file if it exists. */
 					int fdr, fdw;
           char *targetFilePath = cmd->argv[cmd->delimPos + 1];
@@ -237,9 +238,6 @@ int main(int argc, char const *argv[]) {
 								ssize_t bytes_read, bytes_written;
 								bytes_read = read(fdr, buf, nbytes);			// Read from file
 								bytes_written = write(fdw, buf, nbytes);	// Write to target file
-
-								// does not work!
-								// appendToFile(fdr, fdw, filePath, targetFilePath);
 
                 close(fdr);
 								close(fdw);
@@ -494,7 +492,7 @@ int main(int argc, char const *argv[]) {
 							close(fd);
 						}
 						else{
-							utime(filePath, NULL);
+							utime(filePath, NULL);		// Refreshes modification date.
 						}
 					}
 				}
