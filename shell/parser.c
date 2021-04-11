@@ -333,6 +333,44 @@ int isDigit(char *str){
   return 1;
 }
 
+void guessGame(int upperBound, int attemptLimit){
+
+  int number = (rand() * 8951) % upperBound;  // 8951 is a prime number
+  int guess = 0;
+  int attemptNumber = 0;
+
+  printf("Lütfen 1 ile %d arasında bir sayı girin:\n", upperBound);
+
+  do{
+    /* get user input */
+    char *buff = readLine();
+
+    if (!isDigit(buff)){
+      printf("Lütfen bir sayı girin.\n");
+      continue;
+    }
+
+    guess = atoi(buff);
+
+    if (guess == number){
+      printf("Bravo! %d tahminde sayıyı buldunuz!\n", ++attemptNumber);
+    }
+    else if (attemptNumber + 1 == attemptLimit){
+      printf("Üzgünüm, kaybettiniz.\n");
+      break;
+    }
+    else if (guess > number){
+      printf("Aşağı!\n");
+      attemptNumber++;
+    }
+    else if (guess < number){
+      printf("Yukarı!\n");
+      attemptNumber++;
+    }
+
+  }while(guess != number);
+}
+
 void displayWelcomeMessage(){
 
     printf("TURKSHELL'e Hosgeldiniz!\n");
@@ -376,4 +414,9 @@ void displayHelpMessage(){
 	printf("    1. Fonksiyon: Girilen dosyalar varsa dosyaların değiştirilme zamanını o ");
 	printf("                  ana günceller. Yoksa dosyaları boş olarak yaratır.\n");
 	printf("                  Örnek: dosyaYarat dosya1 dosya2 dosya3\n");
+  printf("6. Komut \"tahminOyunu\": Bu oyunda kullanıcı kendi belirlediği limit\n");
+  printf("                  ve tahmin hakkı içinde sayı tahmini yapar.\n");
+  printf("                  Örnek: tahminOyunu üstLimit tahminHakkı\n");
+  printf("                  Örnek: tahminOyunu 100 5\n");
+
 }

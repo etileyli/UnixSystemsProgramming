@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <utime.h>
+#include <sys/random.h>
 #include "parser.h"
 
 #define EXIT_KEYWORD "exit"
@@ -21,7 +22,7 @@ static char *builtInCommands[] = {
 	"baş",        // 3rd Command: partially imitates head
 	"son",        // 4th Command: partially imitates tail
 	"dosyaYarat", // 5th Command: partially imitates touch
-  "??", // Custom Command:
+  "tahminOyunu",// 6th Custom Command: A number guessing game.
 	"dizinYaz",		// imitates pwd
 	"yardım"
 };
@@ -497,6 +498,18 @@ int main(int argc, char const *argv[]) {
 				}
 				else{
 					printf("\"dosyaYarat\" komutu için hatalı kullanım!\n");
+				}
+				return 0;
+			}
+			else if(!strcmp(cmd->argv[0], builtInCommands[6])){
+
+				if(cmd->argc == 3 && isDigit(cmd->argv[1]) && isDigit(cmd->argv[2])){
+					guessGame(atoi(cmd->argv[1]), atoi(cmd->argv[2]));
+				}
+				else{
+					printf("\"dosyaYarat\" komutu için hatalı kullanım!\n");
+					printf("Lütfen üst sınırı ve tahmin hakkını girin. ");
+					printf("Üst sınır 1'den büyük olmalı.\n");
 				}
 				return 0;
 			}
