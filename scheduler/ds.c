@@ -57,4 +57,14 @@ void insert(threadNode *thread){
 
 void delete ()
 {
+  if(front == NULL)
+  {
+      printf("The queue is aready emtpy!\n");
+  }
+  else
+  {
+      threadNode *thread = front;
+      front = front->next;
+      free(thread);
+  }
 }

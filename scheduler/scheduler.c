@@ -5,12 +5,17 @@
 
 int main(int argc, char const *argv[]) {
 
-  for (int i = 0; i < 5; i++){
+  for (int i = 0; i < 4; i++){
     threadNode *thrdNode = NULL;
-    thrdNode = createThread();
-    insert(thrdNode);
+    insert(thrdNode = createThread());
     displayNode(thrdNode);
   }
+
+  displayFront();
+  displayRear();
+
+  delete();
+
 
   displayFront();
   displayRear();
