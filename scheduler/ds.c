@@ -13,6 +13,17 @@ void displayNode(threadNode *thrdNode){
   printf("\n");
 }
 
+void displayRear(){
+  printf("Rear:\n");
+  displayNode(rear);
+}
+
+void displayFront(){
+  printf("Front:\n");
+  displayNode(front);
+}
+
+
 threadNode *createThread(){
 
   threadNode *thrdNode = (threadNode *)malloc(sizeof(struct threadNode));

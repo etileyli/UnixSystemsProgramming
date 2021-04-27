@@ -20,3 +20,5 @@ threadNode *createThread();
 void insert();
 void delete();
 void displayNode();
+void displayFront();
+void displayRear();
