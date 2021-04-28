@@ -1,11 +1,11 @@
 #include "ds.h"
 
-static threadNode *front = NULL;
-static threadNode *rear = NULL;
+static pcbptr *front = NULL;
+static pcbptr *rear = NULL;
 
 static int taskID = 0;
 
-void displayNode(threadNode *thrdNode){
+void displayNode(pcbptr *thrdNode){
 
   printf("Thread No = %d \n", thrdNode->thread.taskID);
   printf("Thread priority = %d \n", thrdNode->thread.priority);
@@ -23,10 +23,9 @@ void displayFront(){
   displayNode(front);
 }
 
+pcbptr *createThread(){
 
-threadNode *createThread(){
-
-  threadNode *thrdNode = (threadNode *)malloc(sizeof(struct threadNode));
+  pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
 
   if(thrdNode == NULL){
     perror("Unable to allocate thread node");
@@ -40,7 +39,7 @@ threadNode *createThread(){
   return thrdNode;
 }
 
-void insert(threadNode *thread){
+void enqueue_proc(pcbptr *thread){
 
   if (front == NULL){
     front = thread;
@@ -55,16 +54,17 @@ void insert(threadNode *thread){
   }
 }
 
-void delete ()
+pcbptr *dequeue_proc()
 {
   if(front == NULL)
   {
       printf("The queue is aready emtpy!\n");
+      return NULL;
   }
   else
   {
-      threadNode *thread = front;
+      pcbptr *thread = front;
       front = front->next;
-      free(thread);
+      return thread;
   }
 }

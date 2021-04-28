@@ -9,16 +9,16 @@ typedef struct pcb{
   int sem;
 }pcb;
 
-typedef struct threadNode{
+typedef struct pcbptr{
   pcb thread;
-  struct threadNode *next;
-}threadNode;
+  struct pcbptr *next;
+}pcbptr;
 
 
 
-threadNode *createThread();
-void insert();
-void delete();
+pcbptr *createThread();
+void enqueue_proc();
+pcbptr *dequeue_proc();
 void displayNode();
 void displayFront();
 void displayRear();

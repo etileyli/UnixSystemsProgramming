@@ -6,19 +6,19 @@
 int main(int argc, char const *argv[]) {
 
   for (int i = 0; i < 4; i++){
-    threadNode *thrdNode = NULL;
-    insert(thrdNode = createThread());
+    pcbptr *thrdNode = NULL;
+    enqueue_proc(thrdNode = createThread());
     displayNode(thrdNode);
   }
 
   displayFront();
   displayRear();
 
-  delete();
-
+  pcbptr *thrdNode = dequeue_proc();
 
   displayFront();
   displayRear();
 
+  displayNode(thrdNode);
   return 0;
 }
