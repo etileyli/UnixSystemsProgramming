@@ -35,9 +35,16 @@ int main(int argc, char const *argv[]) {
   // displayPCBTable();
 
   delete_proc(getPCBFromTable(2), que1);
-  displayQueue(que1);
+  // displayQueue(que1);
 
   delete_proc(getPCBFromTable(3), que1);
+  // displayQueue(que1);
+
+  delete_proc(getPCBFromTable(4), que1);
+  displayQueue(que1);
+
+  delete_proc(getPCBFromTable(1), que1);
+  // displayQueue(que1);
   displayQueue(que1);
 
   return 0;

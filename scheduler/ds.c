@@ -89,11 +89,18 @@ void delete_proc(pcbptr *thread, queue *que){
       pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
       pcbptr *prevThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
       thrdNode = que->front;
+      // prevThrdNode = que->front;
+
       do{
         if (thrdNode->thread.taskID == thread->thread.taskID){
           prevThrdNode->next = thread->next;
         }
+
         prevThrdNode = thrdNode;
+        /* If first note is deleted, change queue front as well. */
+        if (thread->thread.taskID == 1){
+          que->front = thrdNode->next;
+        }
         thrdNode = thrdNode->next;
 
       }while(thrdNode != NULL);
