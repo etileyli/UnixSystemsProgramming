@@ -30,4 +30,4 @@ void displayNode();
 void displayFront(queue *que);
 void displayRear(queue *que);
 void displayPCBTable();
-void displayQueue();
+void displayQueue(queue *que);
