@@ -70,6 +70,44 @@ pcbptr *dequeue_proc(queue *que)
   }
 }
 
+pcbptr *getPCBFromTable(int index){
+  if ((index > 0) && (index < MAX_PROCESS_NUMBER) && pcbTable[index] != NULL )
+    return pcbTable[index];
+  else{
+    printf("Index is not correct!\n");
+    return NULL;
+  }
+}
+
+void delete_proc(pcbptr *thread, queue *que){
+
+  if (thread == NULL){
+    printf("Thread is not defined!\n");
+  }
+  else{
+    if (checkQueue(que)){
+      pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
+      pcbptr *prevThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
+      thrdNode = que->front;
+      do{
+        if (thrdNode->thread.taskID == thread->thread.taskID){
+          prevThrdNode->next = thread->next;
+        }
+        prevThrdNode = thrdNode;
+        thrdNode = thrdNode->next;
+
+      }while(thrdNode != NULL);
+    }
+  }
+}
+
+int checkQueue(queue *que){
+  if (que->front == NULL)
+    return 0; /* If the queue is empty, return 0 */
+  else
+    return 1; /* else, return a non-zero value*/
+}
+
 void displayPCBTable(){
   for (int i = 0; i < MAX_PROCESS_NUMBER; i++){
     if (pcbTable[i] != NULL){
@@ -79,7 +117,7 @@ void displayPCBTable(){
 }
 
 void displayQueue(queue *que){
-  if (que->front == NULL){
+  if (!checkQueue(que)){
     printf("The queue is empty!\n");
     return;
   }

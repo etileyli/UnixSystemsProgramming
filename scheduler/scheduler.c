@@ -13,6 +13,8 @@ int main(int argc, char const *argv[]) {
     displayNode(thrdNode);
   }
 
+  printf("Threads are created!\n\n");
+
   // displayFront(que1);
   // displayRear(que1);
 
@@ -20,14 +22,23 @@ int main(int argc, char const *argv[]) {
 
   // displayFront(que1);
   // displayRear(que1);
-  //
+
   // displayNode(thrdNode);
 
   // displayPCBTable();
-  displayQueue(que1);
-  pcbptr *thrdNode = dequeue_proc(que1);
+  // displayQueue(que1);
+  // pcbptr *thrdNode = dequeue_proc(que1);
+  // displayQueue(que1);
+  //
+  // displayNode(thrdNode);
+  // printf("****\n");
+  // displayPCBTable();
+
+  delete_proc(getPCBFromTable(2), que1);
   displayQueue(que1);
 
-  displayNode(thrdNode);
+  delete_proc(getPCBFromTable(3), que1);
+  displayQueue(que1);
+
   return 0;
 }
