@@ -1,6 +1,8 @@
 #include "ds.h"
 
-static int taskID = 0;
+static pcbptr *pcbTable[MAX_PROCESS_NUMBER];
+/*A pcb's id (pid) is its index in this array*/
+static int pcbTableIndex = 0;
 
 void displayNode(pcbptr *thrdNode){
 
@@ -29,7 +31,9 @@ pcbptr *createThread(){
     exit(1);
   }
 
-  thrdNode->thread.taskID = ++taskID;
+  pcbTable[++pcbTableIndex] = thrdNode;
+
+  thrdNode->thread.taskID = pcbTableIndex;
   thrdNode->thread.priority = 0;
   thrdNode->thread.dataArea = 111;
 
@@ -64,4 +68,29 @@ pcbptr *dequeue_proc(queue *que)
       que->front = que->front->next;
       return thread;
   }
+}
+
+void displayPCBTable(){
+  for (int i = 0; i < MAX_PROCESS_NUMBER; i++){
+    if (pcbTable[i] != NULL){
+      displayNode(pcbTable[i]);
+    }
+  }
+}
+
+void displayQueue(queue *que){
+  if (que->front == NULL){
+    printf("The queue is empty!\n");
+    return;
+  }
+
+  pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
+  thrdNode = que->front;
+
+  do{
+    displayNode(thrdNode);
+    thrdNode = thrdNode->next;
+  }while(thrdNode != NULL);
+
+  free(thrdNode);
 }

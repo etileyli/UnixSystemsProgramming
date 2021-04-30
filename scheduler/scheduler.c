@@ -13,13 +13,20 @@ int main(int argc, char const *argv[]) {
     displayNode(thrdNode);
   }
 
-  displayFront(que1);
-  displayRear(que1);
+  // displayFront(que1);
+  // displayRear(que1);
 
+  // pcbptr *thrdNode = dequeue_proc(que1);
+
+  // displayFront(que1);
+  // displayRear(que1);
+  //
+  // displayNode(thrdNode);
+
+  // displayPCBTable();
+  displayQueue(que1);
   pcbptr *thrdNode = dequeue_proc(que1);
-
-  displayFront(que1);
-  displayRear(que1);
+  displayQueue(que1);
 
   displayNode(thrdNode);
   return 0;
