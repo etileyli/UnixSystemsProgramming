@@ -1,8 +1,5 @@
 #include "ds.h"
 
-static pcbptr *front = NULL;
-static pcbptr *rear = NULL;
-
 static int taskID = 0;
 
 void displayNode(pcbptr *thrdNode){
@@ -13,14 +10,14 @@ void displayNode(pcbptr *thrdNode){
   printf("\n");
 }
 
-void displayRear(){
+void displayRear(queue *que){
   printf("Rear:\n");
-  displayNode(rear);
+  displayNode(que->rear);
 }
 
-void displayFront(){
+void displayFront(queue *que){
   printf("Front:\n");
-  displayNode(front);
+  displayNode(que->front);
 }
 
 pcbptr *createThread(){
@@ -39,32 +36,32 @@ pcbptr *createThread(){
   return thrdNode;
 }
 
-void enqueue_proc(pcbptr *thread){
+void enqueue_proc(pcbptr *thread, queue *que){
 
-  if (front == NULL){
-    front = thread;
-    rear = thread;
-    front->next = NULL;
-    rear->next = NULL;
+  if (que->front == NULL){
+    que->front = thread;
+    que->rear = thread;
+    que->front->next = NULL;
+    que->rear->next = NULL;
   }
   else{
-    rear->next = thread;
-    rear = thread;
-    rear->next = NULL;
+    que->rear->next = thread;
+    que->rear = thread;
+    que->rear->next = NULL;
   }
 }
 
-pcbptr *dequeue_proc()
+pcbptr *dequeue_proc(queue *que)
 {
-  if(front == NULL)
+  if(que->front == NULL)
   {
       printf("The queue is aready emtpy!\n");
       return NULL;
   }
   else
   {
-      pcbptr *thread = front;
-      front = front->next;
+      pcbptr *thread = que->front;
+      que->front = que->front->next;
       return thread;
   }
 }

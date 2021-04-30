@@ -14,11 +14,15 @@ typedef struct pcbptr{
   struct pcbptr *next;
 }pcbptr;
 
-
+typedef struct queue{
+  pcbptr *front;
+  pcbptr *rear;
+  int state;
+}queue;
 
 pcbptr *createThread();
-void enqueue_proc();
-pcbptr *dequeue_proc();
+void enqueue_proc(pcbptr *thread, queue *que);
+pcbptr *dequeue_proc(queue *que);
 void displayNode();
-void displayFront();
-void displayRear();
+void displayFront(queue *que);
+void displayRear(queue *que);
