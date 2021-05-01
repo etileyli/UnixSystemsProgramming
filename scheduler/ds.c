@@ -98,7 +98,7 @@ void insert_proc(pcbptr *newThread, queue *que){
         }
         else{
           newThread->next = currThrdNode;
-          prevThrdNode->next = newNode;
+          prevThrdNode->next = newThread;
         }
         break;
       }
@@ -108,6 +108,8 @@ void insert_proc(pcbptr *newThread, queue *que){
 
     }while(currThrdNode->next != NULL);
     // code here for last node
+    currThrdNode->next = newThread;
+    newThread->next = NULL;
   }
   return;
 }
