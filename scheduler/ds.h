@@ -23,10 +23,11 @@ typedef struct queue{
   int state;
 }queue;
 
-pcbptr *createThread();
+pcbptr *makeProc(int prioritry);
 void enqueue_proc(pcbptr *thread, queue *que);
 pcbptr *dequeue_proc(queue *que);
 pcbptr *getPCBFromTable(int index);
+void insert_proc(pcbptr *thread, queue *que);
 void delete_proc(pcbptr *thread, queue *que);
 int checkQueue(queue *que);
 void displayNode(pcbptr *thrdNode);

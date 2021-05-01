@@ -22,7 +22,7 @@ void displayFront(queue *que){
   displayNode(que->front);
 }
 
-pcbptr *createThread(){
+pcbptr *makeProc(int prioritry){
 
   pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
 
@@ -34,7 +34,7 @@ pcbptr *createThread(){
   pcbTable[++pcbTableIndex] = thrdNode;
 
   thrdNode->thread.taskID = pcbTableIndex;
-  thrdNode->thread.priority = 0;
+  thrdNode->thread.priority = prioritry;
   thrdNode->thread.dataArea = 111;
 
   return thrdNode;
@@ -77,6 +77,39 @@ pcbptr *getPCBFromTable(int index){
     printf("Index is not correct!\n");
     return NULL;
   }
+}
+
+void insert_proc(pcbptr *newThread, queue *que){
+
+  pcbptr *currThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
+  pcbptr *prevThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
+  currThrdNode = que->front;
+
+  /*if the queue is empty, just enqueue the process*/
+  if(!checkQueue(que)){
+    enqueue_proc(newThread, que);
+  }
+  else{
+    do{
+      if (newThread->thread.priority > currThrdNode->thread.priority){
+        if (currThrdNode == que->front){
+          newThread->next = currThrdNode;
+          que->front = newThread;
+        }
+        else{
+          newThread->next = currThrdNode;
+          prevThrdNode->next = newNode;
+        }
+        break;
+      }
+
+      prevThrdNode = currThrdNode;
+      currThrdNode = currThrdNode->next;
+
+    }while(currThrdNode->next != NULL);
+    // code here for last node
+  }
+  return;
 }
 
 void delete_proc(pcbptr *thread, queue *que){
