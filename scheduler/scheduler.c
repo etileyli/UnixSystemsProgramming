@@ -82,15 +82,15 @@ int main(int argc, char const *argv[]) {
     // displayNode(thrdNode);
   }
 
-  printf("Threads are created!\n\n");
+  printf("Threads are created!\n");
 
   // printf("The Queue:\n");
   // displayQueue(quePB);
   insert_proc(thrdNode = makeProc(0), quePB);
   insert_proc(thrdNode = makeProc(5), quePB);
   insert_proc(thrdNode = makeProc(3), quePB);
-  printf("\nThreads 5,6 and 7 is added to the que.\n\n");
-  displayQueue(quePB);
+  printf("\nThreads 5,6 and 7 are added to the que.\n\n");
+  // displayQueue(quePB);
   // displayFront(quePB);
   // displayRear(quePB);
 
@@ -98,12 +98,15 @@ int main(int argc, char const *argv[]) {
   // printf("The Queue:\n");
   // displayQueue(quePB);
 
+  free(del_proc(7, quePB));
+  free(del_proc(6, quePB));
+  free(del_proc(5, quePB));
+  printf("\nThreads 5,6 and 7 are deleted from the system.\n\n");
   printf("The Queue:\n");
-  delete_proc(getPCBFromTable(7), quePB);
-  delete_proc(getPCBFromTable(6), quePB);
-  delete_proc(getPCBFromTable(5), quePB);
   displayQueue(quePB);
 
+  printf("The PCB Table:\n");
+  displayPCBTable();
   // delete_proc(getPCBFromTable(5));
   // displayQueue(quePB);
 

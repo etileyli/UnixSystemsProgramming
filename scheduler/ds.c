@@ -30,19 +30,18 @@ pcbptr *makeProc(int prioritry){
   return thrdNode;
 }
 
-void enqueue_proc(pcbptr *thread, queue *que){
+void enqueue_proc(pcbptr *newThread, queue *que){
 
   if (que->front == NULL){
-    que->front = thread;
-    que->rear = thread;
+    que->front = newThread;
+    que->rear = newThread;
     que->front->next = NULL;
     que->rear->next = NULL;
   }
   else{
-    que->rear->next = thread;
-    que->rear = thread;
+    que->rear->next = newThread;
+    que->rear = newThread;
     que->rear->next = NULL;
-    printf("HEre\n");
   }
 }
 
@@ -135,6 +134,21 @@ void delete_proc(pcbptr *deletedThread, queue *que){
       }while(currThrdNode != NULL);
     }
   }
+}
+
+pcbptr *del_proc(int index, queue *que){
+  /* Copy thread's address*/
+  pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
+  thrdNode = getPCBFromTable(index);
+
+  /* First delete thread from the queue*/
+  delete_proc(getPCBFromTable(index), que);
+
+  /* Then delete thread from pcb_table*/
+  pcbTable[index] = NULL;
+
+  /* Return the address in order to free it. */
+  return thrdNode;
 }
 
 int checkQueue(queue *que){
