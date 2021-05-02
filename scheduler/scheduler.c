@@ -90,6 +90,7 @@ int main(int argc, char const *argv[]) {
   insert_proc(thrdNode = makeProc(5), quePB);
   printf("\nThreads 5 and 6 is added to the que.\n\n");
   displayQueue(quePB);
+  displayRear(quePB);
 
   return 0;
 }

@@ -91,16 +91,17 @@ void insert_proc(pcbptr *newThread, queue *que){
           newThread->next = currThrdNode;
           prevThrdNode->next = newThread;
         }
-        break;
+        return; /* Insertion is done, return.*/
       }
 
       prevThrdNode = currThrdNode;
       currThrdNode = currThrdNode->next;
 
     }while(currThrdNode->next != NULL);
-    // code here for last node
-    // currThrdNode->next = newThread;
-    // newThread->next = NULL;
+    /* new node's priority is not greater than any node. Place it to the rear.*/
+    currThrdNode->next = newThread;
+    newThread->next = NULL;
+    que->rear = newThread;  /* Update rear node. */
   }
   return;
 }
