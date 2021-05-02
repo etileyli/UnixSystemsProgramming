@@ -25,7 +25,7 @@ typedef struct queue{
 
 queue *createQueue();
 pcbptr *makeProc(int prioritry);
-void enqueue_proc(pcbptr *thread, queue *que);
+void enqueue_proc(pcbptr *newThread, queue *que);
 pcbptr *dequeue_proc(queue *que);
 pcbptr *getPCBFromTable(int index);
 void insert_proc(pcbptr *newThread, queue *que);
