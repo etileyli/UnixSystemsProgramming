@@ -23,6 +23,7 @@ typedef struct queue{
   int state;
 }queue;
 
+queue *createQueue();
 pcbptr *makeProc(int prioritry);
 void enqueue_proc(pcbptr *thread, queue *que);
 pcbptr *dequeue_proc(queue *que);

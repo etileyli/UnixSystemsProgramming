@@ -4,22 +4,12 @@ static pcbptr *pcbTable[MAX_PROCESS_NUMBER];
 /*A pcb's id (pid) is its index in this array*/
 static int pcbTableIndex = 0;
 
-void displayNode(pcbptr *thrdNode){
+queue *createQueue(){
 
-  printf("Thread No = %d \n", thrdNode->thread.taskID);
-  printf("Thread priority = %d \n", thrdNode->thread.priority);
-  printf("Thread dataArea = %d \n", thrdNode->thread.dataArea);
-  printf("\n");
-}
+  queue *que = (queue *)malloc(sizeof(struct queue));
+  que->front = NULL; que->rear = NULL;
 
-void displayRear(queue *que){
-  printf("Rear:\n");
-  displayNode(que->rear);
-}
-
-void displayFront(queue *que){
-  printf("Front:\n");
-  displayNode(que->front);
+  return que;
 }
 
 pcbptr *makeProc(int prioritry){
@@ -52,6 +42,7 @@ void enqueue_proc(pcbptr *thread, queue *que){
     que->rear->next = thread;
     que->rear = thread;
     que->rear->next = NULL;
+    printf("HEre\n");
   }
 }
 
@@ -108,8 +99,8 @@ void insert_proc(pcbptr *newThread, queue *que){
 
     }while(currThrdNode->next != NULL);
     // code here for last node
-    currThrdNode->next = newThread;
-    newThread->next = NULL;
+    // currThrdNode->next = newThread;
+    // newThread->next = NULL;
   }
   return;
 }
@@ -150,6 +141,24 @@ int checkQueue(queue *que){
     return 0; /* If the queue is empty, return 0 */
   else
     return 1; /* else, return a non-zero value*/
+}
+
+void displayNode(pcbptr *thrdNode){
+
+  printf("Thread No = %d \n", thrdNode->thread.taskID);
+  printf("Thread priority = %d \n", thrdNode->thread.priority);
+  printf("Thread dataArea = %d \n", thrdNode->thread.dataArea);
+  printf("\n");
+}
+
+void displayRear(queue *que){
+  printf("Rear:\n");
+  displayNode(que->rear);
+}
+
+void displayFront(queue *que){
+  printf("Front:\n");
+  displayNode(que->front);
 }
 
 void displayPCBTable(){

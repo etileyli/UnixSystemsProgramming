@@ -5,8 +5,10 @@
 
 int main(int argc, char const *argv[]) {
 
-  queue *queFCFS = (queue *)malloc(sizeof(struct queue));
-  queue *quePB = (queue *)malloc(sizeof(struct queue));
+  queue *queFCFS = createQueue();
+
+  queue *quePB = createQueue();
+
   pcbptr *thrdNode = NULL;
 
   // for (int i = 0; i < 4; i++){
@@ -76,18 +78,18 @@ int main(int argc, char const *argv[]) {
   // displayPCBTable();
 
   for (int i = 0; i < 4; i++){
-    insert_proc(thrdNode = makeProc(i), quePB);
-    displayNode(thrdNode);
+    insert_proc(thrdNode = makeProc(i+1), quePB);
+    // displayNode(thrdNode);
   }
 
   printf("Threads are created!\n\n");
 
   printf("The Queue:\n");
-  displayQueue(quePB);
-  // insert_proc(thrdNode = makeProc(2), quePB);
-  // insert_proc(thrdNode = makeProc(4), quePB);
-  // printf("\nThreads 5 and 6 is added to the que.\n\n");
   // displayQueue(quePB);
+  insert_proc(thrdNode = makeProc(0), quePB);
+  insert_proc(thrdNode = makeProc(5), quePB);
+  printf("\nThreads 5 and 6 is added to the que.\n\n");
+  displayQueue(quePB);
 
   return 0;
 }
