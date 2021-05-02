@@ -84,13 +84,26 @@ int main(int argc, char const *argv[]) {
 
   printf("Threads are created!\n\n");
 
-  printf("The Queue:\n");
+  // printf("The Queue:\n");
   // displayQueue(quePB);
   insert_proc(thrdNode = makeProc(0), quePB);
   insert_proc(thrdNode = makeProc(5), quePB);
-  printf("\nThreads 5 and 6 is added to the que.\n\n");
+  insert_proc(thrdNode = makeProc(3), quePB);
+  printf("\nThreads 5,6 and 7 is added to the que.\n\n");
   displayQueue(quePB);
-  displayRear(quePB);
+  // displayFront(quePB);
+  // displayRear(quePB);
+
+  dequeue_proc(quePB);
+  printf("The Queue:\n");
+  displayQueue(quePB);
+
+  // delete_proc(getPCBFromTable(6));
+  // displayQueue(quePB);
+  //
+  // delete_proc(getPCBFromTable(5));
+  // displayQueue(quePB);
+
 
   return 0;
 }

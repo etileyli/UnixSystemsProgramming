@@ -106,33 +106,33 @@ void insert_proc(pcbptr *newThread, queue *que){
   return;
 }
 
-void delete_proc(pcbptr *thread, queue *que){
+void delete_proc(pcbptr *deletedThread, queue *que){
 
-  if (thread == NULL){
+  if (deletedThread == NULL){
     printf("Thread is not defined!\n");
   }
   else{
     if (checkQueue(que)){
-      pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
+      pcbptr *currThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
       pcbptr *prevThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
-      thrdNode = que->front;
+      currThrdNode = que->front;
 
       do{
         /* If first note is deleted, change queue front only. */
-        if (thread->thread.taskID == thrdNode->thread.taskID){
-          que->front = thrdNode->next;
-          break;
+        if (deletedThread->thread.taskID == currThrdNode->thread.taskID){
+          que->front = currThrdNode->next;
+          return;
         }
         /* If deleted node is not the first one and exists in queue*/
-        else if (thrdNode->thread.taskID == thread->thread.taskID){
-          prevThrdNode->next = thread->next;
-          break;
+        else if (currThrdNode->thread.taskID == deletedThread->thread.taskID){
+          prevThrdNode->next = deletedThread->next;
+          return;
         }
 
-        prevThrdNode = thrdNode;
-        thrdNode = thrdNode->next;
+        prevThrdNode = currThrdNode;
+        currThrdNode = currThrdNode->next;
 
-      }while(thrdNode != NULL);
+      }while(currThrdNode != NULL);
     }
   }
 }
