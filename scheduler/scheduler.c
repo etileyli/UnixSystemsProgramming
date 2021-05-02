@@ -94,13 +94,16 @@ int main(int argc, char const *argv[]) {
   // displayFront(quePB);
   // displayRear(quePB);
 
-  dequeue_proc(quePB);
+  // dequeue_proc(quePB);
+  // printf("The Queue:\n");
+  // displayQueue(quePB);
+
   printf("The Queue:\n");
+  delete_proc(getPCBFromTable(7), quePB);
+  delete_proc(getPCBFromTable(6), quePB);
+  delete_proc(getPCBFromTable(5), quePB);
   displayQueue(quePB);
 
-  // delete_proc(getPCBFromTable(6));
-  // displayQueue(quePB);
-  //
   // delete_proc(getPCBFromTable(5));
   // displayQueue(quePB);
 

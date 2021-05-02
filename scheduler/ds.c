@@ -118,13 +118,13 @@ void delete_proc(pcbptr *deletedThread, queue *que){
       currThrdNode = que->front;
 
       do{
-        /* If first note is deleted, change queue front only. */
         if (deletedThread->thread.taskID == currThrdNode->thread.taskID){
-          que->front = currThrdNode->next;
-          return;
-        }
-        /* If deleted node is not the first one and exists in queue*/
-        else if (currThrdNode->thread.taskID == deletedThread->thread.taskID){
+          /* If first note is deleted, change queue front only. */
+          if (que->front == deletedThread){
+            que->front = currThrdNode->next;
+            return;
+          }
+          /* If deleted node is not the first one and exists in queue*/
           prevThrdNode->next = deletedThread->next;
           return;
         }
