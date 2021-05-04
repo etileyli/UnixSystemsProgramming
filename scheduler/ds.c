@@ -12,12 +12,22 @@ queue *createQueue(){
   return que;
 }
 
+int findSuitableIndex(){
+
+  for (int i = 1; i < MAX_PROCESS_NUMBER; i++){
+    if (pcbTable[i] == NULL)
+      return i;
+  }
+
+  return -1;
+}
+
 pcbptr *makeProc(int prioritry){
 
   pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
 
   if(thrdNode == NULL){
-    perror("Unable to allocate thread node");
+    // perror("Unable to allocate thread node");
     exit(1);
   }
 
@@ -39,8 +49,14 @@ int makeProc2(int *threadAddress, int prioritry){
     exit(1);
   }
 
-  /* You should reprogram this line to use deleted process pid again */
-  pcbTable[++pcbTableIndex] = thrdNode;
+  int pcbTableIndex = -1;
+  if ((pcbTableIndex = findSuitableIndex()) == -1 ){
+    printf("The process stack is full!\n");
+    return -1;
+  }
+  else{
+    pcbTable[pcbTableIndex] = thrdNode;
+  }
 
   *threadAddress = pcbTableIndex;
   thrdNode->thread.taskID = pcbTableIndex;

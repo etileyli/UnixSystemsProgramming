@@ -56,5 +56,16 @@ int main(int argc, char const *argv[]) {
   printf("The PCB Table:\n");
   displayPCBTable();
 
+  insert_proc2(makeProc2(&thread5, 1), queFCFS);
+  insert_proc2(makeProc2(&thread6, 7), queFCFS);
+  insert_proc2(makeProc2(&thread7, 2), queFCFS);
+
+  printf("The Queue after re-insertation:\n");
+  displayQueue(queFCFS);
+
+  printf("The PCB Table:\n");
+  displayPCBTable();
+
+
   return 0;
 }
