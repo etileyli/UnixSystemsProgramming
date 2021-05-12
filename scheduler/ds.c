@@ -40,7 +40,7 @@ pcbptr *makeProc(int prioritry){
   return thrdNode;
 }
 
-int makeProc2(int *threadAddress, int prioritry){
+int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p)){
 
   pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
 
@@ -62,6 +62,7 @@ int makeProc2(int *threadAddress, int prioritry){
   thrdNode->thread.taskID = pcbTableIndex;
   thrdNode->thread.priority = prioritry;
   thrdNode->thread.dataArea = 111;
+  thrdNode->ftpr = ftpr;
 
   return pcbTableIndex;
 }

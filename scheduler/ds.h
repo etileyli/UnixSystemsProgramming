@@ -10,9 +10,11 @@ typedef struct pcb{
   int dataArea;
   int sem;
   int state;
+  char* name;
 }pcb;
 
 typedef struct pcbptr{
+  void (*ftpr)(void *p);
   pcb thread;
   struct pcbptr *next;
 }pcbptr;
@@ -25,7 +27,7 @@ typedef struct queue{
 
 queue *createQueue();
 pcbptr *makeProc(int prioritry);
-int makeProc2(int *threadAddress, int prioritry);
+int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p));
 int findSuitableIndex();
 void enqueue_proc(pcbptr *newThread, queue *que);
 int enqueue_proc2(int pid, queue *que);
