@@ -1,0 +1,5 @@
+make_proc pthread ve semaphore kütüphanelerini kullanacak. pthread_create ile yaratılan TaskA, TaskB vs priority'lerine göre 
+queue'lara atanacak ve semaphore ile bekletilecek. Scheduler daha sonra bu Queue'lara bakarak çalıştırılacak thread'i seçecek 
+ve koşacak. böylelikle pthread_create ile oluşturulmuş thread'ler hemen çalışmaya başlayacak ama semaphore'lar sayesinde 
+çalışamayacak. yaratılırken ayrıca Queue'lara atanmış threadler scheduler tarafından seçilecek, ilgili semaphore aktive 
+edilecek ve process başlamış olacak.
