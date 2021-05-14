@@ -27,10 +27,6 @@
 
     // void *par = NULL;
 
-    enqueue_proc2(makeProc2(&pid_A, 3, TaskA), queFCFS);
-    enqueue_proc2(makeProc2(&pid_B, 2, TaskB), queFCFS);
-    enqueue_proc2(makeProc2(&pid_C, 1, TaskC), queFCFS);
-    enqueue_proc2(makeProc2(&pid_D, 4, TaskD), queFCFS);
     // displayQueue(queFCFS);
 
     // pcbptr *temp = dequeue_proc(queFCFS);
@@ -46,6 +42,11 @@
     sem_init(&semC, 0, 0);
     sem_init(&semD, 0, 0);
 
+    enqueue_proc2(makeProc2(&pid_A, 3, TaskA), queFCFS);
+    enqueue_proc2(makeProc2(&pid_B, 2, TaskB), queFCFS);
+    enqueue_proc2(makeProc2(&pid_C, 1, TaskC), queFCFS);
+    enqueue_proc2(makeProc2(&pid_D, 4, TaskD), queFCFS);
+
     // while(1){
       // scheduler(par);
       // (*fun_ptr_arr[i%3])(par);
@@ -53,19 +54,19 @@
       pthread_t threadTemp0;
       pthread_create( &threadTemp0, NULL, (void *)scheduler, (void *) NULL);
 
-      pthread_t threadTemp1;
-      pthread_create( &threadTemp1, NULL, (void *)TaskA, (void *) NULL);
-      pthread_t threadTemp2;
-      pthread_create( &threadTemp2, NULL, (void *)TaskB, (void *) NULL);
-      pthread_t threadTemp3;
-      pthread_create( &threadTemp3, NULL, (void *)TaskC, (void *) NULL);
-      pthread_t threadTemp4;
-      pthread_create( &threadTemp4, NULL, (void *)TaskD, (void *) NULL);
+      // pthread_t threadTemp1;
+      // pthread_create( &threadTemp1, NULL, (void *)TaskA, (void *) NULL);
+      // pthread_t threadTemp2;
+      // pthread_create( &threadTemp2, NULL, (void *)TaskB, (void *) NULL);
+      // pthread_t threadTemp3;
+      // pthread_create( &threadTemp3, NULL, (void *)TaskC, (void *) NULL);
+      // pthread_t threadTemp4;
+      // pthread_create( &threadTemp4, NULL, (void *)TaskD, (void *) NULL);
       pthread_join(threadTemp0, NULL);
-      pthread_join(threadTemp1, NULL);
-      pthread_join(threadTemp2, NULL);
-      pthread_join(threadTemp3, NULL);
-      pthread_join(threadTemp4, NULL);
+      // pthread_join(threadTemp1, NULL);
+      // pthread_join(threadTemp2, NULL);
+      // pthread_join(threadTemp3, NULL);
+      // pthread_join(threadTemp4, NULL);
       /* Simulate arrival of the threads. */
       // switch(t){
       //   case 0:
@@ -103,7 +104,7 @@ void scheduler(void *param){
   // sleep(1);
   // pcbptr *temp = dequeue_proc(queFCFS);
   // temp->ftpr(param);
-  sleep(2);
+  // sleep(2);
 
   printf("Now task A:\n");
   sem_post(&semA);
