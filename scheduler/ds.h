@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <pthread.h>
+#include <semaphore.h>
 
 #define MAX_PROCESS_NUMBER 100
 

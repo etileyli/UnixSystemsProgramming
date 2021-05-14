@@ -64,6 +64,9 @@ int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p)){
   thrdNode->thread.dataArea = 111;
   thrdNode->ftpr = ftpr;
 
+  // pthread_t threadTemp;
+  // pthread_create( &threadTemp, NULL, (void *)thrdNode->ftpr, (void *) NULL);
+
   return pcbTableIndex;
 }
 
