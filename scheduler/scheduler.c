@@ -90,7 +90,7 @@ void scheduler(void *param){
   }
   //
   printf("Now task: %s\n", thrdNode->thread.name);
-      sem_post(&thrdNode->thread.sem);
+  sem_post(&thrdNode->thread.sem);
 
   // sleep(1);
   // static int t = 0;
@@ -147,33 +147,26 @@ void scheduler(void *param){
 
 void TaskA(void *param){
 
-  // int i = ((pcbptr *)param)->thread.dataArea;
-  // printf("In taskA: %d\n", i);
-  // sem_t *semA = &(((pcbptr *)param)->thread.sem);
   sem_wait(&(((pcbptr *)param)->thread.sem));
-  // sem_wait(&(((pcbptr *)param)->thread.dataArea));
-  // // // sleep(1);
   printf("TaskA: CPU\n");
   sem_post(&(((pcbptr *)param)->thread.sem));
 }
 
 void TaskB(void *param){
-  sem_wait(&semB);
-  // sleep(1);
-  printf("TaskB\n");
-  sem_post(&semB);
+
+    sem_wait(&(((pcbptr *)param)->thread.sem));
+    printf("TaskB is running.\n");
+    sem_post(&(((pcbptr *)param)->thread.sem));
 }
 
 void TaskC(void *param){
-  sem_wait(&semC);
-  // sleep(1);
-  printf("TaskC\n");
-  sem_post(&semC);
+    sem_wait(&(((pcbptr *)param)->thread.sem));
+    printf("TaskC: is the best\n");
+    sem_post(&(((pcbptr *)param)->thread.sem));
 }
 
 void TaskD(void *param){
-  sem_wait(&semD);
-  // sleep(1);
-  printf("TaskD\n");
-  sem_post(&semD);
+  sem_wait(&(((pcbptr *)param)->thread.sem));
+  printf("TaskD: is the last\n");
+  sem_post(&(((pcbptr *)param)->thread.sem));
 }
