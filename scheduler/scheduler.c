@@ -37,105 +37,124 @@
 
     void *par = NULL;
 
-    sem_init(&semA, 0, 0);
-    sem_init(&semB, 0, 0);
-    sem_init(&semC, 0, 0);
-    sem_init(&semD, 0, 0);
-
-    enqueue_proc2(makeProc2(&pid_A, 3, TaskA), queFCFS);
-    enqueue_proc2(makeProc2(&pid_B, 2, TaskB), queFCFS);
-    enqueue_proc2(makeProc2(&pid_C, 1, TaskC), queFCFS);
-    enqueue_proc2(makeProc2(&pid_D, 4, TaskD), queFCFS);
+    // sem_init(&semA, 0, 0);
+    // sem_init(&semB, 0, 0);
+    // sem_init(&semC, 0, 0);
+    // sem_init(&semD, 0, 0);
+    //
+    // enqueue_proc2(makeProc2(&pid_A, 3, TaskA), queFCFS);
+    // enqueue_proc2(makeProc2(&pid_B, 2, TaskB), queFCFS);
+    // enqueue_proc2(makeProc2(&pid_C, 1, TaskC), queFCFS);
+    // enqueue_proc2(makeProc2(&pid_D, 4, TaskD), queFCFS);
 
     // pthread_t threadTemp0;
     // pthread_create( &threadTemp0, NULL, (void *)scheduler, (void *) NULL);
     // pthread_join(threadTemp0, NULL);
 
     int t = 0;
-    while(1){
-      // 
-      // switch(t){
-      //   case 2:
-      //     enqueue_proc2(makeProc2(&pid_A, 3, TaskA), queFCFS);
-      //     break;
-      //   case 3:
-      //     enqueue_proc2(makeProc2(&pid_B, 2, TaskB), queFCFS);
-      //     break;
-      //   case 6:
-      //     enqueue_proc2(makeProc2(&pid_C, 1, TaskC), queFCFS);
-      //     break;
-      //   case 7:
-      //     enqueue_proc2(makeProc2(&pid_D, 4, TaskD), queFCFS);
-      //     break;
-      // }
-      // t++;
-      //
+    while(t<8){
+
+      switch(t){
+        case 2:
+          enqueue_proc2(makeProc2(&pid_A, 3, TaskA, "TaskA"), queFCFS);
+          break;
+        case 3:
+          enqueue_proc2(makeProc2(&pid_B, 2, TaskB, "TaskB"), queFCFS);
+          break;
+        case 6:
+          enqueue_proc2(makeProc2(&pid_C, 1, TaskC, "TaskC"), queFCFS);
+          break;
+        case 7:
+          enqueue_proc2(makeProc2(&pid_D, 4, TaskD, "TaskD"), queFCFS);
+          break;
+      }
+      t++;
       scheduler(par);
       sleep(1);
     }
+
+    // displayQueue(queFCFS);
 
     return 0;
   }
 
 void scheduler(void *param){
 
-  static int t = 0;
-  int pid_A, pid_B, pid_C, pid_D;
+  // int pid_A, pid_B, pid_C, pid_D;
 
-  switch(t){
-    case 1:
-      printf("Now task A:\n");
-      sem_post(&semA);
-      sleep(1);
-      break;
-    case 2:
-      printf("Now task C:\n");
-      sem_post(&semC);
-      sleep(1);
-      break;
-    case 3:
-      printf("Now task D:\n");
-      sem_post(&semD);
-      sleep(1);
-      break;
-    case 4:
-      printf("Now task B:\n");
-      sem_post(&semB);
-      sleep(1);
-      break;
-    case 5:
-      enqueue_proc2(makeProc2(&pid_B, 2, TaskB), queFCFS);
-      printf("Now task B:\n");
-      sem_post(&semB);
-      sleep(1);
-      break;
-    case 6:
-      enqueue_proc2(makeProc2(&pid_D, 2, TaskD), queFCFS);
-      printf("Now task D:\n");
-      sem_post(&semD);
-      sleep(1);
-      break;
-    case 7:
-      enqueue_proc2(makeProc2(&pid_C, 2, TaskC), queFCFS);
-      printf("Now task C:\n");
-      sem_post(&semC);
-      sleep(1);
-      break;
-    case 8:
-      enqueue_proc2(makeProc2(&pid_A, 2, TaskA), queFCFS);
-      printf("Now task A:\n");
-      sem_post(&semA);
-      sleep(1);
-      break;
+  pcbptr *thrdNode = dequeue_proc(queFCFS);
+
+  if (thrdNode == NULL){
+    printf("No thread in queue.\n");
+    return;
   }
-  t++;
+  //
+  printf("Now task: %s\n", thrdNode->thread.name);
+      sem_post(&thrdNode->thread.sem);
+
+  // sleep(1);
+  // static int t = 0;
+  // int pid_A, pid_B, pid_C, pid_D;
+  //
+  // switch(t){
+  //   case 1:
+  //     printf("Now task A:\n");
+  //     sem_post(&semA);
+  //     sleep(1);
+  //     break;
+  //   case 2:
+  //     printf("Now task C:\n");
+  //     sem_post(&semC);
+  //     sleep(1);
+  //     break;
+  //   case 3:
+  //     printf("Now task D:\n");
+  //     sem_post(&semD);
+  //     sleep(1);
+  //     break;
+  //   case 4:
+  //     printf("Now task B:\n");
+  //     sem_post(&semB);
+  //     sleep(1);
+  //     break;
+  //   case 5:
+  //     enqueue_proc2(makeProc2(&pid_B, 2, TaskB), queFCFS);
+  //     printf("Now task B:\n");
+  //     sem_post(&semB);
+  //     sleep(1);
+  //     break;
+  //   case 6:
+  //     enqueue_proc2(makeProc2(&pid_D, 2, TaskD), queFCFS);
+  //     printf("Now task D:\n");
+  //     sem_post(&semD);
+  //     sleep(1);
+  //     break;
+  //   case 7:
+  //     enqueue_proc2(makeProc2(&pid_C, 2, TaskC), queFCFS);
+  //     printf("Now task C:\n");
+  //     sem_post(&semC);
+  //     sleep(1);
+  //     break;
+  //   case 8:
+  //     enqueue_proc2(makeProc2(&pid_A, 2, TaskA), queFCFS);
+  //     printf("Now task A:\n");
+  //     sem_post(&semA);
+  //     sleep(1);
+  //     break;
+  // }
+  // t++;
 }
 
 void TaskA(void *param){
-  sem_wait(&semA);
-  // sleep(1);
+
+  // int i = ((pcbptr *)param)->thread.dataArea;
+  // printf("In taskA: %d\n", i);
+  // sem_t *semA = &(((pcbptr *)param)->thread.sem);
+  sem_wait(&(((pcbptr *)param)->thread.sem));
+  // sem_wait(&(((pcbptr *)param)->thread.dataArea));
+  // // // sleep(1);
   printf("TaskA: CPU\n");
-  sem_post(&semA);
+  sem_post(&(((pcbptr *)param)->thread.sem));
 }
 
 void TaskB(void *param){

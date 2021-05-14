@@ -40,7 +40,7 @@ pcbptr *makeProc(int prioritry){
   return thrdNode;
 }
 
-int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p)){
+int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p), char *name){
 
   pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
 
@@ -62,10 +62,12 @@ int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p)){
   thrdNode->thread.taskID = pcbTableIndex;
   thrdNode->thread.priority = prioritry;
   thrdNode->thread.dataArea = 111;
+  sem_init(&thrdNode->thread.sem , 0, 0);
   thrdNode->ftpr = ftpr;
+  thrdNode->thread.name = name;
 
   pthread_t threadTemp;
-  pthread_create( &threadTemp, NULL, (void *)thrdNode->ftpr, (void *) NULL);
+  pthread_create(&threadTemp, NULL, (void *)thrdNode->ftpr, (void *)thrdNode);
 
   return pcbTableIndex;
 }
@@ -304,7 +306,7 @@ void displayNode(pcbptr *thrdNode){
 
   printf("Thread No = %d \n", thrdNode->thread.taskID);
   printf("Thread priority = %d \n", thrdNode->thread.priority);
-  printf("Thread dataArea = %d \n", thrdNode->thread.dataArea);
+  printf("Thread name = %s \n", thrdNode->thread.name);
   printf("\n");
 }
 
@@ -312,7 +314,7 @@ void displayNode2(int pid){
 
   printf("Thread No = %d \n", pcbTable[pid]->thread.taskID);
   printf("Thread priority = %d \n", pcbTable[pid]->thread.priority);
-  printf("Thread dataArea = %d \n", pcbTable[pid]->thread.dataArea);
+  printf("Thread name = %s \n", pcbTable[pid]->thread.name);
   printf("\n");
 }
 
