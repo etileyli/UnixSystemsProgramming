@@ -125,27 +125,58 @@ void scheduler(void *param){
     pthread_mutex_lock(&lock);
 
     /*If the queue is not empty */
-    pcbptr *thrdNode;
-    // if (checkQueue(queFCFS)){
-    //   thrdNode = dequeue_proc(queFCFS);
-    if (checkQueue(quePB)){
-      displayQueue(quePB);
-      thrdNode = dequeue_proc(quePB);
-      // displayQueue(quePB);
+    pcbptr *thrdNode, *thrdNodeFCFS, *thrdNodePB;
+
+    thrdNodeFCFS = copyFront(queFCFS);
+    thrdNodePB = copyFront(quePB);
+
+    /* Both queues are empty. Continue until a task arrives to either queue. */
+    if ((thrdNodeFCFS == NULL) && (thrdNodePB == NULL)){
+        pthread_mutex_unlock(&lock);
+        sem_post(&semScheduler);
+        continue;
     }
-    else{
-      thrdNode = NULL;
-
-      pthread_mutex_unlock(&lock);
-      sem_post(&semScheduler);
-
-      continue;
+    /* Both queues are not empty. Decide the task to run.*/
+    else if ((thrdNodeFCFS != NULL) && (thrdNodePB != NULL)){
+      if(thrdNodePB->thread.priority >= thrdNodeFCFS->thread.priority){
+        thrdNode = dequeue_proc(quePB);
+      }
+      else{
+        thrdNode = dequeue_proc(queFCFS);
+      }
+    }
+    else if (thrdNodePB != NULL){
+      thrdNode = dequeue_proc(quePB);
+    }
+    else if (thrdNodeFCFS != NULL){
+      thrdNode = dequeue_proc(queFCFS);
     }
 
     printf("Now task: %s\n", thrdNode->thread.name);
 
     pthread_mutex_unlock(&lock);
     sem_post(&thrdNode->thread.sem);
+
+    // // if (checkQueue(queFCFS)){
+    // //   thrdNode = dequeue_proc(queFCFS);
+    // if (checkQueue(quePB)){
+    //   displayQueue(quePB);
+    //   thrdNode = dequeue_proc(quePB);
+    //   // displayQueue(quePB);
+    // }
+    // else{
+    //   thrdNode = NULL;
+    //
+    //   pthread_mutex_unlock(&lock);
+    //   sem_post(&semScheduler);
+    //
+    //   continue;
+    // }
+    //
+    // printf("Now task: %s\n", thrdNode->thread.name);
+    //
+    // pthread_mutex_unlock(&lock);
+    // sem_post(&thrdNode->thread.sem);
   }
 }
 
