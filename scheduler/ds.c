@@ -108,7 +108,7 @@ pcbptr *dequeue_proc(queue *que)
 {
   if(que->front == NULL)
   {
-      printf("The queue is aready emtpy!\n");
+      // printf("The queue is aready emtpy!\n");
       return NULL;
   }
   else

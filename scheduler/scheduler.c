@@ -13,16 +13,24 @@
 
   queue *queFCFS;
 
+  sem_t semScheduler;
+
   int main(int argc, char const *argv[]) {
 
     queFCFS = createQueue();
+
+    sem_init(&semScheduler , 0, 1);
 
     int pid_A, pid_B, pid_C, pid_D;
 
     void *par = NULL;
 
     int t = 0;
-    while(t<8){
+
+    pthread_t threadTemp;
+    pthread_create(&threadTemp, NULL, (void *)scheduler, (void *)NULL);
+
+    while(t<9){
 
       switch(t){
         case 2:
@@ -39,49 +47,59 @@
           break;
       }
       t++;
-      scheduler(par);
       sleep(1);
     }
-
+    pthread_join(threadTemp, NULL);
     return 0;
   }
 
 void scheduler(void *param){
 
+  while(1){
+    sem_wait(&semScheduler);
+    pcbptr *thrdNode = dequeue_proc(queFCFS);
 
-  pcbptr *thrdNode = dequeue_proc(queFCFS);
+    if (thrdNode == NULL){
+      // printf("No thread in queue.\n");
+      sem_post(&semScheduler);
+      continue;
+    }
 
-  if (thrdNode == NULL){
-    printf("No thread in queue.\n");
-    return;
+    printf("Now task: %s\n", thrdNode->thread.name);
+    sem_post(&thrdNode->thread.sem);
   }
-  //
-  printf("Now task: %s\n", thrdNode->thread.name);
-  sem_post(&thrdNode->thread.sem);
 }
 
 void TaskA(void *param){
 
   sem_wait(&(((pcbptr *)param)->thread.sem));
   printf("TaskA: CPU\n");
-  sem_post(&(((pcbptr *)param)->thread.sem));
+  sleep(3);
+  printf("TaskA: CPU is finished.\n");
+  sem_post(&semScheduler);
 }
 
 void TaskB(void *param){
 
     sem_wait(&(((pcbptr *)param)->thread.sem));
     printf("TaskB is running.\n");
-    sem_post(&(((pcbptr *)param)->thread.sem));
+    sleep(5);
+    printf("TaskB is finished.\n");
+    sem_post(&semScheduler);
 }
 
 void TaskC(void *param){
     sem_wait(&(((pcbptr *)param)->thread.sem));
     printf("TaskC: is the best\n");
-    sem_post(&(((pcbptr *)param)->thread.sem));
+    sleep(2);
+    printf("TaskC: is finished.\n");
+    sem_post(&semScheduler);
 }
 
 void TaskD(void *param){
   sem_wait(&(((pcbptr *)param)->thread.sem));
   printf("TaskD: is the last\n");
-  sem_post(&(((pcbptr *)param)->thread.sem));
+  sleep(1);
+  printf("TaskD: is finished.\n");
+  sem_post(&semScheduler);
 }
