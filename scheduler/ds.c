@@ -22,24 +22,6 @@ int findSuitableIndex(){
   return -1;
 }
 
-pcbptr *makeProc(int prioritry){
-
-  pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
-
-  if(thrdNode == NULL){
-    // perror("Unable to allocate thread node");
-    exit(1);
-  }
-
-  pcbTable[++pcbTableIndex] = thrdNode;
-
-  thrdNode->thread.taskID = pcbTableIndex;
-  thrdNode->thread.priority = prioritry;
-  thrdNode->thread.dataArea = 111;
-
-  return thrdNode;
-}
-
 int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p), char *name){
 
   pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
@@ -72,21 +54,6 @@ int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p), char *na
   return pcbTableIndex;
 }
 
-void enqueue_proc(pcbptr *newThread, queue *que){
-
-  if (que->front == NULL){
-    que->front = newThread;
-    que->rear = newThread;
-    que->front->next = NULL;
-    que->rear->next = NULL;
-  }
-  else{
-    que->rear->next = newThread;
-    que->rear = newThread;
-    que->rear->next = NULL;
-  }
-}
-
 int enqueue_proc2(int pid, queue *que){
 
   if (que->front == NULL){
@@ -104,8 +71,7 @@ int enqueue_proc2(int pid, queue *que){
   return 0;
 }
 
-pcbptr *dequeue_proc(queue *que)
-{
+pcbptr *dequeue_proc(queue *que){
   if(que->front == NULL)
   {
       // printf("The queue is aready emtpy!\n");
@@ -128,42 +94,6 @@ pcbptr *getPCBFromTable(int index){
   }
 }
 
-void insert_proc(pcbptr *newThread, queue *que){
-
-  pcbptr *currThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
-  pcbptr *prevThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
-  currThrdNode = que->front;
-
-  /*if the queue is empty, just enqueue the process*/
-  if(!checkQueue(que)){
-    enqueue_proc(newThread, que);
-  }
-  else{
-    do{
-      if (newThread->thread.priority > currThrdNode->thread.priority){
-        if (currThrdNode == que->front){
-          newThread->next = currThrdNode;
-          que->front = newThread;
-        }
-        else{
-          newThread->next = currThrdNode;
-          prevThrdNode->next = newThread;
-        }
-        return; /* Insertion is done, return.*/
-      }
-
-      prevThrdNode = currThrdNode;
-      currThrdNode = currThrdNode->next;
-
-    }while(currThrdNode->next != NULL);
-    /* new node's priority is not greater than any node. Place it to the rear.*/
-    currThrdNode->next = newThread;
-    newThread->next = NULL;
-    que->rear = newThread;  /* Update rear node. */
-  }
-  return;
-}
-
 int insert_proc2(int pid, queue *que){
   pcbptr *currThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
   pcbptr *prevThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
@@ -171,7 +101,7 @@ int insert_proc2(int pid, queue *que){
 
   /*if the queue is empty, just enqueue the process*/
   if(!checkQueue(que)){
-    enqueue_proc(pcbTable[pid], que);
+    enqueue_proc2(pid, que);
   }
   else{
     do{
@@ -198,37 +128,6 @@ int insert_proc2(int pid, queue *que){
   }
 
   return 0;
-}
-
-void delete_proc(pcbptr *deletedThread, queue *que){
-
-  if (deletedThread == NULL){
-    printf("Thread is not defined!\n");
-  }
-  else{
-    if (checkQueue(que)){
-      pcbptr *currThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
-      pcbptr *prevThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
-      currThrdNode = que->front;
-
-      do{
-        if (deletedThread->thread.taskID == currThrdNode->thread.taskID){
-          /* If first note is deleted, change queue front only. */
-          if (que->front == deletedThread){
-            que->front = currThrdNode->next;
-            return;
-          }
-          /* If deleted node is not the first one and exists in queue*/
-          prevThrdNode->next = deletedThread->next;
-          return;
-        }
-
-        prevThrdNode = currThrdNode;
-        currThrdNode = currThrdNode->next;
-
-      }while(currThrdNode != NULL);
-    }
-  }
 }
 
 int delete_proc2(int pid, queue *que){
@@ -264,28 +163,13 @@ int delete_proc2(int pid, queue *que){
   return 0;
 }
 
-pcbptr *del_proc(int index, queue *que){
-  /* Copy thread's address*/
-  pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
-  thrdNode = getPCBFromTable(index);
-
-  /* First delete thread from the queue*/
-  delete_proc(getPCBFromTable(index), que);
-
-  /* Then delete thread from pcb_table*/
-  pcbTable[index] = NULL;
-
-  /* Return the address in order to free it. */
-  return thrdNode;
-}
-
 pcbptr *del_proc2(int pid, queue *que){
   /* Copy thread's address*/
   pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
   thrdNode = pcbTable[pid];
 
   /* First delete thread from the queue*/
-  delete_proc(thrdNode, que);
+  delete_proc2(pid, que);
 
   /* Then delete thread from pcb_table*/
   pcbTable[pid] = NULL;
@@ -293,7 +177,6 @@ pcbptr *del_proc2(int pid, queue *que){
   /* Return the address in order to free it. */
   return thrdNode;
 }
-
 
 int checkQueue(queue *que){
   if (que->front == NULL)
@@ -317,7 +200,6 @@ void displayNode2(int pid){
   printf("Thread name = %s \n", pcbTable[pid]->thread.name);
   printf("\n");
 }
-
 
 void displayRear(queue *que){
   printf("Rear:\n");
