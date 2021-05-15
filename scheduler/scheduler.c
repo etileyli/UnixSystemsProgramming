@@ -45,7 +45,7 @@
     while(1){
       pthread_t threadTemp;
       pthread_create(&threadTemp, NULL, (void *)scheduler, (void *)NULL);
-
+ 
       switch(t){
         case 1:
           pthread_mutex_lock(&lock);
