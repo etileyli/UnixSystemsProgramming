@@ -49,42 +49,42 @@
       switch(t){
         case 1:
           pthread_mutex_lock(&lock);
-          enqueue_proc2(makeProc2(&pid_A, 1, TaskA, "TaskA"), queFCFS);
+          enqueue_proc(makeProc(&pid_A, 1, TaskA, "TaskA"), queFCFS);
           pthread_mutex_unlock(&lock);
           break;
         case 2:
           pthread_mutex_lock(&lock);
-          enqueue_proc2(makeProc2(&pid_B, 1, TaskB, "TaskB"), queFCFS);
+          enqueue_proc(makeProc(&pid_B, 1, TaskB, "TaskB"), queFCFS);
           pthread_mutex_unlock(&lock);
           break;
         case 3:
           pthread_mutex_lock(&lock);
-          enqueue_proc2(makeProc2(&pid_C, 1, TaskC, "TaskC"), queFCFS);
+          enqueue_proc(makeProc(&pid_C, 1, TaskC, "TaskC"), queFCFS);
           pthread_mutex_unlock(&lock);
           break;
         case 4:
           pthread_mutex_lock(&lock);
-          enqueue_proc2(makeProc2(&pid_D, 1, TaskD, "TaskD"), queFCFS);
+          enqueue_proc(makeProc(&pid_D, 1, TaskD, "TaskD"), queFCFS);
           pthread_mutex_unlock(&lock);
           break;
         case 5:
           pthread_mutex_lock(&lock);
-          insert_proc2(makeProc2(&pid_E, 3, TaskE, "TaskE"), quePB);
+          insert_proc(makeProc(&pid_E, 3, TaskE, "TaskE"), quePB);
           pthread_mutex_unlock(&lock);
           break;
         case 6:
           pthread_mutex_lock(&lock);
-          insert_proc2(makeProc2(&pid_F, 4, TaskF, "TaskF"), quePB);
+          insert_proc(makeProc(&pid_F, 4, TaskF, "TaskF"), quePB);
           pthread_mutex_unlock(&lock);
           break;
         case 7:
           pthread_mutex_lock(&lock);
-          insert_proc2(makeProc2(&pid_G, 3, TaskG, "TaskG"), quePB);
+          insert_proc(makeProc(&pid_G, 3, TaskG, "TaskG"), quePB);
           pthread_mutex_unlock(&lock);
           break;
         case 8:
           pthread_mutex_lock(&lock);
-          insert_proc2(makeProc2(&pid_H, 0, TaskH, "TaskH"), quePB);
+          insert_proc(makeProc(&pid_H, 0, TaskH, "TaskH"), quePB);
           pthread_mutex_unlock(&lock);
           break;
       }
@@ -97,8 +97,6 @@
   }
 
 void scheduler(void *param){
-
-  // while(1){
 
     sem_wait(&semScheduler);
     pthread_mutex_lock(&lock);
@@ -135,7 +133,6 @@ void scheduler(void *param){
 
     pthread_mutex_unlock(&lock);
     sem_post(&thrdNode->thread.sem);
-  // }
 }
 
 void TaskA(void *param){

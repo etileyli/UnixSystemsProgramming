@@ -28,14 +28,14 @@ typedef struct queue{
 }queue;
 
 queue *createQueue();
-int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p), char *name);
+int makeProc(int *threadAddress, int prioritry, void (*ftpr)(void *p), char *name);
 int findSuitableIndex();
-int enqueue_proc2(int pid, queue *que);
+int enqueue_proc(int pid, queue *que);
 pcbptr *dequeue_proc(queue *que);
 pcbptr *getPCBFromTable(int index);
-int insert_proc2(int pid, queue *que);
-int delete_proc2(int pid, queue *que);
-pcbptr *del_proc2(int pid, queue *que);
+int insert_proc(int pid, queue *que);
+int delete_proc(int pid, queue *que);
+pcbptr *del_proc(int pid, queue *que);
 int checkQueue(queue *que);
 void displayNode(pcbptr *thrdNode);
 void displayNode2(int pid);

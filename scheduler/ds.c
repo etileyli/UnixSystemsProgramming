@@ -22,7 +22,7 @@ int findSuitableIndex(){
   return -1;
 }
 
-int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p), char *name){
+int makeProc(int *threadAddress, int prioritry, void (*ftpr)(void *p), char *name){
 
   pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
 
@@ -54,7 +54,7 @@ int makeProc2(int *threadAddress, int prioritry, void (*ftpr)(void *p), char *na
   return pcbTableIndex;
 }
 
-int enqueue_proc2(int pid, queue *que){
+int enqueue_proc(int pid, queue *que){
 
   if (que->front == NULL){
     que->front = pcbTable[pid];
@@ -94,14 +94,14 @@ pcbptr *getPCBFromTable(int index){
   }
 }
 
-int insert_proc2(int pid, queue *que){
+int insert_proc(int pid, queue *que){
   pcbptr *currThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
   pcbptr *prevThrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
   currThrdNode = que->front;
 
   /*if the queue is empty, just enqueue the process*/
   if(!checkQueue(que)){
-    enqueue_proc2(pid, que);
+    enqueue_proc(pid, que);
   }
   else{
     do{
@@ -130,7 +130,7 @@ int insert_proc2(int pid, queue *que){
   return 0;
 }
 
-int delete_proc2(int pid, queue *que){
+int delete_proc(int pid, queue *que){
 
   if (pcbTable[pid] == NULL){
     printf("Thread is not defined!\n");
@@ -163,13 +163,13 @@ int delete_proc2(int pid, queue *que){
   return 0;
 }
 
-pcbptr *del_proc2(int pid, queue *que){
+pcbptr *del_proc(int pid, queue *que){
   /* Copy thread's address*/
   pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
   thrdNode = pcbTable[pid];
 
   /* First delete thread from the queue*/
-  delete_proc2(pid, que);
+  delete_proc(pid, que);
 
   /* Then delete thread from pcb_table*/
   pcbTable[pid] = NULL;
