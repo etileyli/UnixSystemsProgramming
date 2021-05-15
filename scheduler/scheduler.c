@@ -44,6 +44,7 @@
     pthread_t threadTemp;
     pthread_create(&threadTemp, NULL, (void *)scheduler, (void *)NULL);
 
+    /* Task arrival simulation loop. */
     while(t<9){
 
       switch(t){
@@ -89,31 +90,10 @@
           break;
       }
       t++;
-      // sleep(1);
+      sleep(1);
     }
     pthread_join(threadTemp, NULL);
 
-    // enqueue_proc2(makeProc2(&pid_A, 1, TaskA, "TaskA"), queFCFS);
-    // enqueue_proc2(makeProc2(&pid_B, 1, TaskB, "TaskB"), queFCFS);
-    // enqueue_proc2(makeProc2(&pid_C, 1, TaskC, "TaskC"), queFCFS);
-    // enqueue_proc2(makeProc2(&pid_D, 1, TaskD, "TaskD"), queFCFS);
-    //
-    // insert_proc2(makeProc2(&pid_E, 3, TaskE, "TaskE"), quePB);
-    // insert_proc2(makeProc2(&pid_F, 4, TaskF, "TaskF"), quePB);
-    // insert_proc2(makeProc2(&pid_G, 3, TaskG, "TaskG"), quePB);
-    // insert_proc2(makeProc2(&pid_H, 2, TaskH, "TaskH"), quePB);
-    // dequeue_proc(quePB);
-    // dequeue_proc(quePB);
-    // dequeue_proc(quePB);
-    // dequeue_proc(quePB);
-
-    // displayNode(copyFront(queFCFS));
-    // printf("quePB:\n");
-    // displayQueue(quePB);
-    // printf("queFCFS:\n");
-    // displayQueue(queFCFS);
-    // printf("PCB Table:\n");
-    // displayPCBTable();
     return 0;
   }
 
@@ -156,27 +136,6 @@ void scheduler(void *param){
 
     pthread_mutex_unlock(&lock);
     sem_post(&thrdNode->thread.sem);
-
-    // // if (checkQueue(queFCFS)){
-    // //   thrdNode = dequeue_proc(queFCFS);
-    // if (checkQueue(quePB)){
-    //   displayQueue(quePB);
-    //   thrdNode = dequeue_proc(quePB);
-    //   // displayQueue(quePB);
-    // }
-    // else{
-    //   thrdNode = NULL;
-    //
-    //   pthread_mutex_unlock(&lock);
-    //   sem_post(&semScheduler);
-    //
-    //   continue;
-    // }
-    //
-    // printf("Now task: %s\n", thrdNode->thread.name);
-    //
-    // pthread_mutex_unlock(&lock);
-    // sem_post(&thrdNode->thread.sem);
   }
 }
 
