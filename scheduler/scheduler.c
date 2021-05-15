@@ -131,7 +131,7 @@ void scheduler(void *param){
       thrdNode = dequeue_proc(queFCFS);
     }
 
-    printf("Now task: %s\n", thrdNode->thread.name);
+    printf("Now running task: %s\n", thrdNode->thread.name);
 
     pthread_mutex_unlock(&lock);
     sem_post(&thrdNode->thread.sem);
@@ -141,68 +141,75 @@ void scheduler(void *param){
 void TaskA(void *param){
 
   sem_wait(&(((pcbptr *)param)->thread.sem));
-  printf("TaskA: CPU\n");
+  printf("TaskA: running.\n");
+  displayNode((pcbptr *)param);
   sleep(4);
-  printf("TaskA: CPU is finished.\n");
+  printf("TaskA: finished.\n\n");
   sem_post(&semScheduler);
 }
 
 void TaskB(void *param){
 
     sem_wait(&(((pcbptr *)param)->thread.sem));
-    printf("TaskB is running.\n");
+    printf("TaskB: running.\n");
+    displayNode((pcbptr *)param);
     sleep(8);
-    printf("TaskB is finished.\n");
+    printf("TaskB: finished.\n\n");
     sem_post(&semScheduler);
 }
 
 void TaskC(void *param){
     sem_wait(&(((pcbptr *)param)->thread.sem));
-    printf("TaskC: is the best\n");
+    printf("TaskC: running.\n\n");
+    displayNode((pcbptr *)param);
     sleep(3);
-    printf("TaskC: is finished.\n");
+    printf("TaskC: finished.\n\n");
     sem_post(&semScheduler);
 }
 
 void TaskD(void *param){
   sem_wait(&(((pcbptr *)param)->thread.sem));
-  printf("TaskD: is the last\n");
+  printf("TaskD: running.\n\n");
+  displayNode((pcbptr *)param);
   sleep(4);
-  printf("TaskD: is finished.\n");
+  printf("TaskD: finished.\n\n");
   sem_post(&semScheduler);
 }
 
 void TaskE(void *param){
-
   sem_wait(&(((pcbptr *)param)->thread.sem));
-  printf("TaskE: CPU\n");
+  printf("TaskE: running.\n");
+  displayNode((pcbptr *)param);
   sleep(3);
-  printf("TaskE: CPU is finished.\n");
+  printf("TaskE: finished.\n\n");
   sem_post(&semScheduler);
 }
 
 void TaskF(void *param){
 
   sem_wait(&(((pcbptr *)param)->thread.sem));
-  printf("TaskF: CPU\n");
+  printf("TaskF: running.\n");
+  displayNode((pcbptr *)param);
   for (int i = 0; i < 1000000000; i++){
   }
-  printf("TaskF: CPU is finished.\n");
+  printf("TaskF: finished.\n\n");
   sem_post(&semScheduler);
 }
 
 void TaskG(void *param){
     sem_wait(&(((pcbptr *)param)->thread.sem));
-    printf("TaskG: is the best\n");
+    printf("TaskG: running.\n");
+    displayNode((pcbptr *)param);
     sleep(2);
-    printf("TaskG: is finished.\n");
+    printf("TaskG: finished.\n\n");
     sem_post(&semScheduler);
 }
 
 void TaskH(void *param){
   sem_wait(&(((pcbptr *)param)->thread.sem));
-  printf("TaskH: is the last\n");
+  printf("TaskH: running.\n");
+  displayNode((pcbptr *)param);
   sleep(1);
-  printf("TaskH: is finished.\n");
+  printf("TaskH: finished.\n\n");
   sem_post(&semScheduler);
 }
