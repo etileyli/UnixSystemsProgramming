@@ -41,11 +41,10 @@
 
     int t = 0;
 
-    pthread_t threadTemp;
-    pthread_create(&threadTemp, NULL, (void *)scheduler, (void *)NULL);
-
     /* Task arrival simulation loop. */
-    while(t<9){
+    while(1){
+      pthread_t threadTemp;
+      pthread_create(&threadTemp, NULL, (void *)scheduler, (void *)NULL);
 
       switch(t){
         case 1:
@@ -90,16 +89,16 @@
           break;
       }
       t++;
-      sleep(1);
+      usleep(1000000);
     }
-    pthread_join(threadTemp, NULL);
+    // pthread_join(threadTemp, NULL);
 
     return 0;
   }
 
 void scheduler(void *param){
 
-  while(1){
+  // while(1){
 
     sem_wait(&semScheduler);
     pthread_mutex_lock(&lock);
@@ -114,7 +113,7 @@ void scheduler(void *param){
     if ((thrdNodeFCFS == NULL) && (thrdNodePB == NULL)){
         pthread_mutex_unlock(&lock);
         sem_post(&semScheduler);
-        continue;
+        return;
     }
     /* Both queues are not empty. Decide the task to run.*/
     else if ((thrdNodeFCFS != NULL) && (thrdNodePB != NULL)){
@@ -136,7 +135,7 @@ void scheduler(void *param){
 
     pthread_mutex_unlock(&lock);
     sem_post(&thrdNode->thread.sem);
-  }
+  // }
 }
 
 void TaskA(void *param){
