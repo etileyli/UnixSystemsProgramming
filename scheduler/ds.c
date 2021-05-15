@@ -329,6 +329,12 @@ void displayFront(queue *que){
   displayNode(que->front);
 }
 
+pcbptr *copyFront(queue *que){
+  pcbptr *thrdNode = (pcbptr *)malloc(sizeof(struct pcbptr));
+  thrdNode = que->front;
+  return thrdNode;
+}
+
 void displayPCBTable(){
   for (int i = 0; i < MAX_PROCESS_NUMBER; i++){
     if (pcbTable[i] != NULL){

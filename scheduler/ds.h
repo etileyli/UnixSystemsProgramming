@@ -45,6 +45,7 @@ int checkQueue(queue *que);
 void displayNode(pcbptr *thrdNode);
 void displayNode2(int pid);
 void displayFront(queue *que);
+pcbptr *copyFront(queue *que);
 void displayRear(queue *que);
 void displayPCBTable();
 void displayQueue(queue *que);
