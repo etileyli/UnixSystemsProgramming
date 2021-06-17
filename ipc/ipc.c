@@ -8,14 +8,19 @@
 #include <pthread.h>
 #include<sys/ipc.h>
 #include<sys/shm.h>
+#include <semaphore.h>
 
-#define BUF_SIZE 5
+#define BUF_SIZE 4
 #define SHM_KEY 1000
 
 int shmid;
-char *ch ;
+char *ch;
 
-int getFileSize(char *filePath);
+sem_t semWrite;
+sem_t semRead;
+
+pthread_mutex_t lock;
+
 void *writeFunction();
 void *readFunction();
 
@@ -47,32 +52,39 @@ int main(int argc, char const *argv[]) {
 
   // printf("%s\n", buffer);
 
-  retW = pthread_create(&threadWrite, NULL, writeFunction, NULL);
-  retR = pthread_create(&threadRead, NULL, readFunction, NULL);
+  // Init semWrite
+  sem_init(&semWrite , 0, 1);
+  if (pthread_mutex_init(&lock, NULL) != 0)
+  {
+      printf("\n mutex init failed\n");
+      return 1;
+  }
 
-  pthread_join(threadWrite, NULL);
-  pthread_join(threadRead, NULL);
+  // Init semRead
+  sem_init(&semRead , 0, 0);
+  if (pthread_mutex_init(&lock, NULL) != 0)
+  {
+      printf("\n mutex init failed\n");
+      return 1;
+  }
+
+  for (int i = 0; i < 5; i++){
+    retW = pthread_create(&threadWrite, NULL, writeFunction, NULL);
+    retR = pthread_create(&threadRead, NULL, readFunction, NULL);
+
+    pthread_join(threadWrite, NULL);
+    pthread_join(threadRead, NULL);
+  }
 
   return 0;
 }
 
-// This function gets size of a file
-int getFileSize(char *filePath){
-  struct stat bufFileSize;
-
-  if (stat(filePath, &bufFileSize) == -1) {
-     perror("stat");
-     exit(EXIT_FAILURE);
-  }
-
-  int fileSize =(int)bufFileSize.st_size;
-
-  return fileSize;
-}
-
 void *writeFunction(){
 
-  int shmid = shmget(SHM_KEY, BUF_SIZE, 0644|IPC_CREAT);
+  sem_wait(&semWrite);
+  pthread_mutex_lock(&lock);
+
+  shmid = shmget(SHM_KEY, BUF_SIZE, 0644|IPC_CREAT);
   if (shmid == -1) {
      perror("Shared memory fault!");
      exit(-1);
@@ -84,16 +96,22 @@ void *writeFunction(){
      exit(-2);
   }
 
-  strcpy(ch, "abcde");
+  strcpy(ch, "xyzq");
 
   shmdt(ch);
 
   printf("Hello Write\n");
+
+  pthread_mutex_unlock(&lock);
+  sem_post(&semRead);
 }
 
 void *readFunction(){
 
-  int shmid = shmget(SHM_KEY, BUF_SIZE, 0644|IPC_CREAT);
+  sem_wait(&semRead);
+  pthread_mutex_lock(&lock);
+
+  shmid = shmget(SHM_KEY, BUF_SIZE, 0644|IPC_CREAT);
   if (shmid == -1) {
      perror("Shared memory fault!");
      exit(-1);
@@ -108,4 +126,7 @@ void *readFunction(){
 
   printf("%s\n", shmArr);
   printf("Hello Read\n");
+
+  pthread_mutex_unlock(&lock);
+  sem_post(&semWrite);
 }
