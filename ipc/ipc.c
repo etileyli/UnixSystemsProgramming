@@ -86,6 +86,8 @@ void *writeFunction(){
 
   strcpy(ch, "abcde");
 
+  shmdt(ch);
+
   printf("Hello Write\n");
 }
 
@@ -99,7 +101,10 @@ void *readFunction(){
 
   char *ch = shmat(shmid, NULL, 0);
   char shmArr[BUF_SIZE];
+
   strncpy(shmArr, ch, BUF_SIZE);
+
+  shmdt(ch);
 
   printf("%s\n", shmArr);
   printf("Hello Read\n");
