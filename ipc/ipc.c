@@ -7,6 +7,9 @@
 #include <sys/stat.h>
 #include <pthread.h>
 
+#define BUF_SIZE 1024
+#define SHM_KEY 1000
+
 int getFileSize(char *filePath);
 void *writeFunction();
 void *readFunction();
@@ -17,26 +20,27 @@ int main(int argc, char const *argv[]) {
 
   int retW, retR;
 
-  int fd;
+  /* READ FILE CONTENT INTO "buffer"*/
+  FILE *fp;
+  char *buffer = NULL;
+  long length;
   char *filePath = "64BytesFile";
 
-  if ((fd = open(filePath, O_RDONLY)) == -1)
-  {
-      perror("Cannot open file");
-      exit(1);
+  fp = fopen(filePath, "rb");
+
+  if (fp){
+    fseek (fp, 0, SEEK_END);
+    length = ftell (fp);
+    fseek (fp, 0, SEEK_SET);
+    buffer = malloc (length);
+    if (buffer)
+    {
+      fread (buffer, 1, length, fp);
+    }
+    fclose (fp);
   }
 
-  /* READ FILE CONTENT INTO "buffer"*/
-  // get size of the file
-  int fileSize = getFileSize(filePath);
-
-  // Allocate space as large as file size
-  char buffer[(int)fileSize];
-  size_t nbytes = sizeof(buffer);
-  ssize_t bytes_read;
-  bytes_read = read(fd, buffer, nbytes); // Read from file into "buffer"
-  // write(STDOUT_FILENO, buffer, 64);
-  close(fd);
+  // printf("%s\n", buffer);
 
   retW = pthread_create(&threadWrite, NULL, writeFunction, NULL);
   retR = pthread_create(&threadRead, NULL, readFunction, NULL);
