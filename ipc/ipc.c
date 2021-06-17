@@ -6,9 +6,14 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <pthread.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
 
-#define BUF_SIZE 1024
+#define BUF_SIZE 5
 #define SHM_KEY 1000
+
+int shmid;
+char *ch ;
 
 int getFileSize(char *filePath);
 void *writeFunction();
@@ -66,9 +71,36 @@ int getFileSize(char *filePath){
 }
 
 void *writeFunction(){
+
+  int shmid = shmget(SHM_KEY, BUF_SIZE, 0644|IPC_CREAT);
+  if (shmid == -1) {
+     perror("Shared memory fault!");
+     exit(-1);
+  }
+
+  ch = (char*)shmat(shmid, NULL, 0);
+  if (ch == (void *) -1) {
+     perror("Shared memory attach fault!");
+     exit(-2);
+  }
+
+  strcpy(ch, "abcde");
+
   printf("Hello Write\n");
 }
 
 void *readFunction(){
+
+  int shmid = shmget(SHM_KEY, BUF_SIZE, 0644|IPC_CREAT);
+  if (shmid == -1) {
+     perror("Shared memory fault!");
+     exit(-1);
+  }
+
+  char *ch = shmat(shmid, NULL, 0);
+  char shmArr[BUF_SIZE];
+  strncpy(shmArr, ch, BUF_SIZE);
+
+  printf("%s\n", shmArr);
   printf("Hello Read\n");
 }
