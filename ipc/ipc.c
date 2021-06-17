@@ -71,7 +71,7 @@ int main(int argc, char const *argv[]) {
   for (int i = 0; i < length / BUF_SIZE; i++){
 
     char word[BUF_SIZE];
-    for (j = 0; j < BUF_SIZE; j++){
+    for (int j = 0; j < BUF_SIZE; j++){
         word[j] = buffer[i * BUF_SIZE + j];
     }
 
