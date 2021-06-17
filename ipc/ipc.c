@@ -6,8 +6,8 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <pthread.h>
-#include<sys/ipc.h>
-#include<sys/shm.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
 #include <semaphore.h>
 
 #define BUF_SIZE 4
@@ -68,8 +68,14 @@ int main(int argc, char const *argv[]) {
       return 1;
   }
 
-  for (int i = 0; i < 5; i++){
-    retW = pthread_create(&threadWrite, NULL, writeFunction, NULL);
+  for (int i = 0; i < length / BUF_SIZE; i++){
+
+    char word[BUF_SIZE];
+    for (j = 0; j < BUF_SIZE; j++){
+        word[j] = buffer[i * BUF_SIZE + j];
+    }
+
+    retW = pthread_create(&threadWrite, NULL, writeFunction, (void *)word);
     retR = pthread_create(&threadRead, NULL, readFunction, NULL);
 
     pthread_join(threadWrite, NULL);
@@ -79,7 +85,7 @@ int main(int argc, char const *argv[]) {
   return 0;
 }
 
-void *writeFunction(){
+void *writeFunction(void *word){
 
   sem_wait(&semWrite);
   pthread_mutex_lock(&lock);
@@ -96,7 +102,8 @@ void *writeFunction(){
      exit(-2);
   }
 
-  strcpy(ch, "xyzq");
+  strcpy(ch, (char*)word);
+  // strcpy(ch, "xyzq");
 
   shmdt(ch);
 
