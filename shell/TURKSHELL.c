@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <utime.h>
-#include <sys/random.h>
+// #include <sys/random.h>
 #include "parser.h"
 
 #define EXIT_KEYWORD "exit"
