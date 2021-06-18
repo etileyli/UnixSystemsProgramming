@@ -13,6 +13,11 @@
 #define BUF_SIZE 4
 #define SHM_KEY 1000
 
+typedef struct wrtArgs{
+  char word[BUF_SIZE + 1];
+  int packageNo;
+}wrtArgs;
+
 int shmid;
 char *ch;
 
@@ -70,12 +75,17 @@ int main(int argc, char const *argv[]) {
 
   for (int i = 0; i < length / BUF_SIZE; i++){
 
-    char word[BUF_SIZE];
-    for (int j = 0; j < BUF_SIZE; j++){
-        word[j] = buffer[i * BUF_SIZE + j];
-    }
+    // char word[BUF_SIZE];
+    wrtArgs *argsP = (wrtArgs*)malloc(sizeof(struct wrtArgs));;
+    argsP->packageNo = i;
 
-    retW = pthread_create(&threadWrite, NULL, writeFunction, (void *)word);
+    int j;
+    for (j = 0; j < BUF_SIZE; j++){
+      argsP->word[j] = buffer[i * BUF_SIZE + j];
+    }
+    argsP->word[j + 1] = '\n';
+
+    retW = pthread_create(&threadWrite, NULL, writeFunction, (void *)argsP);
     retR = pthread_create(&threadRead, NULL, readFunction, NULL);
 
     pthread_join(threadWrite, NULL);
@@ -85,7 +95,7 @@ int main(int argc, char const *argv[]) {
   return 0;
 }
 
-void *writeFunction(void *word){
+void *writeFunction(void *argsP){
 
   sem_wait(&semWrite);
   pthread_mutex_lock(&lock);
@@ -102,12 +112,11 @@ void *writeFunction(void *word){
      exit(-2);
   }
 
-  strcpy(ch, (char*)word);
-  // strcpy(ch, "xyzq");
+  strncpy(ch, (char*)((wrtArgs*)argsP)->word, BUF_SIZE);
+  printf("Writing package %d-\"%s\".", (int)((wrtArgs*)argsP)->packageNo, ch);
+  printf("\nDone!\n");
 
   shmdt(ch);
-
-  printf("Hello Write\n");
 
   pthread_mutex_unlock(&lock);
   sem_post(&semRead);
@@ -131,8 +140,8 @@ void *readFunction(){
 
   shmdt(ch);
 
-  printf("%s\n", shmArr);
-  printf("Hello Read\n");
+  printf("Received package: \n");
+  printf("%s\n\n", shmArr);
 
   pthread_mutex_unlock(&lock);
   sem_post(&semWrite);
