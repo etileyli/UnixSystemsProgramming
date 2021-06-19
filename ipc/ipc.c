@@ -140,7 +140,7 @@ void *readFunction(){
 
   shmdt(ch);
 
-  printf("Received package: \n");
+  printf("Package read: \n");
   printf("%s\n\n", shmArr);
 
   pthread_mutex_unlock(&lock);
