@@ -92,6 +92,10 @@ int main(int argc, char const *argv[]) {
     pthread_join(threadRead, NULL);
   }
 
+
+  sem_destroy(&semWrite);
+  sem_destroy(&semRead);
+  
   return 0;
 }
 
