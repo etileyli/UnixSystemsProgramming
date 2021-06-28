@@ -1,0 +1,25 @@
+CENG 501 - Advanced Operating Systems
+CENG 502 - Advanced Computer Networks and Communication
+CENG 505 - Parallel Computing
+CENG 509 - Pattern Recognition
+CENG 511 - Advanced Algorithms
+CENG 526 - Software Architecture
+CENG 513 - Object Oriented Analysis and Design
+CENG 522 - Advanced Object Oriented Programming
+CENG 539 - Essentials of Network Routing and Switching
+CENG 545 - Graphics Processing Unit Computing
+CENG 571 - Distributed Computing
+
+CENG 356 - Database Management Systems
+CENG 393 - Computer Networks
+CENG 491 - Formal Languages and Automata
+CENG 444 - Advanced Java Programming
+
+METU
+CENG 532 - DISTRIBUTED COMPUTING SYSTEMS 
+CENG 551 - SYSTEM DEVELOPMENT WITH ABSTRACT DESIGN 
+CENG 565 - INTRODUCTION TO THEORY OF COMPUTATION 
+CENG 567 - DESIGN AND ANALYSIS OF ALGORITHMS 
+CENG 577 - PARALLEL COMPUTING 
+
+IS 707 - FORMAL VERIFICATION-THEORY AND PRACTICE
