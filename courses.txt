@@ -16,10 +16,42 @@ CENG 491 - Formal Languages and Automata
 CENG 444 - Advanced Java Programming
 
 METU
-CENG 532 - DISTRIBUTED COMPUTING SYSTEMS 
-CENG 551 - SYSTEM DEVELOPMENT WITH ABSTRACT DESIGN 
-CENG 565 - INTRODUCTION TO THEORY OF COMPUTATION 
-CENG 567 - DESIGN AND ANALYSIS OF ALGORITHMS 
-CENG 577 - PARALLEL COMPUTING 
+CENG 532 - DISTRIBUTED COMPUTING SYSTEMS
+CENG 551 - SYSTEM DEVELOPMENT WITH ABSTRACT DESIGN
+CENG 565 - INTRODUCTION TO THEORY OF COMPUTATION
+CENG 567 - DESIGN AND ANALYSIS OF ALGORITHMS
+CENG 577 - PARALLEL COMPUTING
 
 IS 707 - FORMAL VERIFICATION-THEORY AND PRACTICE
+
+*** COURSERA
+Development of Real Time Systems
+Computer Communications
+Real-Time Mission Critical Systems
+Parallel Concurrent and Distributed Programming in Java
+Introduction to TCP/IP
+Database Management Essentials
+Using Databases With Python
+Object Oriented Design
+Design Patterns
+Software Architecture
+Real-Time Embedded Systems Theory and Analysis
+Introduction to Embedded Systems Software and Development Environment
+The Unix Workbench
+Introduction to Git and Github
+Linux for Developers
+Pattern Recognition
+
+*** TOPICS
+RTOS
+Regular Expresisons
+GPU + Parallel Programming
+Communication Interfaces
+  RS422, 485, Canbus, ARINC 429, MIL-STD-1553, UEI-Pack
+Autopilot
+
+*** APPLICATIONS
+Scade
+Matlab/Simulink
+Integrity/VxWorks
+VectorCast
