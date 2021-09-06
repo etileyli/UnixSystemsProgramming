@@ -61,7 +61,7 @@ VectorCast
 *** PhD
 CENG 571 - Distributed Computing
 CENG 505 - Parallel Computing
-ENG 545 - Graphics Processing Unit Computing / MMI 713 - APPLIED PARALLEL PROGRAMMING ON GPU
+CENG 545 - Graphics Processing Unit Computing / MMI 713 - APPLIED PARALLEL PROGRAMMING ON GPU
 CENG 502 - Advanced Computer Networks and Communication
 CENG 511 - Advanced Algorithms
 EE 546 - Recurrent Neural Networks
