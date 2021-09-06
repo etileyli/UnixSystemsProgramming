@@ -24,6 +24,8 @@ CENG 577 - PARALLEL COMPUTING
 
 IS 707 - FORMAL VERIFICATION-THEORY AND PRACTICE
 
+MMI713 APPLIED PARALLEL PROGRAMMING ON GPU
+
 *** COURSERA
 Development of Real Time Systems
 Computer Communications
@@ -55,3 +57,12 @@ Scade
 Matlab/Simulink
 Integrity/VxWorks
 VectorCast
+
+*** PhD
+CENG 571 - Distributed Computing
+CENG 505 - Parallel Computing
+MMI 713 - APPLIED PARALLEL PROGRAMMING ON GPU
+CENG 502 - Advanced Computer Networks and Communication
+CENG 511 - Advanced Algorithms
+EE 546 - Recurrent Neural Networks
+EE 541 - Convolutional Neural Networks
