@@ -46,7 +46,7 @@ Pattern Recognition
 
 *** TOPICS
 RTOS
-Regular Expresisons
+Regular Expressions
 GPU + Parallel Programming
 Communication Interfaces
   RS422, 485, Canbus, ARINC 429, MIL-STD-1553, UEI-Pack
