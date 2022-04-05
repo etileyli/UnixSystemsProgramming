@@ -69,6 +69,6 @@ CENG 571 - Distributed Computing
 CENG 505 - Parallel Computing
 CENG 545 - Graphics Processing Unit Computing / MMI 713 - APPLIED PARALLEL PROGRAMMING ON GPU
 CENG 502 - Advanced Computer Networks and Communication
+CENG 521	Topics in Advanced Database
 X_CENG 511 - Advanced Algorithms
-EE 546 - Recurrent Neural Networks
 EE 541 - Convolutional Neural Networks
