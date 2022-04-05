@@ -9,6 +9,7 @@ X_CENG 522 - Advanced Object Oriented Programming
 CENG 539 - Essentials of Network Routing and Switching
 CENG 545 - Graphics Processing Unit Computing
 CENG 571 - Distributed Computing
+CENG 521	Topics in Advanced Database
 
 CENG 356 - Database Management Systems
 CENG 393 - Computer Networks
@@ -21,6 +22,9 @@ CENG 551 - SYSTEM DEVELOPMENT WITH ABSTRACT DESIGN
 CENG 565 - INTRODUCTION TO THEORY OF COMPUTATION
 CENG 567 - DESIGN AND ANALYSIS OF ALGORITHMS
 CENG 577 - PARALLEL COMPUTING
+CENG 514 - DATA MINING
+CENG 536 - ADVANCE UNIX
+CENG 574 - STATISTICAL DATA ANALYSIS
 
 IS 707 - FORMAL VERIFICATION-THEORY AND PRACTICE
 
@@ -49,7 +53,7 @@ RTOS
 Regular Expressions
 GPU + Parallel Programming
 Communication Interfaces
-  RS422, 485, Canbus, ARINC 429, MIL-STD-1553, UEI-Pack
+  RS422, 485, Canbus, ARINC 429, MIL-STD-1553, UEI-Pack, Device Drivers
 Autopilot
 Certification
 Model Based Development & Verification
