@@ -67,8 +67,19 @@ VectorCast
 *** PhD
 X_CENG 511 - Advanced Algorithms
 CENG 502 - Advanced Computer Networks and Communication
-CENG 521	Topics in Advanced Database
+CENG 521 - Topics in Advanced Database
+CENG 545 - Graphics Processing Unit Computing / MMI 713 - APPLIED PARALLEL PROGRAMMING ON GPU
 CENG 571 - Distributed Computing
 CENG 505 - Parallel Computing
-CENG 545 - Graphics Processing Unit Computing / MMI 713 - APPLIED PARALLEL PROGRAMMING ON GPU
 EE 541 - Convolutional Neural Networks
+
+*** Application
+ISTQB Foundation Level
+ISTQB Advanced Level - Test Manager
+  FMEA
+DO-178C Trainings + Documentations
+DO-331, DO-248C
+Our Testing Framework
+
+Reading List:
+The Pragmatic Programmer
