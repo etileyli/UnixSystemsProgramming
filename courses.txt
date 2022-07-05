@@ -47,6 +47,7 @@ The Unix Workbench
 Introduction to Git and Github
 Linux for Developers
 Pattern Recognition
+Web Design
 
 *** TOPICS
 RTOS
