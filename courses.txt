@@ -78,6 +78,7 @@ EE 541 - Convolutional Neural Networks
 ISTQB Foundation Level
 ISTQB Advanced Level - Test Manager
   FMEA
+ISTQB-Model Based Testing Essentials
 DO-178C Trainings + Documentations
 DO-331, DO-248C
 Our Testing Framework
