@@ -80,7 +80,7 @@ ISTQB Advanced Level - Test Manager
   FMEA
 ISTQB-Model Based Testing Essentials
 DO-178C Trainings + Documentations
-DO-331, DO-248C
+DO-331, DO-248C, DO-330, DO-332
 Our Testing Framework
 
 Reading List:
