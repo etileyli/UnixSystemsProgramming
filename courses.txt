@@ -74,7 +74,7 @@ CENG 571 - Distributed Computing
 CENG 505 - Parallel Computing
 EE 541 - Convolutional Neural Networks
 
-*** Application
+*** CV
 ISTQB Foundation Level
 ISTQB Advanced Level - Test Manager
   FMEA
