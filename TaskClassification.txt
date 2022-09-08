@@ -64,6 +64,7 @@
   Regular Expressions
   Communication Interfaces
     RS422, 485, Canbus, ARINC 429, MIL-STD-1553, UEI-Pack, Device Drivers
+  System Engineering
 
 **** OC-LT:
   Development of Real Time Systems
