@@ -31,7 +31,7 @@
   CENG 539 - Essentials of Network Routing and Switching
   CENG 545 - Graphics Processing Unit Computing
   CENG 571 - Distributed Computing
-  CENG 521	Topics in Advanced Database
+  CENG 521 - Topics in Advanced Database
 
   CENG 356 - Database Management Systems
   CENG 393 - Computer Networks
