@@ -22,7 +22,7 @@
 **** Courses
   X_CENG 501 - Advanced Operating Systems
   CENG 502 - Advanced Computer Networks and Communication
-  CENG 505 - Parallel Computing
+  CENG 505  - Parallel Computing
   CENG 509 - Pattern Recognition
   X_CENG 511 - Advanced Algorithms
   CENG 526 - Software Architecture
